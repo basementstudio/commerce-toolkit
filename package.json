@@ -1,9 +1,14 @@
 {
-  "version": "0.1.20",
-  "repository": "git://github.com/basementstudio/react-shopify-drop.git",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "bin": "bin/index.js",
+  "name": "react-dropify",
+  "author": "Moran Santiago <santiago@basement.studio>",
+  "version": "0.0.1",
+  "repository": "git://github.com/basementstudio/react-dropify.git",
+  "module": "./dist/react-dropify.esm.js",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "bin": {
+    "react-dropify": "./bin/index.js"
+  },
   "files": [
     "dist",
     "generate.d.ts"
@@ -32,16 +37,13 @@
       "pre-commit": "tsdx lint"
     }
   },
-  "name": "react-shopify-drop",
-  "author": "Moran Santiago <santiago@basement.studio>",
-  "module": "dist/react-shopify-drop.esm.js",
   "size-limit": [
     {
-      "path": "dist/react-shopify-drop.cjs.production.min.js",
+      "path": "dist/react-dropify.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/react-shopify-drop.esm.js",
+      "path": "dist/react-dropify.esm.js",
       "limit": "10 KB"
     }
   ],
