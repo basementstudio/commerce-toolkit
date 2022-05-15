@@ -1,0 +1,18 @@
+overwrite: true
+schema:
+  - ${SHOPIFY_STOREFRONT_GRAPHQL_ENDPOINT}:
+      headers:
+        x-shopify-storefront-access-token: ${SHOPIFY_STOREFRONT_ACCESS_TOKEN}
+generates:
+  ./src/lib/shopify/storefront/generated.ts:
+    documents: './src/lib/shopify/storefront/**/*.{gql,graphql}'
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - typescript-graphql-request
+  ./src/lib/shopify/graphql.schema.json:
+    plugins:
+      - 'introspection'
+    config:
+      withHooks: true
+      documentMode: documentNode
