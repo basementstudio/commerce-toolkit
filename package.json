@@ -1,7 +1,7 @@
 {
   "name": "react-dropify",
   "author": "Moran Santiago <santiago@basement.studio>",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "repository": "git://github.com/basementstudio/react-dropify.git",
   "module": "./dist/react-dropify.esm.js",
   "main": "./dist/index.js",
@@ -12,7 +12,8 @@
   "files": [
     "dist",
     "bin",
-    "generate.d.ts"
+    "generate.d.ts",
+    "default-gql"
   ],
   "engines": {
     "node": ">=12"
@@ -28,7 +29,7 @@
     "prepare": "yarn build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "gql-codegen": "graphql-codegen --config gql-codegen.yml -r dotenv/config"
+    "default-codegen": "graphql-codegen --config default-gql-codegen.yml -r dotenv/config"
   },
   "peerDependencies": {
     "react": ">=16"
