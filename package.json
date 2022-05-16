@@ -21,7 +21,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "yarn build:react && yarn build:generate",
-    "build:react": "yarn default-codegen && tsdx build",
+    "build:react": "yarn gql-codegen && tsdx build",
     "build:generate": "tsc --project tsconfig.generate.json",
     "test": "tsdx test --passWithNoTests",
     "lint": "eslint ./src --ext .ts,.tsx,.js,.jsx ",
@@ -29,7 +29,7 @@
     "prepare": "yarn build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "default-codegen": "graphql-codegen --config default-gql-codegen.yml -r dotenv/config"
+    "gql-codegen": "graphql-codegen --config default-gql-codegen.yml -r dotenv/config"
   },
   "peerDependencies": {
     "react": ">=16"

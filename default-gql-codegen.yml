@@ -10,7 +10,7 @@ generates:
       - 'typescript'
       - 'typescript-operations'
       - typescript-graphql-request
-  ./src/lib/shopify/graphql.schema.json:
+  ./src/lib/shopify/storefront/graphql.schema.json:
     plugins:
       - 'introspection'
     config:

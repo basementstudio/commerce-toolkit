@@ -1,5 +1,0 @@
-query FetchCart($id: ID!) {
-  cart(id: $id) {
-    ...Cart
-  }
-}

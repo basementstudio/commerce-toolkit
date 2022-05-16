@@ -1,6 +1,6 @@
 import EventEmitter from 'events'
 
-import { CartFragment } from './generated'
+import { _CartFragment } from './generated'
 
 type EventMap = Record<string, any>
 
@@ -18,13 +18,13 @@ interface Emitter<T extends EventMap> {
 
 type STOREFRONT_EVENT_MAP = {
   createCartError: Error
-  createCartSuccess: CartFragment | null | undefined
+  createCartSuccess: _CartFragment | null | undefined
   addLineItemError: Error
-  addLineItemSuccess: CartFragment | null | undefined
+  addLineItemSuccess: _CartFragment | null | undefined
   updateLineItemError: Error
-  updateLineItemSuccess: CartFragment | null | undefined
+  updateLineItemSuccess: _CartFragment | null | undefined
   removeLineItemError: Error
-  removeLineItemSuccess: CartFragment | null | undefined
+  removeLineItemSuccess: _CartFragment | null | undefined
 }
 
 type ALL_ERRORS_MAP = {
@@ -49,7 +49,7 @@ type ALL_SUCCESSES_MAP = {
       | 'removeLineItemSuccess'
       | 'updateLineItemSuccess'
     >
-    data: CartFragment | null | undefined
+    data: _CartFragment | null | undefined
   }
 }
 

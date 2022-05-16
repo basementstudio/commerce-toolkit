@@ -6505,6 +6505,13 @@ export type _RemoveLineItemMutationVariables = Exact<{
 
 export type _RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null } | null };
 
+export type _CreateCustomerMutationVariables = Exact<{
+  input: CustomerCreateInput;
+}>;
+
+
+export type _CreateCustomerMutation = { __typename?: 'Mutation', customerCreate?: { __typename?: 'CustomerCreatePayload', customer?: { __typename?: 'Customer', email?: string | null } | null, customerUserErrors: Array<{ __typename?: 'CustomerUserError', code?: CustomerErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+
 export type _FetchCartQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -6718,6 +6725,20 @@ export const _RemoveLineItemDocument = gql`
   }
 }
     ${_CartFragmentDoc}`;
+export const _CreateCustomerDocument = gql`
+    mutation _CreateCustomer($input: CustomerCreateInput!) {
+  customerCreate(input: $input) {
+    customer {
+      email
+    }
+    customerUserErrors {
+      code
+      field
+      message
+    }
+  }
+}
+    `;
 export const _FetchCartDocument = gql`
     query _FetchCart($id: ID!) {
   cart(id: $id) {
@@ -6792,6 +6813,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     _RemoveLineItem(variables: _RemoveLineItemMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<_RemoveLineItemMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<_RemoveLineItemMutation>(_RemoveLineItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), '_RemoveLineItem');
+    },
+    _CreateCustomer(variables: _CreateCustomerMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<_CreateCustomerMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<_CreateCustomerMutation>(_CreateCustomerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), '_CreateCustomer');
     },
     _FetchCart(variables: _FetchCartQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<_FetchCartQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<_FetchCartQuery>(_FetchCartDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), '_FetchCart');
