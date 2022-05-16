@@ -12,10 +12,12 @@ type EmailInputProps = {
 
 export const useEmailSubscriptionForm = ({
   submit,
-  emailInputProps: emailInputPropsOverride
+  emailInputProps: emailInputPropsOverride,
+  resetOnSuccess
 }: {
   submit: (email: string) => void | Promise<void>
   emailInputProps?: Partial<EmailInputProps>
+  resetOnSuccess?: boolean
 }) => {
   const [status, setStatus] = React.useState<
     'submitting' | 'error' | 'success'
@@ -43,13 +45,13 @@ export const useEmailSubscriptionForm = ({
       try {
         await submit(email)
         setStatus('success')
-        form.reset()
+        if (resetOnSuccess) form.reset()
       } catch (error) {
         setStatus('error')
         setError(formatError(error))
       }
     },
-    [submit]
+    [submit, resetOnSuccess]
   )
 
   return { emailInputProps, onSubmit, status, error }
