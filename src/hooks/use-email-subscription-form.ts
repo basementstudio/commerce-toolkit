@@ -1,7 +1,6 @@
 import * as React from 'react'
 
-import { StandardStorefrontClient } from '../lib/shopify/storefront'
-import { formatError, generatePassword } from '../lib/utils'
+import { formatError } from '../lib/utils'
 
 type EmailInputProps = {
   placeholder: string
@@ -12,10 +11,10 @@ type EmailInputProps = {
 }
 
 export const useEmailSubscriptionForm = ({
-  client,
+  submit,
   emailInputProps: emailInputPropsOverride
 }: {
-  client: StandardStorefrontClient
+  submit: (email: string) => void | Promise<void>
   emailInputProps?: Partial<EmailInputProps>
 }) => {
   const [status, setStatus] = React.useState<
@@ -41,22 +40,13 @@ export const useEmailSubscriptionForm = ({
       setStatus('submitting')
 
       try {
-        const { customerCreate } = await client._CreateCustomer({
-          input: { email, password: generatePassword() }
-        })
-        if (customerCreate?.customer?.email) {
-          setStatus('success')
-        } else if (customerCreate?.customerUserErrors[0].message) {
-          throw new Error(customerCreate?.customerUserErrors[0].message)
-        } else {
-          throw new Error('An unknown error occurred.')
-        }
+        await submit(email)
       } catch (error) {
         setStatus('error')
         setError(formatError(error))
       }
     },
-    [client]
+    [submit]
   )
 
   return { emailInputProps, onSubmit, status, error }
