@@ -7,7 +7,7 @@ const configSchema = z.object({
   accessToken: z.string()
 })
 
-export type BGsdkConfig = z.infer<typeof configSchema>
+export type ReactDropifyConfig = z.infer<typeof configSchema>
 
 export const getBGsdkConfig = (directoryPath: string) => {
   const bgsdkConfigJsonPath = path.join(directoryPath, 'config.json')
@@ -22,7 +22,7 @@ export const getBGsdkConfig = (directoryPath: string) => {
   } else if (fs.existsSync(bgsdkConfigTSPath)) {
     rawConfig = require(bgsdkConfigTSPath)
   } else {
-    throw new Error(`Could not find config.{json,js,ts} in ${directoryPath}`)
+    throw new Error(`Could not find config.{json,js} in ${directoryPath}`)
   }
   const parsedConfig = configSchema.parse(rawConfig)
   return parsedConfig
