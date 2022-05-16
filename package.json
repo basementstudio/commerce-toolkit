@@ -1,7 +1,7 @@
 {
   "name": "react-dropify",
   "author": "Moran Santiago <santiago@basement.studio>",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "repository": "git://github.com/basementstudio/react-dropify.git",
   "module": "./dist/react-dropify.esm.js",
   "main": "./dist/index.js",
