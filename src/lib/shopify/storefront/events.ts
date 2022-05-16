@@ -56,3 +56,8 @@ type ALL_SUCCESSES_MAP = {
 export const storefrontEvents = new EventEmitter() as Emitter<
   STOREFRONT_EVENT_MAP & ALL_ERRORS_MAP & ALL_SUCCESSES_MAP
 >
+
+export type AllErrorsHandler = (args: ALL_ERRORS_MAP['allErrors']) => void
+export type AllSuccessesHandler = (
+  args: ALL_SUCCESSES_MAP['allSuccesses']
+) => void
