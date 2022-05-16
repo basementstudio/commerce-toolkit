@@ -1,9 +1,21 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import { ProductFragment } from '../lib/shopify/storefront/generated'
+import { _ProductFragment } from '../lib/shopify/storefront/generated'
 import { useStorefront } from '../lib/shopify/storefront/provider'
 
-export const useProductHelper = (product: ProductFragment) => {
+type BareBonesVariant = Pick<
+  _ProductFragment['variants']['edges'][0]['node'],
+  'availableForSale' | 'compareAtPriceV2' | 'priceV2' | 'selectedOptions' | 'id'
+>
+
+type BareBonesProduct = Pick<
+  _ProductFragment,
+  'options' | 'availableForSale'
+> & {
+  variants: { edges: Array<{ node: BareBonesVariant }> }
+} & { [key: string]: unknown }
+
+export const useProductHelper = (product: BareBonesProduct) => {
   const { onAddLineItem, cartToggleState } = useStorefront()
 
   const [selectedOptions, setSelectedOptions] = useState<
