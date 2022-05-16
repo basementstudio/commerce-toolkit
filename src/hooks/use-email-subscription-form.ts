@@ -36,11 +36,14 @@ export const useEmailSubscriptionForm = ({
   const onSubmit: React.FormEventHandler<HTMLFormElement> = React.useCallback(
     async (e) => {
       e.preventDefault()
-      const email = e.currentTarget.email.value
+      const form = e.currentTarget
+      const email = form.email.value
       setStatus('submitting')
 
       try {
         await submit(email)
+        setStatus('success')
+        form.reset()
       } catch (error) {
         setStatus('error')
         setError(formatError(error))
