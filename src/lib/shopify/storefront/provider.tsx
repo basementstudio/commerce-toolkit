@@ -3,8 +3,9 @@ import useSWR from 'swr'
 
 import { ToggleState, useToggleState } from '../../../hooks/use-toggle-state'
 import { formatError } from '../../utils'
+import { StandardStorefrontClient } from '.'
 import { storefrontEvents } from './events'
-import { CartFragment, Sdk } from './generated'
+import { _CartFragment } from './generated'
 
 type LineItem = { merchandiseId: string; quantity: number }
 
@@ -18,7 +19,7 @@ type Context = {
     quantity: number
   }) => Promise<void>
   onRemoveLineItem: (params: { merchandiseId: string }) => Promise<void>
-  cart: CartFragment | undefined | null
+  cart: _CartFragment | undefined | null
   cartItemsCount: number | undefined
   cartToggleState: ToggleState
 }
@@ -26,7 +27,7 @@ type Context = {
 const Context = createContext<Context | undefined>(undefined)
 
 type InternalContextProviderProps = {
-  client: Sdk
+  client: StandardStorefrontClient
   appCartId: string
   children?: React.ReactNode
 }
@@ -58,7 +59,7 @@ const InternalContextProvider = ({
     try {
       const id = cartLocalStorage.get()
       if (!id) return null
-      const { cart } = await client.FetchCart({ id })
+      const { cart } = await client._FetchCart({ id })
       if (cart === null) {
         cartLocalStorage.clear()
       }
@@ -69,11 +70,11 @@ const InternalContextProvider = ({
   }
 
   const createCart = useCallback(
-    async (lines?: LineItem[]): Promise<CartFragment | null | undefined> => {
+    async (lines?: LineItem[]): Promise<_CartFragment | null | undefined> => {
       try {
         const data = lines
-          ? await client.CreateCartWithLines({ lines })
-          : await client.CreateCart()
+          ? await client._CreateCartWithLines({ lines })
+          : await client._CreateCart()
 
         const cart = data.cartCreate?.cart
         const cartId = cart?.id
@@ -109,13 +110,13 @@ const InternalContextProvider = ({
       quantity: number
     }) => {
       try {
-        let cart: CartFragment | undefined | null
+        let cart: _CartFragment | undefined | null
         const localStorageCheckoutId = cartLocalStorage.get()
         if (!localStorageCheckoutId) {
           // create new cart
           cart = await createCart([{ merchandiseId, quantity }])
         } else {
-          const { cartLinesAdd } = await client.AddLineItem({
+          const { cartLinesAdd } = await client._AddLineItem({
             cartId: localStorageCheckoutId,
             lines: [{ merchandiseId, quantity }]
           })
@@ -154,7 +155,7 @@ const InternalContextProvider = ({
       try {
         const id = cartLocalStorage.get()
         if (!id) return
-        const { cartLinesUpdate } = await client.UpdateLineItem({
+        const { cartLinesUpdate } = await client._UpdateLineItem({
           cartId: id,
           lines: [{ id: merchandiseId, quantity }]
         })
@@ -187,7 +188,7 @@ const InternalContextProvider = ({
       try {
         const id = cartLocalStorage.get()
         if (!id) return
-        const { cartLinesRemove } = await client.RemoveLineItem({
+        const { cartLinesRemove } = await client._RemoveLineItem({
           cartId: id,
           lineIds: [merchandiseId]
         })

@@ -1877,7 +1877,7 @@
           },
           {
             "name": "discountCodes",
-            "description": "The discount codes that have been applied to the cart.",
+            "description": "The case-insensitive discount codes that the customer added at checkout.\n",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2581,7 +2581,7 @@
         "fields": [
           {
             "name": "subtotalAmount",
-            "description": "The estimated amount, before taxes and discounts, for the customer to pay at checkout.",
+            "description": "The estimated amount, before taxes and discounts, for the customer to pay.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2597,7 +2597,7 @@
           },
           {
             "name": "totalAmount",
-            "description": "The estimated total amount for the customer to pay at checkout.",
+            "description": "The estimated total amount for the customer to pay.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2681,7 +2681,7 @@
           },
           {
             "name": "discountCodes",
-            "description": "The discount codes to apply to the cart.",
+            "description": "The case-insensitive discount codes that the customer added at checkout.\n",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -3508,7 +3508,7 @@
           },
           {
             "name": "currencyCode",
-            "description": "The currency code for the Checkout.",
+            "description": "The currency code for the checkout.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3938,7 +3938,7 @@
           },
           {
             "name": "taxExempt",
-            "description": "Specifies if the Checkout is tax exempt.",
+            "description": "Whether the checkout is tax exempt.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3954,7 +3954,7 @@
           },
           {
             "name": "taxesIncluded",
-            "description": "Specifies if taxes are included in the line item and shipping line prices.",
+            "description": "Whether taxes are included in the line item and shipping line prices.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -8077,7 +8077,7 @@
       {
         "kind": "ENUM",
         "name": "CountryCode",
-        "description": "ISO 3166-1 alpha-2 country codes with some differences.",
+        "description": "The code designating a country/region, which generally follows ISO 3166-1 alpha-2 guidelines.\nIf a territory doesn't have a country code value in the `CountryCode` enum, it might be considered a subdivision\nof another country. For example, the territories associated with Spain are represented by the country code `ES`,\nand the territories associated with the United States of America are represented by the country code `US`.\n",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -12950,7 +12950,7 @@
       {
         "kind": "SCALAR",
         "name": "DateTime",
-        "description": "Represents an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)-encoded date and time string.\nFor example, 3:30 pm on September 7, 2019 in the time zone of UTC (Coordinated Universal Time) is\nrepresented as `\"2019-09-07T15:50:00Z`\".\n",
+        "description": "Represents an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)-encoded date and time string.\nFor example, 3:50 pm on September 7, 2019 in the time zone of UTC (Coordinated Universal Time) is\nrepresented as `\"2019-09-07T15:50:00Z`\".\n",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13267,7 +13267,7 @@
       {
         "kind": "ENUM",
         "name": "DiscountApplicationTargetSelection",
-        "description": "Which lines on the order that the discount is allocated over, of the type\ndefined by the Discount Application's target_type.\n",
+        "description": "The lines on the order to which the discount is applied, of the type defined by\nthe discount application's `targetType`. For example, the value `ENTITLED`, combined with a `targetType` of\n`LINE_ITEM`, applies the discount on all line items that are entitled to the discount.\nThe value `ALL`, combined with a `targetType` of `SHIPPING_LINE`, applies the discount on all shipping lines.\n",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13280,7 +13280,7 @@
           },
           {
             "name": "ENTITLED",
-            "description": "The discount is allocated onto only the lines it is entitled for.",
+            "description": "The discount is allocated onto only the lines that it's entitled for.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -16777,7 +16777,7 @@
               },
               {
                 "name": "discountCodes",
-                "description": "The discount codes to apply to the cart.",
+                "description": "The case-insensitive discount codes that the customer added at checkout.\n",
                 "type": {
                   "kind": "LIST",
                   "name": null,
@@ -17629,7 +17629,7 @@
           },
           {
             "name": "checkoutDiscountCodeRemove",
-            "description": "Removes the applied discount from an existing checkout.",
+            "description": "Removes the applied discounts from an existing checkout.",
             "args": [
               {
                 "name": "checkoutId",
@@ -25480,7 +25480,7 @@
           },
           {
             "name": "options",
-            "description": "Represents the selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product.",
+            "description": "The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -25504,7 +25504,7 @@
           },
           {
             "name": "priceAdjustments",
-            "description": "Represents how a selling plan affects pricing when a variant is purchased with a selling plan.",
+            "description": "The price adjustments that a selling plan makes when a variant is purchased with a selling plan.",
             "args": [],
             "type": {
               "kind": "NON_NULL",

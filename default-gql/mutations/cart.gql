@@ -1,0 +1,45 @@
+fragment _CartCreatePayload on CartCreatePayload {
+  cart {
+    ..._Cart
+  }
+  userErrors {
+    code
+    field
+    message
+  }
+}
+
+mutation _CreateCart {
+  cartCreate {
+    ..._CartCreatePayload
+  }
+}
+mutation _CreateCartWithLines($lines: [CartLineInput!]!) {
+  cartCreate(input: { lines: $lines }) {
+    ..._CartCreatePayload
+  }
+}
+
+mutation _AddLineItem($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart {
+      ..._Cart
+    }
+  }
+}
+
+mutation _UpdateLineItem($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+  cartLinesUpdate(cartId: $cartId, lines: $lines) {
+    cart {
+      ..._Cart
+    }
+  }
+}
+
+mutation _RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart {
+      ..._Cart
+    }
+  }
+}

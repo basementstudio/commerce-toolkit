@@ -5,3 +5,4 @@ node_modules
 dist
 bin
 package-lock.json
+.env

@@ -11,7 +11,7 @@ import { formatError } from './util/format-error'
 function help(code: number) {
   console.log(`Usage:
   
-  b-gsdk generate
+  react-dropify generate
   
   `)
   process.exit(code)

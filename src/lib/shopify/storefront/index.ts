@@ -1,29 +1,32 @@
 import { GraphQLClient } from 'graphql-request'
-import type * as Dom from 'graphql-request/dist/types.dom'
 
 import { getSdk } from './generated'
 
-export type StorefrontClientProps = { endpoint: string; accessToken: string }
+export type StandardStorefrontClientProps = {
+  domain: string
+  accessToken: string
+}
 
-export const createStorefrontClient = ({
-  endpoint,
+export const createStandardStorefrontClient = ({
+  domain,
   accessToken
-}: StorefrontClientProps) => {
+}: StandardStorefrontClientProps) => {
+  const endpoint = `https://${domain}/api/2021-10/graphql`
   const graphqlClient = new GraphQLClient(endpoint, {
     headers: {
-      'x-shopify-storefront-access-token': accessToken,
       accept: 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-shopify-storefront-access-token': accessToken
     }
   })
   const generatedSdk = getSdk(graphqlClient)
 
   return {
     ...generatedSdk,
-    Request: async (
-      query: string,
-      variables?: Record<string, any>,
-      requestHeaders?: Dom.RequestInit['headers']
-    ) => graphqlClient.request(query, variables, requestHeaders)
+    client: graphqlClient
   }
 }
+
+export type StandardStorefrontClient = ReturnType<
+  typeof createStandardStorefrontClient
+>

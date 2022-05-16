@@ -11,6 +11,12 @@ const API_VERSION = '2021-10'
 
 export async function main(args: Args) {
   const bgsdkDirectoryPath = getBGsdkDirectoryPath(process.cwd(), args['--dir'])
+  const defaultGqlPath = path.join(
+    process.cwd(),
+    'node_modules',
+    'react-dropify',
+    'default-gql'
+  )
 
   if (!bgsdkDirectoryPath) {
     throw new Error(
@@ -35,7 +41,8 @@ export async function main(args: Args) {
         [__dirname + '/generated/index.ts']: {
           documents: [
             bgsdkDirectoryPath + '/**/*.{gql,graphql}',
-            bgsdkDirectoryPath + '/*.{gql,graphql}'
+            bgsdkDirectoryPath + '/*.{gql,graphql}',
+            defaultGqlPath + '/**/*.{gql,graphql}'
           ],
           plugins: [
             'typescript',
@@ -62,20 +69,11 @@ export async function main(args: Args) {
   )
   fs.writeFileSync(
     path.join(bgsdkDirectoryPath, 'generated/index.ts'),
-    sdkCodegen.content
+    '/* eslint-disable */\n' + sdkCodegen.content + '\n' + extraGenerated
   )
   const skdFilePath = path.join(bgsdkDirectoryPath, 'sdk.ts')
   if (!fs.existsSync(skdFilePath)) {
     fs.writeFileSync(skdFilePath, sdkFileContents)
-  }
-
-  const eslintignorePath = path.join(process.cwd(), '.eslintignore')
-  if (fs.existsSync(eslintignorePath)) {
-    const eslintignore = fs.readFileSync(eslintignorePath, 'utf8')
-    if (!eslintignore.includes('generated')) {
-      fs.appendFileSync(eslintignorePath, '\ngenerated/')
-      console.log('Added "generated/" to .eslintignore')
-    }
   }
 
   console.log('Done ✨')
@@ -87,31 +85,31 @@ function createDirIfDoesNotExist(p: string) {
   }
 }
 
-const sdkFileContents = `import { GraphQLClient } from 'graphql-request'
-import { getSdk } from './generated'
-
-export type CreateReactDropifySdkParams = {
+const extraGenerated = `export type CreateReactDropifySdkParams = {
   domain: string
   accessToken: string
 }
 
-export const createReactDropifySdk = ({ domain, accessToken }: CreateReactDropifySdkParams) => {
-  const endpoint = \`https://\${config.domain}/api/${API_VERSION}/graphql\`
+export const createReactDropifySdk = ({
+  domain,
+  accessToken
+}: CreateReactDropifySdkParams) => {
+  const endpoint = \`https://\${domain}/api/${API_VERSION}/graphql\`
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
       accept: 'application/json',
       'Content-Type': 'application/json',
-      'x-shopify-storefront-access-token': \`\${config.accessToken}\`
+      'x-shopify-storefront-access-token': accessToken
     }
   })
 
   const generatedSdk = getSdk(graphQLClient)
 
   return { ...generatedSdk, client: graphQLClient }
-}
+}`
 
-// You can then create the sdk and export it from here.
-// Like this:
-// export const reactDropifySdk = createReactDropifySdk({ })
+const sdkFileContents = `import config from './config'
+import { createReactDropifySdk } from './generated'
 
+export const reactDropifySdk = createReactDropifySdk(config)
 `

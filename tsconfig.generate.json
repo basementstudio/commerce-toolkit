@@ -4,6 +4,7 @@
   "compilerOptions": {
     "rootDir": "src-generate",
     "outDir": "bin",
-    "strict": true
+    "strict": true,
+    "declaration": true
   }
 }

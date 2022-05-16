@@ -1,1 +1,1 @@
-export * from './src-generate/types'
+export * from './bin/types'
