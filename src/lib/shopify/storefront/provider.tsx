@@ -82,9 +82,18 @@ const InternalContextProvider = ({
         cartLocalStorage.set(cartId ?? '')
 
         storefrontEvents.emit('createCartSuccess', cart)
+        storefrontEvents.emit('allSuccesses', {
+          type: 'createCartSuccess',
+          data: cart
+        })
         return cart
       } catch (error) {
-        storefrontEvents.emit('createCartError', formatError(error))
+        const formattedError = formatError(error)
+        storefrontEvents.emit('createCartError', formattedError)
+        storefrontEvents.emit('allErrors', {
+          type: 'createCartError',
+          error: formattedError
+        })
         return null
       }
     },
@@ -118,8 +127,17 @@ const InternalContextProvider = ({
         }
 
         storefrontEvents.emit('addLineItemSuccess', cart)
+        storefrontEvents.emit('allSuccesses', {
+          type: 'addLineItemSuccess',
+          data: cart
+        })
       } catch (error) {
-        storefrontEvents.emit('addLineItemError', formatError(error))
+        const formattedError = formatError(error)
+        storefrontEvents.emit('addLineItemError', formattedError)
+        storefrontEvents.emit('allErrors', {
+          type: 'addLineItemError',
+          error: formattedError
+        })
       }
     },
     [cartLocalStorage, client, createCart, mutate]
@@ -148,8 +166,17 @@ const InternalContextProvider = ({
         }
 
         storefrontEvents.emit('updateLineItemSuccess', cart)
+        storefrontEvents.emit('allSuccesses', {
+          type: 'updateLineItemSuccess',
+          data: cart
+        })
       } catch (error) {
-        storefrontEvents.emit('updateLineItemError', formatError(error))
+        const formattedError = formatError(error)
+        storefrontEvents.emit('updateLineItemError', formattedError)
+        storefrontEvents.emit('allErrors', {
+          type: 'updateLineItemError',
+          error: formattedError
+        })
       }
     },
     [cartLocalStorage, client, mutate]
@@ -172,8 +199,17 @@ const InternalContextProvider = ({
         }
 
         storefrontEvents.emit('removeLineItemSuccess', cart)
+        storefrontEvents.emit('allSuccesses', {
+          type: 'removeLineItemSuccess',
+          data: cart
+        })
       } catch (error) {
-        storefrontEvents.emit('removeLineItemError', formatError(error))
+        const formattedError = formatError(error)
+        storefrontEvents.emit('removeLineItemError', formattedError)
+        storefrontEvents.emit('allErrors', {
+          type: 'removeLineItemError',
+          error: formattedError
+        })
       }
     },
     [cartLocalStorage, client, mutate]

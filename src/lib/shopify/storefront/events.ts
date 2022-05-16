@@ -27,5 +27,32 @@ type STOREFRONT_EVENT_MAP = {
   removeLineItemSuccess: CartFragment | null | undefined
 }
 
-export const storefrontEvents =
-  new EventEmitter() as Emitter<STOREFRONT_EVENT_MAP>
+type ALL_ERRORS_MAP = {
+  allErrors: {
+    type: keyof Pick<
+      STOREFRONT_EVENT_MAP,
+      | 'addLineItemError'
+      | 'createCartError'
+      | 'removeLineItemError'
+      | 'updateLineItemError'
+    >
+    error: Error
+  }
+}
+
+type ALL_SUCCESSES_MAP = {
+  allSuccesses: {
+    type: keyof Pick<
+      STOREFRONT_EVENT_MAP,
+      | 'addLineItemSuccess'
+      | 'createCartSuccess'
+      | 'removeLineItemSuccess'
+      | 'updateLineItemSuccess'
+    >
+    data: CartFragment | null | undefined
+  }
+}
+
+export const storefrontEvents = new EventEmitter() as Emitter<
+  STOREFRONT_EVENT_MAP & ALL_ERRORS_MAP & ALL_SUCCESSES_MAP
+>
