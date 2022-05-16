@@ -1,7 +1,7 @@
 {
   "name": "react-dropify",
   "author": "Moran Santiago <santiago@basement.studio>",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "repository": "git://github.com/basementstudio/react-dropify.git",
   "module": "./dist/react-dropify.esm.js",
   "main": "./dist/index.js",
@@ -21,7 +21,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "yarn build:react && yarn build:generate",
-    "build:react": "tsdx build",
+    "build:react": "yarn default-codegen && tsdx build",
     "build:generate": "tsc --project tsconfig.generate.json",
     "test": "tsdx test --passWithNoTests",
     "lint": "eslint ./src --ext .ts,.tsx,.js,.jsx ",
