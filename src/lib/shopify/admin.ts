@@ -1,9 +1,8 @@
-export const makeAdminAPIOrigin = ({
+export const makeAdminApiOrigin = ({
   apiKey,
   adminPassword,
   domain
 }: {
-  endpoint: string
   apiKey: string
   adminPassword: string
   domain: string
