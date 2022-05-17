@@ -22,7 +22,7 @@ export const useEmailSubscriptionForm = ({
   const [status, setStatus] = React.useState<
     'submitting' | 'error' | 'success'
   >()
-  const [error, setError] = React.useState<Error>()
+  const [error, setError] = React.useState<string>()
 
   const emailInputProps = React.useMemo(() => {
     return {
@@ -48,7 +48,7 @@ export const useEmailSubscriptionForm = ({
         if (resetOnSuccess) form.reset()
       } catch (error) {
         setStatus('error')
-        setError(formatError(error))
+        setError(formatError(error).message)
       }
     },
     [submit, resetOnSuccess]
