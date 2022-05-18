@@ -13,6 +13,7 @@ fragment _Cart on Cart {
               value
             }
             title
+            quantityAvailable
             priceV2 {
               amount
               currencyCode
