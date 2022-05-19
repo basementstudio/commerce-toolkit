@@ -54,5 +54,5 @@ export const useEmailSubscriptionForm = ({
     [submit, resetOnSuccess]
   )
 
-  return { emailInputProps, onSubmit, status, error }
+  return { emailInputProps, onSubmit, status, setStatus, error }
 }
