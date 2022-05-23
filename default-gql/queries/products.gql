@@ -4,6 +4,7 @@ fragment _Product on Product {
   description
   handle
   productType
+  tags
   options {
     name
     values
