@@ -56,7 +56,7 @@ module.exports = {
 
 ⁉️ The Storefront API Access Token can be public. In fact, the API is optimized for being accessed from the client.
 
-### 4. Get your SDK!
+### 4. Get your SDK
 
 Simply run
 
@@ -74,9 +74,9 @@ Tip:
   },
 ```
 
-## And now?
+## Let's see the results!
 
-Congratulations, now you have a type safe SDK to interact with the SFAPI. Open up `./react-dropify/sdk.ts`. It should look something like this:
+Congratulations, you now have a type safe SDK to interact with the SFAPI. Open up `./react-dropify/sdk.ts`. It should look something like this:
 
 ```ts
 import config from './config'
@@ -96,9 +96,9 @@ What's even cooler is that you can define **custom queries** in `.graphql` files
 
 Isn't that amazing?
 
-## Yeah, the SDK is one thing, but let's check out the `StorefrontProvider`
+## OK, let's not forget about the `StorefrontProvider`
 
-The `StorefrontProvider` is a React Context provider which manages cart state. Simply wrap it on your `App` component and you're ready to create a cool cart UI for your users.
+The `StorefrontProvider` is a React Context Provider which manages cart state. Wrap it on your `App` component.
 
 ```tsx
 // Example using Next.js
@@ -137,6 +137,25 @@ const Component = () => {
 }
 ```
 
+When you add an item to cart, the provider:
+
+1. will check on `localStorage` to see if there's a cart id stored there.
+2. will fetch the cart **only when needed**, and will cache the result using [swr](https://swr.vercel.app/).
+3. will report errors to an event emitter.
+
 ---
 
 And this is not all. I'll get some rest and continue writing this README later on 😅
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## Authors
+
+- Santiago Moran ([@morangsantiago](https://twitter.com/morangsantiago)) – [basement.studio](https://basement.studio)
+- Julian Benegas ([@julianbenegas8](https://twitter.com/julianbenegas8)) – [basement.studio](https://basement.studio)
