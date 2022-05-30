@@ -4,7 +4,7 @@ Let's drop some cool stuff 🔥
 
 `react-dropify` is the best library for interacting with the Shopify Storefront API (SFAPI).
 
-- ✅ Start quickly with readymade queries.
+- ✅ Start quickly with ready-made queries.
 - ✅ Grab the full power of the SFAPI with custom GraphQL queries.
 - ✅ Type safe with a built in, ready-to-go GraphQL x TypeScript codegen.
 - ✅ Cart state saved to `localStorage`, and provided via React Context.
