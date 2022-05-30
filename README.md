@@ -96,6 +96,47 @@ What's even cooler is that you can define **custom queries** in `.graphql` files
 
 Isn't that amazing?
 
+## Yeah, the SDK is one thing, but let's check out the `StorefrontProvider`
+
+The `StorefrontProvider` is a React Context provider which manages cart state. Simply wrap it on your `App` component and you're ready to create a cool cart UI for your users.
+
+```tsx
+// Example using Next.js
+
+import { AppProps } from 'next/app'
+import { StorefrontProvider } from 'react-dropify'
+import { reactDropifySdk } from '~/lib/react-dropify/sdk'
+
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <StorefrontProvider appCartId="<store>-cart-id" client={reactDropifySdk}>
+      <Component {...pageProps} />
+    </StorefrontProvider>
+  )
+}
+
+export default App
+```
+
+And then, somewhere in your app:
+
+```tsx
+import { useStorefront } from 'react-dropify'
+
+const Component = () => {
+  const {
+    cart,
+    cartItemsCount,
+    cartToggleState,
+    onAddLineItem,
+    onRemoveLineItem,
+    onUpdateLineItem
+  } = useStorefront()
+
+  return <div />
+}
+```
+
 ---
 
 And this is not all. I'll get some rest and continue writing this README later on 😅
