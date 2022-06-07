@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/40034115/170902196-3a3e5c50-b47a-4446-a04b-995fc7ffee42.png)
+![react-dropify](https://user-images.githubusercontent.com/40034115/170902196-3a3e5c50-b47a-4446-a04b-995fc7ffee42.png)
 
 Let's drop some cool stuff 🔥
 
@@ -28,13 +28,11 @@ Save the Storefront Access Token as a public `.env` variable.
 
 ⁉️ The Storefront API Access Token can be public. In fact, the API is optimized for being accessed from the client.
 
-
 ### 3. Get your Store Domain Name.
 
 This is generally something like `<your-store>.myshopify.com`.
 
 Save the Store Domain Name as a public `.env` variable.
-
 
 ### 3. Create `./react-dropify/config.js` at the root of your project.
 
@@ -65,6 +63,7 @@ yarn react-dropify generate
 ```
 
 Tip:
+
 ```js
   // package.json
 
