@@ -123,7 +123,7 @@ export type Article = HasMetafields & Node & OnlineStorePublishable & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -323,7 +323,7 @@ export type Blog = HasMetafields & Node & OnlineStorePublishable & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -1543,7 +1543,7 @@ export type Collection = HasMetafields & Node & OnlineStorePublishable & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -2641,7 +2641,7 @@ export type Customer = HasMetafields & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -3271,7 +3271,7 @@ export type HasMetafields = {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -4429,7 +4429,7 @@ export type Order = HasMetafields & Node & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -4702,7 +4702,7 @@ export type Page = HasMetafields & Node & OnlineStorePublishable & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -4906,7 +4906,7 @@ export type Product = HasMetafields & Node & OnlineStorePublishable & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -5282,7 +5282,7 @@ export type ProductVariant = HasMetafields & Node & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -6010,7 +6010,7 @@ export type Shop = HasMetafields & {
   metafield?: Maybe<Metafield>;
   /**
    * A paginated list of metafields associated with the resource.
-   * @deprecated The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.
+   * @deprecated As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.
    *
    */
   metafields: MetafieldConnection;
@@ -6519,14 +6519,14 @@ export type _FetchCartQueryVariables = Exact<{
 
 export type _FetchCartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', title: string, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null };
 
-export type _ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } };
+export type _ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } };
 
 export type _GetProductByHandleQueryVariables = Exact<{
   handle: Scalars['String'];
 }>;
 
 
-export type _GetProductByHandleQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } | null };
+export type _GetProductByHandleQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } | null };
 
 export type _GetAllProductsQueryVariables = Exact<{
   startAfter?: InputMaybe<Scalars['String']>;
@@ -6534,7 +6534,7 @@ export type _GetAllProductsQueryVariables = Exact<{
 }>;
 
 
-export type _GetAllProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } };
+export type _GetAllProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } };
 
 export type _GetProductsOnCollectionQueryVariables = Exact<{
   startAfter?: InputMaybe<Scalars['String']>;
@@ -6543,7 +6543,7 @@ export type _GetProductsOnCollectionQueryVariables = Exact<{
 }>;
 
 
-export type _GetProductsOnCollectionQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } } | null };
+export type _GetProductsOnCollectionQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } } | null };
 
 export type _GetCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6634,6 +6634,7 @@ export const _ProductFragmentDoc = gql`
   description
   handle
   productType
+  tags
   options {
     name
     values

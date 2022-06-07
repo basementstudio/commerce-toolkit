@@ -503,7 +503,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -519,7 +519,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -596,7 +596,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -629,7 +629,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "onlineStoreUrl",
@@ -1406,7 +1406,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -1422,7 +1422,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -1499,7 +1499,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1532,7 +1532,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "onlineStoreUrl",
@@ -7356,7 +7356,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -7372,7 +7372,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -7449,7 +7449,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -7482,7 +7482,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "onlineStoreUrl",
@@ -11113,7 +11113,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -11129,7 +11129,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -11206,7 +11206,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -11239,7 +11239,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "orders",
@@ -14049,7 +14049,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -14065,7 +14065,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -14142,7 +14142,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -14175,7 +14175,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           }
         ],
         "inputFields": null,
@@ -19435,7 +19435,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -19451,7 +19451,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -19528,7 +19528,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -19561,7 +19561,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "name",
@@ -20521,7 +20521,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -20537,7 +20537,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -20614,7 +20614,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -20647,7 +20647,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "onlineStoreUrl",
@@ -21771,7 +21771,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -21787,7 +21787,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -21864,7 +21864,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -21897,7 +21897,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "onlineStoreUrl",
@@ -23082,7 +23082,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -23098,7 +23098,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -23175,7 +23175,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -23208,7 +23208,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "presentmentPrices",
@@ -26770,7 +26770,7 @@
             "args": [
               {
                 "name": "key",
-                "description": "Identifier for the metafield (maximum of 30 characters).",
+                "description": "The identifier for the metafield.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -26786,7 +26786,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "A container for a set of metafields.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -26863,7 +26863,7 @@
               },
               {
                 "name": "namespace",
-                "description": "Container for a set of metafields (maximum of 20 characters).",
+                "description": "Container for a set of metafields.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -26896,7 +26896,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "The `metafields` field will be removed in the future in favor of using [aliases](https://graphql.org/learn/queries/#aliases) with the `metafield` field.\n"
+            "deprecationReason": "As of 2022-07, the paginated `metafields` field has been repurposed to require a list of metafield identifiers.\n"
           },
           {
             "name": "moneyFormat",
