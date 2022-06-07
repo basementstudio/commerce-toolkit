@@ -3,7 +3,8 @@ import create from 'zustand'
 import createContext from 'zustand/context'
 import shallow from 'zustand/shallow'
 
-import { getFormattedTimeDelta } from './utils'
+import { calculateCountdownState } from './calculate-countdown-state'
+import { dateOrTimestampToTimestamp, getFormattedTimeDelta } from './utils'
 
 interface DropContext {
   progress: number | null
@@ -35,12 +36,9 @@ const DropProvider = ({
   countdownChildren
 }: DropProviderProps) => {
   const { endTimestamp, startTimestamp } = React.useMemo(() => {
-    const endTimestamp =
-      typeof endDate === 'number' ? endDate : endDate.getTime()
+    const endTimestamp = dateOrTimestampToTimestamp(endDate)
     const startTimestamp = startDate
-      ? typeof startDate === 'number'
-        ? startDate
-        : startDate.getTime()
+      ? dateOrTimestampToTimestamp(startDate)
       : null
 
     if (startTimestamp && startTimestamp >= endTimestamp) {
@@ -56,7 +54,7 @@ const DropProvider = ({
     <Provider
       createStore={() =>
         create<DropContext>((set) => {
-          const state = calculateState(endTimestamp, startTimestamp)
+          const state = calculateCountdownState(endTimestamp, startTimestamp)
           return {
             ...state,
             endTimestamp,
@@ -65,7 +63,7 @@ const DropProvider = ({
               ? 'complete'
               : 'running',
             update() {
-              set(calculateState(endTimestamp, startTimestamp))
+              set(calculateCountdownState(endTimestamp, startTimestamp))
             },
             setCountdownState(countdownState: DropContext['countdownState']) {
               set({ countdownState })
@@ -156,24 +154,5 @@ function Renderer({
 const Memo = React.memo(({ children }: { children?: React.ReactNode }) => {
   return <>{children}</>
 })
-
-function calculateState(endTimestamp: number, startTimestamp: number | null) {
-  const now = Date.now()
-
-  const timeRemaining = Math.max(0, endTimestamp - now)
-  const progress = startTimestamp
-    ? parseFloat(
-        Math.max(
-          0,
-          Math.min((now - startTimestamp) / (endTimestamp - startTimestamp), 1)
-        ).toFixed(2)
-      )
-    : null
-  const isComplete = timeRemaining <= 0
-
-  const humanTimeRemaining = getFormattedTimeDelta(timeRemaining)
-
-  return { timeRemaining, isComplete, progress, humanTimeRemaining }
-}
 
 export { DropContext, DropProvider, useDrop }

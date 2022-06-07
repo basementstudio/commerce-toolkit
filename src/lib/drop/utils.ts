@@ -37,3 +37,9 @@ export function getFormattedTimeDelta(
     isComplete: timeRemaining < 1000 // this is the "human" isComplete. At this point we might have some milliseconds left, but the countdown will say "0".
   }
 }
+
+export function dateOrTimestampToTimestamp(dateOrTimestamp: Date | number) {
+  return typeof dateOrTimestamp === 'number'
+    ? dateOrTimestamp
+    : dateOrTimestamp.getTime()
+}
