@@ -1,4 +1,4 @@
-# React Dropify 🧪
+# React Dropify 
 
 Let's drop some cool stuff 🔥
 
