@@ -25,5 +25,5 @@ const formatter = new Intl.NumberFormat('en-US', {
 })
 
 export const formatPrice = (amount: string) => {
-  return formatter.format(parseFloat(amount))
+  return formatter.format(parseFloat(amount ?? '0'))
 }

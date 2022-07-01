@@ -442,7 +442,7 @@
             "args": [
               {
                 "name": "crop",
-                "description": "Crops the image according to the specified region. This argument is deprecated: Use `crop` on `Image.transformedSrc` instead.",
+                "description": "Crops the image according to the specified region. This argument is deprecated: Use `Image.url(transform: { crop:})` instead.",
                 "type": {
                   "kind": "ENUM",
                   "name": "CropRegion",
@@ -454,7 +454,7 @@
               },
               {
                 "name": "maxHeight",
-                "description": "Image height in pixels between 1 and 2048. This argument is deprecated: Use `maxHeight` on `Image.transformedSrc` instead.",
+                "description": "Image height in pixels between 1 and 2048. This argument is deprecated: Use `Image.url(transform: { maxHeight:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -466,7 +466,7 @@
               },
               {
                 "name": "maxWidth",
-                "description": "Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.",
+                "description": "Image width in pixels between 1 and 2048. This argument is deprecated: Use `Image.url(transform: { maxWidth:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -478,7 +478,7 @@
               },
               {
                 "name": "scale",
-                "description": "Image size multiplier for high-resolution retina displays. Must be between 1 and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.",
+                "description": "Image size multiplier for high-resolution retina displays. Must be between 1 and 3. This argument is deprecated: Use `Image.url(transform: { scale:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -1912,8 +1912,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use `cost` instead"
           },
           {
             "name": "id",
@@ -2802,8 +2802,8 @@
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "Use `cost` instead"
           },
           {
             "name": "id",
@@ -7295,7 +7295,7 @@
             "args": [
               {
                 "name": "crop",
-                "description": "Crops the image according to the specified region. This argument is deprecated: Use `crop` on `Image.transformedSrc` instead.",
+                "description": "Crops the image according to the specified region. This argument is deprecated: Use `Image.url(transform: { crop:})` instead.",
                 "type": {
                   "kind": "ENUM",
                   "name": "CropRegion",
@@ -7307,7 +7307,7 @@
               },
               {
                 "name": "maxHeight",
-                "description": "Image height in pixels between 1 and 2048. This argument is deprecated: Use `maxHeight` on `Image.transformedSrc` instead.",
+                "description": "Image height in pixels between 1 and 2048. This argument is deprecated: Use `Image.url(transform: { maxHeight:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -7319,7 +7319,7 @@
               },
               {
                 "name": "maxWidth",
-                "description": "Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.",
+                "description": "Image width in pixels between 1 and 2048. This argument is deprecated: Use `Image.url(transform: { maxWidth:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -7331,7 +7331,7 @@
               },
               {
                 "name": "scale",
-                "description": "Image size multiplier for high-resolution retina displays. Must be between 1 and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.",
+                "description": "Image size multiplier for high-resolution retina displays. Must be between 1 and 3. This argument is deprecated: Use `Image.url(transform: { scale:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -8077,7 +8077,7 @@
       {
         "kind": "ENUM",
         "name": "CountryCode",
-        "description": "The code designating a country/region, which generally follows ISO 3166-1 alpha-2 guidelines.\nIf a territory doesn't have a country code value in the `CountryCode` enum, it might be considered a subdivision\nof another country. For example, the territories associated with Spain are represented by the country code `ES`,\nand the territories associated with the United States of America are represented by the country code `US`.\n",
+        "description": "The code designating a country/region, which generally follows ISO 3166-1 alpha-2 guidelines.\nIf a territory doesn't have a country code value in the `CountryCode` enum, then it might be considered a subdivision\nof another country. For example, the territories associated with Spain are represented by the country code `ES`,\nand the territories associated with the United States of America are represented by the country code `US`.\n",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -21046,7 +21046,7 @@
           },
           {
             "name": "ready",
-            "description": "Whether or not the payment is still processing asynchronously.",
+            "description": "Whether the payment is still processing asynchronously.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -21569,7 +21569,7 @@
               },
               {
                 "name": "crop",
-                "description": "Crops the image according to the specified region. This argument is deprecated: Use `crop` on `Image.transformedSrc` instead.",
+                "description": "Crops the image according to the specified region. This argument is deprecated: Use `Image.url(transform: { crop:})` instead.",
                 "type": {
                   "kind": "ENUM",
                   "name": "CropRegion",
@@ -21605,7 +21605,7 @@
               },
               {
                 "name": "maxHeight",
-                "description": "Image height in pixels between 1 and 2048. This argument is deprecated: Use `maxHeight` on `Image.transformedSrc` instead.",
+                "description": "Image height in pixels between 1 and 2048. This argument is deprecated: Use `Image.url(transform: { maxHeight:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -21617,7 +21617,7 @@
               },
               {
                 "name": "maxWidth",
-                "description": "Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.",
+                "description": "Image width in pixels between 1 and 2048. This argument is deprecated: Use `Image.url(transform: { maxWidth:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -21641,7 +21641,7 @@
               },
               {
                 "name": "scale",
-                "description": "Image size multiplier for high-resolution retina displays. Must be between 1 and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.",
+                "description": "Image size multiplier for high-resolution retina displays. Must be between 1 and 3. This argument is deprecated: Use `Image.url(transform: { scale:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -23021,7 +23021,7 @@
             "args": [
               {
                 "name": "crop",
-                "description": "Crops the image according to the specified region. This argument is deprecated: Use `crop` on `Image.transformedSrc` instead.",
+                "description": "Crops the image according to the specified region. This argument is deprecated: Use `Image.url(transform: { crop:})` instead.",
                 "type": {
                   "kind": "ENUM",
                   "name": "CropRegion",
@@ -23033,7 +23033,7 @@
               },
               {
                 "name": "maxHeight",
-                "description": "Image height in pixels between 1 and 2048. This argument is deprecated: Use `maxHeight` on `Image.transformedSrc` instead.",
+                "description": "Image height in pixels between 1 and 2048. This argument is deprecated: Use `Image.url(transform: { maxHeight:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -23045,7 +23045,7 @@
               },
               {
                 "name": "maxWidth",
-                "description": "Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.",
+                "description": "Image width in pixels between 1 and 2048. This argument is deprecated: Use `Image.url(transform: { maxWidth:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -23057,7 +23057,7 @@
               },
               {
                 "name": "scale",
-                "description": "Image size multiplier for high-resolution retina displays. Must be between 1 and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.",
+                "description": "Image size multiplier for high-resolution retina displays. Must be between 1 and 3. This argument is deprecated: Use `Image.url(transform: { scale:})` instead.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -27358,7 +27358,7 @@
         "fields": [
           {
             "name": "available",
-            "description": "Whether or not this product variant is in-stock at this location.",
+            "description": "Whether the product variant is in-stock at this location.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
