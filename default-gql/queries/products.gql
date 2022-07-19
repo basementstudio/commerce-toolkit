@@ -96,6 +96,15 @@ query _GetCollections {
       node {
         id
         handle
+        title
+        products(first: 200) {
+          edges {
+            cursor
+            node {
+              ..._Product
+            }
+          }
+        }
       }
     }
   }
