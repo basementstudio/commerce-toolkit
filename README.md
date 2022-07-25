@@ -98,7 +98,7 @@ What's even cooler is that you can define **custom queries** in `.graphql` files
 
 Isn't that amazing?
 
-## OK, let's not forget about the `StorefrontProvider`
+## Using the `StorefrontProvider`
 
 The `StorefrontProvider` is a React Context Provider which manages cart state. Wrap it on your `App` component.
 
@@ -146,8 +146,6 @@ When you add an item to cart, the provider:
 3. will report errors to an event emitter.
 
 ---
-
-And this is not all. I'll get some rest and continue writing this README later on 😅
 
 ## Contributing
 
