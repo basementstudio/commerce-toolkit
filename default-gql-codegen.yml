@@ -1,8 +1,8 @@
 overwrite: true
 schema:
-  - https://${SHOPIFY_STOREFRONT_GRAPHQL_DOMAIN}/api/2021-10/graphql:
+  - https://react-dropify.myshopify.com/api/2021-10/graphql:
       headers:
-        x-shopify-storefront-access-token: ${SHOPIFY_STOREFRONT_ACCESS_TOKEN}
+        x-shopify-storefront-access-token: 9deca4de8e0365aa69919db9f48dfc4e
 generates:
   ./src/lib/shopify/storefront/generated.ts:
     documents: './default-gql/**/*.{gql,graphql}'
