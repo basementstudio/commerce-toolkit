@@ -28,7 +28,7 @@ export async function main(args: Args) {
 
   const endpoint = `https://${config.domain}/api/${API_VERSION}/graphql`
 
-  const [schemaCodegen, sdkCodegen] = await generate(
+  const codegenOutput = await generate(
     {
       schema: {
         [endpoint]: {
@@ -61,6 +61,13 @@ export async function main(args: Args) {
     },
     false
   )
+
+  const schemaCodegen = codegenOutput[0].content.startsWith('{')
+    ? codegenOutput[0]
+    : codegenOutput[1]
+  const sdkCodegen = codegenOutput[0].content.startsWith('{')
+    ? codegenOutput[1]
+    : codegenOutput[0]
 
   createDirIfDoesNotExist(`${bgsdkDirectoryPath}/generated`)
   fs.writeFileSync(

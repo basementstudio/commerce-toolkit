@@ -5884,6 +5884,12 @@
             "deprecationReason": null
           },
           {
+            "name": "HIGHER_VALUE_DISCOUNT_APPLIED",
+            "description": "Higher value discount applied.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "INVALID",
             "description": "The input value is invalid.",
             "isDeprecated": false,

@@ -1259,6 +1259,8 @@ export enum CheckoutErrorCode {
   GiftCardUnusable = 'GIFT_CARD_UNUSABLE',
   /** The input value should be greater than or equal to the minimum value allowed. */
   GreaterThanOrEqualTo = 'GREATER_THAN_OR_EQUAL_TO',
+  /** Higher value discount applied. */
+  HigherValueDiscountApplied = 'HIGHER_VALUE_DISCOUNT_APPLIED',
   /** The input value is invalid. */
   Invalid = 'INVALID',
   /** Cannot specify country and presentment currency code. */

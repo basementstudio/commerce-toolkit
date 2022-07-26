@@ -22,6 +22,7 @@ type Context = {
   cart: _CartFragment | undefined | null
   cartItemsCount: number | undefined
   cartToggleState: ToggleState
+  getOrCreateCart: () => Promise<_CartFragment | null | undefined>
 }
 
 const Context = createContext<Context | undefined>(undefined)
@@ -100,6 +101,11 @@ const InternalContextProvider = ({
     },
     [cartLocalStorage, client, mutate]
   )
+
+  const getOrCreateCart = useCallback(async () => {
+    if (cart) return cart
+    return createCart()
+  }, [cart, createCart])
 
   const onAddLineItem = useCallback(
     async ({
@@ -230,6 +236,7 @@ const InternalContextProvider = ({
     <Context.Provider
       value={{
         cart,
+        getOrCreateCart,
         cartToggleState,
         cartItemsCount,
         onAddLineItem,
