@@ -8,6 +8,7 @@ fragment _Cart on Cart {
         quantity
         merchandise {
           ... on ProductVariant {
+            id
             selectedOptions {
               name
               value
@@ -23,6 +24,7 @@ fragment _Cart on Cart {
               ..._Image
             }
             product {
+              id
               title
               handle
               description
@@ -35,6 +37,12 @@ fragment _Cart on Cart {
             currencyCode
           }
           totalAmount {
+            amount
+            currencyCode
+          }
+        }
+        discountAllocations {
+          discountedAmount {
             amount
             currencyCode
           }
