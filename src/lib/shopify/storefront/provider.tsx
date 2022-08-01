@@ -14,14 +14,8 @@ type LineItem = {
 }
 
 type Context = {
-  onAddLineItem: (params: {
-    merchandiseId: string
-    quantity: number
-  }) => Promise<void>
-  onUpdateLineItem: (params: {
-    merchandiseId: string
-    quantity: number
-  }) => Promise<void>
+  onAddLineItem: (params: LineItem) => Promise<void>
+  onUpdateLineItem: (params: LineItem) => Promise<void>
   onRemoveLineItem: (params: { merchandiseId: string }) => Promise<void>
   cart: _CartFragment | undefined | null
   cartItemsCount: number | undefined
