@@ -14,9 +14,15 @@ type LineItem = {
 }
 
 type Context = {
-  onAddLineItem: (params: LineItem) => Promise<void>
-  onUpdateLineItem: (params: LineItem) => Promise<void>
-  onRemoveLineItem: (params: { merchandiseId: string }) => Promise<void>
+  onAddLineItem: (params: LineItem, dontMutateState?: boolean) => Promise<void>
+  onUpdateLineItem: (
+    params: LineItem,
+    dontMutateState?: boolean
+  ) => Promise<void>
+  onRemoveLineItem: (
+    params: { merchandiseId: string },
+    dontMutateState?: boolean
+  ) => Promise<void>
   cart: _CartFragment | undefined | null
   cartItemsCount: number | undefined
   cartToggleState: ToggleState
@@ -107,7 +113,7 @@ const InternalContextProvider = ({
   }, [cart, createCart])
 
   const onAddLineItem = useCallback(
-    async (lineItem: LineItem) => {
+    async (lineItem: LineItem, dontMutateState = false) => {
       try {
         let cart: _CartFragment | undefined | null
         const localStorageCheckoutId = cartLocalStorage.get()
@@ -122,7 +128,7 @@ const InternalContextProvider = ({
           cart = cartLinesAdd?.cart
         }
 
-        if (cart) {
+        if (cart && !dontMutateState) {
           mutate(cart, false)
         }
 
@@ -144,7 +150,10 @@ const InternalContextProvider = ({
   )
 
   const onUpdateLineItem = useCallback(
-    async ({ merchandiseId, quantity, attributes }: LineItem) => {
+    async (
+      { merchandiseId, quantity, attributes }: LineItem,
+      dontMutateState = false
+    ) => {
       try {
         const id = cartLocalStorage.get()
         if (!id) return
@@ -155,7 +164,7 @@ const InternalContextProvider = ({
 
         const cart = cartLinesUpdate?.cart
 
-        if (cart) {
+        if (cart && !dontMutateState) {
           mutate(cart, false)
         }
 
@@ -177,7 +186,10 @@ const InternalContextProvider = ({
   )
 
   const onRemoveLineItem = useCallback(
-    async ({ merchandiseId }: { merchandiseId: string }) => {
+    async (
+      { merchandiseId }: { merchandiseId: string },
+      dontMutateState = false
+    ) => {
       try {
         const id = cartLocalStorage.get()
         if (!id) return
@@ -188,7 +200,7 @@ const InternalContextProvider = ({
 
         const cart = cartLinesRemove?.cart
 
-        if (cart) {
+        if (cart && !dontMutateState) {
           mutate(cart, false)
         }
 
