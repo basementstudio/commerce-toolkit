@@ -124,7 +124,13 @@ const InternalContextProvider = ({
         } else {
           const { cartLinesAdd } = await client._AddLineItem({
             cartId: localStorageCheckoutId,
-            lines: [{ merchandiseId, quantity }]
+            lines: [
+              {
+                merchandiseId,
+                quantity,
+                attributes: [{ key: 'hola', value: 'hey' }]
+              }
+            ]
           })
           cart = cartLinesAdd?.cart
         }

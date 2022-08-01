@@ -47,6 +47,10 @@ fragment _Cart on Cart {
             currencyCode
           }
         }
+        attributes {
+          key
+          value
+        }
       }
     }
   }
