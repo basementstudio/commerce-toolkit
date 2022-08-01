@@ -7,7 +7,11 @@ import { StandardStorefrontClient } from '.'
 import { storefrontEvents } from './events'
 import { _CartFragment } from './generated'
 
-type LineItem = { merchandiseId: string; quantity: number }
+type LineItem = {
+  merchandiseId: string
+  quantity: number
+  attributes?: { key: string; value: string }[]
+}
 
 type Context = {
   onAddLineItem: (params: {
@@ -108,29 +112,17 @@ const InternalContextProvider = ({
   }, [cart, createCart])
 
   const onAddLineItem = useCallback(
-    async ({
-      merchandiseId,
-      quantity
-    }: {
-      merchandiseId: string
-      quantity: number
-    }) => {
+    async (lineItem: LineItem) => {
       try {
         let cart: _CartFragment | undefined | null
         const localStorageCheckoutId = cartLocalStorage.get()
         if (!localStorageCheckoutId) {
           // create new cart
-          cart = await createCart([{ merchandiseId, quantity }])
+          cart = await createCart([lineItem])
         } else {
           const { cartLinesAdd } = await client._AddLineItem({
             cartId: localStorageCheckoutId,
-            lines: [
-              {
-                merchandiseId,
-                quantity,
-                attributes: [{ key: 'hola', value: 'hey' }]
-              }
-            ]
+            lines: [lineItem]
           })
           cart = cartLinesAdd?.cart
         }
@@ -157,19 +149,13 @@ const InternalContextProvider = ({
   )
 
   const onUpdateLineItem = useCallback(
-    async ({
-      merchandiseId,
-      quantity
-    }: {
-      merchandiseId: string
-      quantity: number
-    }) => {
+    async ({ merchandiseId, quantity, attributes }: LineItem) => {
       try {
         const id = cartLocalStorage.get()
         if (!id) return
         const { cartLinesUpdate } = await client._UpdateLineItem({
           cartId: id,
-          lines: [{ id: merchandiseId, quantity }]
+          lines: [{ id: merchandiseId, quantity, attributes }]
         })
 
         const cart = cartLinesUpdate?.cart
