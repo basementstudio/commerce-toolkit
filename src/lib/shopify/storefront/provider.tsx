@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useMemo } from 'react'
-import useSWR from 'swr'
+import useSWR, { KeyedMutator } from 'swr'
 
 import { ToggleState, useToggleState } from '../../../hooks/use-toggle-state'
 import { formatError } from '../../utils'
@@ -21,6 +21,7 @@ type Context = {
   cartItemsCount: number | undefined
   cartToggleState: ToggleState
   getOrCreateCart: () => Promise<_CartFragment | null | undefined>
+  mutateCart: KeyedMutator<_CartFragment | null | undefined>
 }
 
 const Context = createContext<Context | undefined>(undefined)
@@ -227,7 +228,8 @@ const InternalContextProvider = ({
         cartItemsCount,
         onAddLineItem,
         onUpdateLineItem,
-        onRemoveLineItem
+        onRemoveLineItem,
+        mutateCart: mutate
       }}
     >
       {children}
