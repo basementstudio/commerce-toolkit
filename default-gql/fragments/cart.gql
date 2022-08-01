@@ -64,4 +64,18 @@ fragment _Cart on Cart {
       currencyCode
     }
   }
+  attributes {
+    key
+    value
+  }
+  discountAllocations {
+    discountedAmount {
+      amount
+      currencyCode
+    }
+  }
+  discountCodes {
+    applicable
+    code
+  }
 }
