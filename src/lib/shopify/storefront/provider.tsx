@@ -66,9 +66,6 @@ const InternalContextProvider = ({
       const id = cartLocalStorage.get()
       if (!id) return null
       const { cart } = await client._FetchCart({ id })
-      if (cart === null) {
-        cartLocalStorage.clear()
-      }
       if (cart) {
         storefrontEvents.emit('createCartSuccess', cart)
         storefrontEvents.emit('allSuccesses', {
@@ -76,6 +73,7 @@ const InternalContextProvider = ({
           data: cart
         })
       } else {
+        cartLocalStorage.clear()
         const err = new Error('Could not find cart in cartFetcher')
         storefrontEvents.emit('fetchCartError', err)
         storefrontEvents.emit('allErrors', {
