@@ -19338,11 +19338,11 @@
           },
           {
             "name": "customerAccessTokenCreateWithMultipass",
-            "description": "Creates a customer access token using a multipass token instead of email and password.\nA customer record is created if customer does not exist. If a customer record already\nexists but the record is disabled, then it's enabled.\n",
+            "description": "Creates a customer access token using a\n[multipass token](https://shopify.dev/api/multipass) instead of email and\npassword. A customer record is created if the customer doesn't exist. If a customer\nrecord already exists but the record is disabled, then the customer record is enabled.\n",
             "args": [
               {
                 "name": "multipassToken",
-                "description": "A valid multipass token to be authenticated.",
+                "description": "A valid [multipass token](https://shopify.dev/api/multipass) to be authenticated.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -26140,7 +26140,7 @@
           },
           {
             "name": "options",
-            "description": "The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product.",
+            "description": "The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -27140,7 +27140,7 @@
       {
         "kind": "OBJECT",
         "name": "SellingPlanPriceAdjustment",
-        "description": "Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments.",
+        "description": "Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. If a variant has multiple price adjustments, then the first price adjustment applies when the variant is initially purchased. The second price adjustment applies after a certain number of orders (specified by the `orderCount` field) are made. If a selling plan doesn't have any price adjustments, then the unadjusted price of the variant is the effective price.",
         "fields": [
           {
             "name": "adjustmentValue",
@@ -27160,7 +27160,7 @@
           },
           {
             "name": "orderCount",
-            "description": "The number of orders that the price adjustment applies to If the price adjustment always applies, then this field is `null`.",
+            "description": "The number of orders that the price adjustment applies to. If the price adjustment always applies, then this field is `null`.",
             "args": [],
             "type": {
               "kind": "SCALAR",

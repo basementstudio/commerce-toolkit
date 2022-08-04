@@ -4345,9 +4345,10 @@ export type Mutation = {
    */
   customerAccessTokenCreate?: Maybe<CustomerAccessTokenCreatePayload>;
   /**
-   * Creates a customer access token using a multipass token instead of email and password.
-   * A customer record is created if customer does not exist. If a customer record already
-   * exists but the record is disabled, then it's enabled.
+   * Creates a customer access token using a
+   * [multipass token](https://shopify.dev/api/multipass) instead of email and
+   * password. A customer record is created if the customer doesn't exist. If a customer
+   * record already exists but the record is disabled, then the customer record is enabled.
    *
    */
   customerAccessTokenCreateWithMultipass?: Maybe<CustomerAccessTokenCreateWithMultipassPayload>;
@@ -5985,7 +5986,7 @@ export type SellingPlan = {
   id: Scalars['ID'];
   /** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
   name: Scalars['String'];
-  /** The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. */
+  /** The selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing. */
   options: Array<SellingPlanOption>;
   /** The price adjustments that a selling plan makes when a variant is purchased with a selling plan. */
   priceAdjustments: Array<SellingPlanPriceAdjustment>;
@@ -6186,12 +6187,12 @@ export type SellingPlanPercentagePriceAdjustment = {
   adjustmentPercentage: Scalars['Int'];
 };
 
-/** Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. */
+/** Represents by how much the price of a variant associated with a selling plan is adjusted. Each variant can have up to two price adjustments. If a variant has multiple price adjustments, then the first price adjustment applies when the variant is initially purchased. The second price adjustment applies after a certain number of orders (specified by the `orderCount` field) are made. If a selling plan doesn't have any price adjustments, then the unadjusted price of the variant is the effective price. */
 export type SellingPlanPriceAdjustment = {
   __typename?: 'SellingPlanPriceAdjustment';
   /** The type of price adjustment. An adjustment value can have one of three types: percentage, amount off, or a new price. */
   adjustmentValue: SellingPlanPriceAdjustmentValue;
-  /** The number of orders that the price adjustment applies to If the price adjustment always applies, then this field is `null`. */
+  /** The number of orders that the price adjustment applies to. If the price adjustment always applies, then this field is `null`. */
   orderCount?: Maybe<Scalars['Int']>;
 };
 
@@ -6622,7 +6623,7 @@ export type _AddLineItemMutationVariables = Exact<{
 }>;
 
 
-export type _AddLineItemMutation = { __typename?: 'Mutation', cartLinesAdd?: { __typename?: 'CartLinesAddPayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null } | null };
+export type _AddLineItemMutation = { __typename?: 'Mutation', cartLinesAdd?: { __typename?: 'CartLinesAddPayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type _UpdateLineItemMutationVariables = Exact<{
   cartId: Scalars['ID'];
@@ -6630,7 +6631,7 @@ export type _UpdateLineItemMutationVariables = Exact<{
 }>;
 
 
-export type _UpdateLineItemMutation = { __typename?: 'Mutation', cartLinesUpdate?: { __typename?: 'CartLinesUpdatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null } | null };
+export type _UpdateLineItemMutation = { __typename?: 'Mutation', cartLinesUpdate?: { __typename?: 'CartLinesUpdatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type _RemoveLineItemMutationVariables = Exact<{
   cartId: Scalars['ID'];
@@ -6638,7 +6639,7 @@ export type _RemoveLineItemMutationVariables = Exact<{
 }>;
 
 
-export type _RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null } | null };
+export type _RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type _CreateCustomerMutationVariables = Exact<{
   input: CustomerCreateInput;
@@ -6868,6 +6869,11 @@ export const _AddLineItemDocument = gql`
     cart {
       ..._Cart
     }
+    userErrors {
+      code
+      field
+      message
+    }
   }
 }
     ${_CartFragmentDoc}`;
@@ -6877,6 +6883,11 @@ export const _UpdateLineItemDocument = gql`
     cart {
       ..._Cart
     }
+    userErrors {
+      code
+      field
+      message
+    }
   }
 }
     ${_CartFragmentDoc}`;
@@ -6885,6 +6896,11 @@ export const _RemoveLineItemDocument = gql`
   cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
     cart {
       ..._Cart
+    }
+    userErrors {
+      code
+      field
+      message
     }
   }
 }

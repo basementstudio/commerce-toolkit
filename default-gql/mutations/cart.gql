@@ -25,6 +25,11 @@ mutation _AddLineItem($cartId: ID!, $lines: [CartLineInput!]!) {
     cart {
       ..._Cart
     }
+    userErrors {
+      code
+      field
+      message
+    }
   }
 }
 
@@ -33,6 +38,11 @@ mutation _UpdateLineItem($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
     cart {
       ..._Cart
     }
+    userErrors {
+      code
+      field
+      message
+    }
   }
 }
 
@@ -40,6 +50,11 @@ mutation _RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
   cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
     cart {
       ..._Cart
+    }
+    userErrors {
+      code
+      field
+      message
     }
   }
 }

@@ -17,6 +17,8 @@ interface Emitter<T extends EventMap> {
 }
 
 type STOREFRONT_EVENT_MAP = {
+  fetchCartError: Error
+  fetchCartSuccess: _CartFragment | null | undefined
   createCartError: Error
   createCartSuccess: _CartFragment | null | undefined
   addLineItemError: Error
@@ -35,6 +37,7 @@ type ALL_ERRORS_MAP = {
       | 'createCartError'
       | 'removeLineItemError'
       | 'updateLineItemError'
+      | 'fetchCartError'
     >
     error: Error
   }
@@ -48,6 +51,7 @@ type ALL_SUCCESSES_MAP = {
       | 'createCartSuccess'
       | 'removeLineItemSuccess'
       | 'updateLineItemSuccess'
+      | 'fetchCartSuccess'
     >
     data: _CartFragment | null | undefined
   }

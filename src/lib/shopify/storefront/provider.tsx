@@ -69,8 +69,28 @@ const InternalContextProvider = ({
       if (cart === null) {
         cartLocalStorage.clear()
       }
+      if (cart) {
+        storefrontEvents.emit('createCartSuccess', cart)
+        storefrontEvents.emit('allSuccesses', {
+          type: 'createCartSuccess',
+          data: cart
+        })
+      } else {
+        const err = new Error('Could not find cart in cartFetcher')
+        storefrontEvents.emit('fetchCartError', err)
+        storefrontEvents.emit('allErrors', {
+          type: 'fetchCartError',
+          error: err
+        })
+      }
       return cart
     } catch (error) {
+      const formattedError = formatError(error)
+      storefrontEvents.emit('fetchCartError', formattedError)
+      storefrontEvents.emit('allErrors', {
+        type: 'fetchCartError',
+        error: formattedError
+      })
       return undefined
     }
   }
@@ -85,13 +105,22 @@ const InternalContextProvider = ({
         const cart = data.cartCreate?.cart
         const cartId = cart?.id
 
-        mutate(cart, false)
-        cartLocalStorage.set(cartId ?? '')
-
-        storefrontEvents.emit('createCartSuccess', cart)
-        storefrontEvents.emit('allSuccesses', {
-          type: 'createCartSuccess',
-          data: cart
+        if (cart && cartId) {
+          mutate(cart, false)
+          cartLocalStorage.set(cartId ?? '')
+          storefrontEvents.emit('createCartSuccess', cart)
+          storefrontEvents.emit('allSuccesses', {
+            type: 'createCartSuccess',
+            data: cart
+          })
+        }
+        data.cartCreate?.userErrors.forEach((error) => {
+          const err = new Error(`${error.code}: ${error.message}`)
+          storefrontEvents.emit('createCartError', err)
+          storefrontEvents.emit('allErrors', {
+            type: 'createCartError',
+            error: err
+          })
         })
         return cart
       } catch (error) {
@@ -126,17 +155,27 @@ const InternalContextProvider = ({
             lines: [lineItem]
           })
           cart = cartLinesAdd?.cart
+          cartLinesAdd?.userErrors.forEach((error) => {
+            const err = new Error(`${error.code}: ${error.message}`)
+            storefrontEvents.emit('addLineItemError', err)
+            storefrontEvents.emit('allErrors', {
+              type: 'addLineItemError',
+              error: err
+            })
+          })
         }
 
         if (cart && !dontMutateState) {
           mutate(cart, false)
         }
 
-        storefrontEvents.emit('addLineItemSuccess', cart)
-        storefrontEvents.emit('allSuccesses', {
-          type: 'addLineItemSuccess',
-          data: cart
-        })
+        if (cart) {
+          storefrontEvents.emit('addLineItemSuccess', cart)
+          storefrontEvents.emit('allSuccesses', {
+            type: 'addLineItemSuccess',
+            data: cart
+          })
+        }
       } catch (error) {
         const formattedError = formatError(error)
         storefrontEvents.emit('addLineItemError', formattedError)
@@ -168,10 +207,20 @@ const InternalContextProvider = ({
           mutate(cart, false)
         }
 
-        storefrontEvents.emit('updateLineItemSuccess', cart)
-        storefrontEvents.emit('allSuccesses', {
-          type: 'updateLineItemSuccess',
-          data: cart
+        if (cart) {
+          storefrontEvents.emit('updateLineItemSuccess', cart)
+          storefrontEvents.emit('allSuccesses', {
+            type: 'updateLineItemSuccess',
+            data: cart
+          })
+        }
+        cartLinesUpdate?.userErrors.forEach((error) => {
+          const err = new Error(`${error.code}: ${error.message}`)
+          storefrontEvents.emit('updateLineItemError', err)
+          storefrontEvents.emit('allErrors', {
+            type: 'updateLineItemError',
+            error: err
+          })
         })
       } catch (error) {
         const formattedError = formatError(error)
@@ -204,10 +253,20 @@ const InternalContextProvider = ({
           mutate(cart, false)
         }
 
-        storefrontEvents.emit('removeLineItemSuccess', cart)
-        storefrontEvents.emit('allSuccesses', {
-          type: 'removeLineItemSuccess',
-          data: cart
+        if (cart) {
+          storefrontEvents.emit('removeLineItemSuccess', cart)
+          storefrontEvents.emit('allSuccesses', {
+            type: 'removeLineItemSuccess',
+            data: cart
+          })
+        }
+        cartLinesRemove?.userErrors.forEach((error) => {
+          const err = new Error(`${error.code}: ${error.message}`)
+          storefrontEvents.emit('removeLineItemError', err)
+          storefrontEvents.emit('allErrors', {
+            type: 'removeLineItemError',
+            error: err
+          })
         })
       } catch (error) {
         const formattedError = formatError(error)
