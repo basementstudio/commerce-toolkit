@@ -84,6 +84,15 @@ const InternalContextProvider = ({
       return cart
     } catch (error) {
       const formattedError = formatError(error)
+
+      if (
+        formattedError.message.includes(
+          'Variable $id of type ID! was provided invalid value'
+        )
+      ) {
+        cartLocalStorage.clear()
+      }
+
       storefrontEvents.emit('fetchCartError', formattedError)
       storefrontEvents.emit('allErrors', {
         type: 'fetchCartError',
