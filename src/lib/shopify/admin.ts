@@ -1,9 +1,14 @@
-export const makeAdminApiOrigin = ({
-  apiKey,
+export const getAdminAPIGraphQLConfig = ({
+  domain,
   adminPassword,
-  domain
+  version // should we default to '2022-07'?
 }: {
-  apiKey: string
-  adminPassword: string
   domain: string
-}) => `https://${apiKey}:${adminPassword}@${domain}`
+  adminPassword: string
+  version: string
+}) => {
+  return {
+    endpoint: `https://${domain}/admin/api/${version}/graphql.json`,
+    headers: { 'X-Shopify-Access-Token': adminPassword }
+  }
+}

@@ -5,13 +5,15 @@ import { getSdk } from './generated'
 export type StandardStorefrontClientProps = {
   domain: string
   accessToken: string
+  version: string
 }
 
 export const createStandardStorefrontClient = ({
   domain,
-  accessToken
+  accessToken,
+  version
 }: StandardStorefrontClientProps) => {
-  const endpoint = `https://${domain}/api/2022-07/graphql`
+  const endpoint = `https://${domain}/api/${version}/graphql`
   const graphqlClient = new GraphQLClient(endpoint, {
     headers: {
       accept: 'application/json',
@@ -19,6 +21,7 @@ export const createStandardStorefrontClient = ({
       'x-shopify-storefront-access-token': accessToken
     }
   })
+
   const generatedSdk = getSdk(graphqlClient)
 
   return {

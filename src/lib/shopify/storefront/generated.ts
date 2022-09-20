@@ -564,23 +564,23 @@ export type CartCodeDiscountAllocation = CartDiscountAllocation & {
  */
 export type CartCost = {
   __typename?: 'CartCost';
-  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, the checkout charge amount is equivalent to subtotalAmount. */
+  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`. */
   checkoutChargeAmount: MoneyV2;
   /** The amount, before taxes and cart-level discounts, for the customer to pay. */
   subtotalAmount: MoneyV2;
-  /** Whether or not the subtotal amount is estimated. */
+  /** Whether the subtotal amount is estimated. */
   subtotalAmountEstimated: Scalars['Boolean'];
   /** The total amount for the customer to pay. */
   totalAmount: MoneyV2;
-  /** Whether or not the total amount is estimated. */
+  /** Whether the total amount is estimated. */
   totalAmountEstimated: Scalars['Boolean'];
   /** The duty amount for the customer to pay at checkout. */
   totalDutyAmount?: Maybe<MoneyV2>;
-  /** Whether or not the total duty amount is estimated. */
+  /** Whether the total duty amount is estimated. */
   totalDutyAmountEstimated: Scalars['Boolean'];
   /** The tax amount for the customer to pay at checkout. */
   totalTaxAmount?: Maybe<MoneyV2>;
-  /** Whether or not the total tax amount is estimated. */
+  /** Whether the total tax amount is estimated. */
   totalTaxAmountEstimated: Scalars['Boolean'];
 };
 
@@ -941,7 +941,7 @@ export type Checkout = Node & {
    * @deprecated Use `paymentDueV2` instead
    */
   paymentDue: Scalars['Money'];
-  /** The amount left to be paid. This is equal to the cost of the line items, duties, taxes and shipping minus discounts and gift cards. */
+  /** The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards. */
   paymentDueV2: MoneyV2;
   /**
    * Whether or not the Checkout is ready and can be completed. Checkouts may
@@ -967,7 +967,7 @@ export type Checkout = Node & {
    * @deprecated Use `subtotalPriceV2` instead
    */
   subtotalPrice: Scalars['Money'];
-  /** Price of the checkout before duties, shipping and taxes. */
+  /** The price at checkout before duties, shipping, and taxes. */
   subtotalPriceV2: MoneyV2;
   /** Whether the checkout is tax exempt. */
   taxExempt: Scalars['Boolean'];
@@ -980,7 +980,7 @@ export type Checkout = Node & {
    * @deprecated Use `totalPriceV2` instead
    */
   totalPrice: Scalars['Money'];
-  /** The sum of all the prices of all the items in the checkout, duties, taxes and discounts included. */
+  /** The sum of all the prices of all the items in the checkout, including duties, taxes, and discounts. */
   totalPriceV2: MoneyV2;
   /**
    * The sum of all the taxes applied to the line items and shipping lines in the checkout.
@@ -3433,16 +3433,16 @@ export type ImageEdge = {
 /**
  * The available options for transforming an image.
  *
- * All transformation options are considered "best-effort". Any transformation that the original image type doesn't support will be ignored.
+ * All transformation options are considered best effort. Any transformation that the original image type doesn't support will be ignored.
  *
  */
 export type ImageTransformInput = {
   /**
-   * Region of the image to remain after cropping.
-   * Must be used in conjunction with maxWidth and/or maxHeight fields where the maxWidth / maxHeight are not equal.
-   * The crop parameter should coincide with the smaller value (i.e. smaller maxWidth indicates a LEFT / RIGHT crop, while
-   * smaller maxHeight indicates a TOP / BOTTOM crop). For example, { maxWidth: 5, maxHeight: 10, crop: LEFT } will result
-   * in an image with width 5 and height 10, where the right side of the image is removed.
+   * The region of the image to remain after cropping.
+   * Must be used in conjunction with the `maxWidth` and/or `maxHeight` fields, where the `maxWidth` and `maxHeight` aren't equal.
+   * The `crop` argument should coincide with the smaller value. A smaller `maxWidth` indicates a `LEFT` or `RIGHT` crop, while
+   * a smaller `maxHeight` indicates a `TOP` or `BOTTOM` crop. For example, `{ maxWidth: 5, maxHeight: 10, crop: LEFT }` will result
+   * in an image with a width of 5 and height of 10, where the right side of the image is removed.
    *
    */
   crop?: InputMaybe<CropRegion>;
@@ -3626,7 +3626,7 @@ export enum LanguageCode {
   Lv = 'LV',
   /** Malagasy. */
   Mg = 'MG',
-  /** Maori. */
+  /** Māori. */
   Mi = 'MI',
   /** Macedonian. */
   Mk = 'MK',
@@ -5675,7 +5675,7 @@ export type QueryRoot = {
   blogByHandle?: Maybe<Blog>;
   /** List of the shop's blogs. */
   blogs: BlogConnection;
-  /** Find a cart by its ID. */
+  /** Retrieve a cart by its ID. For more information, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
   cart?: Maybe<Cart>;
   /** Fetch a specific `Collection` by one of its unique attributes. */
   collection?: Maybe<Collection>;
@@ -6162,7 +6162,11 @@ export type SellingPlanGroupEdge = {
   node: SellingPlanGroup;
 };
 
-/** Represents an option on a selling plan group that's available in the drop-down list in the storefront. */
+/**
+ * Represents an option on a selling plan group that's available in the drop-down list in the storefront.
+ *
+ * Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing.
+ */
 export type SellingPlanGroupOption = {
   __typename?: 'SellingPlanGroupOption';
   /** The name of the option. For example, 'Delivery every'. */
@@ -6235,7 +6239,7 @@ export type Shop = HasMetafields & Node & {
   name: Scalars['String'];
   /** Settings related to payments. */
   paymentSettings: PaymentSettings;
-  /** The shop’s primary domain. */
+  /** The primary domain of the shop’s Online Store. */
   primaryDomain: Domain;
   /** The shop’s privacy policy. */
   privacyPolicy?: Maybe<ShopPolicy>;

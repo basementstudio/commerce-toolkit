@@ -2406,7 +2406,7 @@
         "fields": [
           {
             "name": "checkoutChargeAmount",
-            "description": "The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, the checkout charge amount is equivalent to subtotalAmount.",
+            "description": "The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2438,7 +2438,7 @@
           },
           {
             "name": "subtotalAmountEstimated",
-            "description": "Whether or not the subtotal amount is estimated.",
+            "description": "Whether the subtotal amount is estimated.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2470,7 +2470,7 @@
           },
           {
             "name": "totalAmountEstimated",
-            "description": "Whether or not the total amount is estimated.",
+            "description": "Whether the total amount is estimated.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2498,7 +2498,7 @@
           },
           {
             "name": "totalDutyAmountEstimated",
-            "description": "Whether or not the total duty amount is estimated.",
+            "description": "Whether the total duty amount is estimated.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2526,7 +2526,7 @@
           },
           {
             "name": "totalTaxAmountEstimated",
-            "description": "Whether or not the total tax amount is estimated.",
+            "description": "Whether the total tax amount is estimated.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4565,7 +4565,7 @@
           },
           {
             "name": "paymentDueV2",
-            "description": "The amount left to be paid. This is equal to the cost of the line items, duties, taxes and shipping minus discounts and gift cards.",
+            "description": "The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4677,7 +4677,7 @@
           },
           {
             "name": "subtotalPriceV2",
-            "description": "Price of the checkout before duties, shipping and taxes.",
+            "description": "The price at checkout before duties, shipping, and taxes.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4753,7 +4753,7 @@
           },
           {
             "name": "totalPriceV2",
-            "description": "The sum of all the prices of all the items in the checkout, duties, taxes and discounts included.",
+            "description": "The sum of all the prices of all the items in the checkout, including duties, taxes, and discounts.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -14761,12 +14761,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "ImageTransformInput",
-        "description": "The available options for transforming an image.\n\nAll transformation options are considered \"best-effort\". Any transformation that the original image type doesn't support will be ignored.\n",
+        "description": "The available options for transforming an image.\n\nAll transformation options are considered best effort. Any transformation that the original image type doesn't support will be ignored.\n",
         "fields": null,
         "inputFields": [
           {
             "name": "crop",
-            "description": "Region of the image to remain after cropping.\nMust be used in conjunction with maxWidth and/or maxHeight fields where the maxWidth / maxHeight are not equal.\nThe crop parameter should coincide with the smaller value (i.e. smaller maxWidth indicates a LEFT / RIGHT crop, while\nsmaller maxHeight indicates a TOP / BOTTOM crop). For example, { maxWidth: 5, maxHeight: 10, crop: LEFT } will result\nin an image with width 5 and height 10, where the right side of the image is removed.\n",
+            "description": "The region of the image to remain after cropping.\nMust be used in conjunction with the `maxWidth` and/or `maxHeight` fields, where the `maxWidth` and `maxHeight` aren't equal.\nThe `crop` argument should coincide with the smaller value. A smaller `maxWidth` indicates a `LEFT` or `RIGHT` crop, while\na smaller `maxHeight` indicates a `TOP` or `BOTTOM` crop. For example, `{ maxWidth: 5, maxHeight: 10, crop: LEFT }` will result\nin an image with a width of 5 and height of 10, where the right side of the image is removed.\n",
             "type": {
               "kind": "ENUM",
               "name": "CropRegion",
@@ -15350,7 +15350,7 @@
           },
           {
             "name": "MI",
-            "description": "Maori.",
+            "description": "Māori.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -24852,11 +24852,11 @@
           },
           {
             "name": "cart",
-            "description": "Find a cart by its ID.",
+            "description": "Retrieve a cart by its ID. For more information, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart).",
             "args": [
               {
                 "name": "id",
-                "description": "The id of the cart.",
+                "description": "The ID of the cart.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -25505,7 +25505,7 @@
             "args": [
               {
                 "name": "handle",
-                "description": "The handle of the product.",
+                "description": "A unique string that identifies the product. Handles are automatically generated based on the product's title, and are always lowercase. Whitespace and special characters are replaced with a hyphen: `-`. If there are multiple consecutive whitespace or special characters, then they're replaced with a single hyphen. Whitespace or special characters at the beginning are removed. If a duplicate product title is used, then the handle is auto-incremented by one. For example, if you had two products called `Potion`, then their handles would be `potion` and `potion-1`. After a product has been created, changing the product title doesn't update the handle.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -27027,7 +27027,7 @@
       {
         "kind": "OBJECT",
         "name": "SellingPlanGroupOption",
-        "description": "Represents an option on a selling plan group that's available in the drop-down list in the storefront.",
+        "description": "Represents an option on a selling plan group that's available in the drop-down list in the storefront.\n\nIndividual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing.",
         "fields": [
           {
             "name": "name",
@@ -27450,7 +27450,7 @@
           },
           {
             "name": "primaryDomain",
-            "description": "The shop’s primary domain.",
+            "description": "The primary domain of the shop’s Online Store.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
