@@ -210,6 +210,8 @@ const InternalContextProvider = ({
 
         const cart = cartLinesUpdate?.cart
 
+        cartLinesUpdate?.userErrors
+
         if (cart && !dontMutateState) {
           mutate(cart, false)
         }

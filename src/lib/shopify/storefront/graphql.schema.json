@@ -86,7 +86,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `amountUsedV2` instead"
+            "deprecationReason": "Use `amountUsedV2` instead."
           },
           {
             "name": "amountUsedV2",
@@ -118,7 +118,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `balanceV2` instead"
+            "deprecationReason": "Use `balanceV2` instead."
           },
           {
             "name": "balanceV2",
@@ -215,7 +215,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `authorV2` instead"
+            "deprecationReason": "Use `authorV2` instead."
           },
           {
             "name": "authorV2",
@@ -1938,7 +1938,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `cost` instead"
+            "deprecationReason": "Use `cost` instead."
           },
           {
             "name": "id",
@@ -3447,7 +3447,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `cost` instead"
+            "deprecationReason": "Use `cost` instead."
           },
           {
             "name": "id",
@@ -4561,7 +4561,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `paymentDueV2` instead"
+            "deprecationReason": "Use `paymentDueV2` instead."
           },
           {
             "name": "paymentDueV2",
@@ -4673,7 +4673,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `subtotalPriceV2` instead"
+            "deprecationReason": "Use `subtotalPriceV2` instead."
           },
           {
             "name": "subtotalPriceV2",
@@ -4749,7 +4749,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `totalPriceV2` instead"
+            "deprecationReason": "Use `totalPriceV2` instead."
           },
           {
             "name": "totalPriceV2",
@@ -4781,7 +4781,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `totalTaxV2` instead"
+            "deprecationReason": "Use `totalTaxV2` instead."
           },
           {
             "name": "totalTaxV2",
@@ -4961,7 +4961,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5082,7 +5082,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5165,7 +5165,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5248,7 +5248,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5442,7 +5442,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5525,7 +5525,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5596,7 +5596,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5667,7 +5667,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5738,7 +5738,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -5809,7 +5809,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -6030,6 +6030,12 @@
             "deprecationReason": null
           },
           {
+            "name": "MAXIMUM_DISCOUNT_CODE_LIMIT_REACHED",
+            "description": "Maximum number of discount codes limit reached.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "MISSING_PAYMENT_INPUT",
             "description": "Missing payment input.",
             "isDeprecated": false,
@@ -6149,7 +6155,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -6220,7 +6226,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -6676,7 +6682,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -6747,7 +6753,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -6865,7 +6871,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -6936,7 +6942,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -7007,7 +7013,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `checkoutUserErrors` instead"
+            "deprecationReason": "Use `checkoutUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -11324,7 +11330,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -11662,7 +11668,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -11733,7 +11739,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -11804,7 +11810,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -11875,7 +11881,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -12037,7 +12043,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -12108,7 +12114,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -12268,7 +12274,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -12351,7 +12357,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -12477,7 +12483,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -12643,7 +12649,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `customerUserErrors` instead"
+            "deprecationReason": "Use `customerUserErrors` instead."
           }
         ],
         "inputFields": null,
@@ -13443,7 +13449,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `originUrl` instead"
+            "deprecationReason": "Use `originUrl` instead."
           },
           {
             "name": "host",
@@ -14469,7 +14475,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `url` instead"
+            "deprecationReason": "Use `url` instead."
           },
           {
             "name": "src",
@@ -14485,7 +14491,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `url` instead"
+            "deprecationReason": "Use `url` instead."
           },
           {
             "name": "transformedSrc",
@@ -16292,7 +16298,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `countryCodeV2` instead"
+            "deprecationReason": "Use `countryCodeV2` instead."
           },
           {
             "name": "countryCodeV2",
@@ -19740,7 +19746,7 @@
           },
           {
             "name": "customerRecover",
-            "description": "Sends a reset password email to the customer, as the first step in the reset password process.",
+            "description": "\"Sends a reset password email to the customer. The reset password email contains a reset password URL and token that you can pass to the [`customerResetByUrl`](https://shopify.dev/api/storefront/latest/mutations/customerResetByUrl) or [`customerReset`](https://shopify.dev/api/storefront/latest/mutations/customerReset) mutation to reset the customer password.\"\n",
             "args": [
               {
                 "name": "email",
@@ -19769,7 +19775,7 @@
           },
           {
             "name": "customerReset",
-            "description": "Resets a customer’s password with a token received from `CustomerRecover`.",
+            "description": "\"Resets a customer’s password with the token received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation.\"\n",
             "args": [
               {
                 "name": "id",
@@ -19814,7 +19820,7 @@
           },
           {
             "name": "customerResetByUrl",
-            "description": "Resets a customer’s password with the reset password url received from `CustomerRecover`.",
+            "description": "\"Resets a customer’s password with the reset password URL received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation.\"\n",
             "args": [
               {
                 "name": "password",
@@ -20720,7 +20726,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `subtotalPriceV2` instead"
+            "deprecationReason": "Use `subtotalPriceV2` instead."
           },
           {
             "name": "subtotalPriceV2",
@@ -20781,7 +20787,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `totalPriceV2` instead"
+            "deprecationReason": "Use `totalPriceV2` instead."
           },
           {
             "name": "totalPriceV2",
@@ -20813,7 +20819,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `totalRefundedV2` instead"
+            "deprecationReason": "Use `totalRefundedV2` instead."
           },
           {
             "name": "totalRefundedV2",
@@ -20845,7 +20851,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `totalShippingPriceV2` instead"
+            "deprecationReason": "Use `totalShippingPriceV2` instead."
           },
           {
             "name": "totalShippingPriceV2",
@@ -20873,7 +20879,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `totalTaxV2` instead"
+            "deprecationReason": "Use `totalTaxV2` instead."
           },
           {
             "name": "totalTaxV2",
@@ -21977,7 +21983,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `amountV2` instead"
+            "deprecationReason": "Use `amountV2` instead."
           },
           {
             "name": "amountV2",
@@ -23919,7 +23925,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `compareAtPriceV2` instead"
+            "deprecationReason": "Use `compareAtPriceV2` instead."
           },
           {
             "name": "compareAtPriceV2",
@@ -24081,7 +24087,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `priceV2` instead"
+            "deprecationReason": "Use `priceV2` instead."
           },
           {
             "name": "priceV2",
@@ -24747,7 +24753,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `blog` instead"
+            "deprecationReason": "Use `blog` instead."
           },
           {
             "name": "blogs",
@@ -24943,7 +24949,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `collection` instead"
+            "deprecationReason": "Use `collection` instead."
           },
           {
             "name": "collections",
@@ -25359,7 +25365,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `page` instead"
+            "deprecationReason": "Use `page` instead."
           },
           {
             "name": "pages",
@@ -25526,7 +25532,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `product` instead"
+            "deprecationReason": "Use `product` instead."
           },
           {
             "name": "productRecommendations",
@@ -27237,7 +27243,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `priceV2` instead"
+            "deprecationReason": "Use `priceV2` instead."
           },
           {
             "name": "priceV2",
@@ -28164,7 +28170,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `amountV2` instead"
+            "deprecationReason": "Use `amountV2` instead."
           },
           {
             "name": "amountV2",
@@ -28212,7 +28218,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "Use `statusV2` instead"
+            "deprecationReason": "Use `statusV2` instead."
           },
           {
             "name": "statusV2",
