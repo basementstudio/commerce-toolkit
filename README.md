@@ -4,6 +4,9 @@ Let's drop some cool stuff 🔥
 
 ![react](https://user-images.githubusercontent.com/13522179/174338656-b1644ca5-f768-45ce-8576-b342f0675fae.png)
 
+🚧 Still in alpha — API might change with new releases 🚧
+
+---
 
 `react-dropify` is the best library for interacting with the Shopify Storefront API (SFAPI).
 
