@@ -4,9 +4,9 @@ import * as React from 'react'
 import { surfaceMutationErrors } from '../helpers/error-handling'
 import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
 import { CartMutators } from '../storefront-hooks'
-import { BarebonesCart } from '../types'
+import { BarebonesCart, OptionalPromise } from '../types'
 
-export type CartFetcher<Cart> = (cartId: string) => Promise<Cart>
+export type CartFetcher<Cart> = (cartId: string) => OptionalPromise<Cart>
 
 const cartQueryKey = ['cart']
 

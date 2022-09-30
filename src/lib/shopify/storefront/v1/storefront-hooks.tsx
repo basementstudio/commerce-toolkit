@@ -5,12 +5,19 @@ import {
   QueryClientProviderProps
 } from '@tanstack/react-query'
 import * as React from 'react'
+import type { OmitIndexSignature } from 'type-fest'
 
 import * as addLines from './mutations/add-lines'
 import * as removeLines from './mutations/remove-lines'
 import * as updateLines from './mutations/update-lines'
 import * as cartQuery from './queries/cart'
-import { BarebonesCart, LineItem, NoInfer, UserError } from './types'
+import {
+  BarebonesCart,
+  LineItem,
+  NoInfer,
+  OptionalPromise,
+  UserError
+} from './types'
 
 type MutatorResult<Data> = {
   data: Data | null | undefined
@@ -59,20 +66,25 @@ type StorefrontMutators<Cart extends BarebonesCart> = CartMutators<Cart>
  *   }
  * })
  */
-export function createStorefrontHooks<Cart extends BarebonesCart>({
+export function createStorefrontHooks<
+  Cart extends BarebonesCart,
+  ExtraHooks extends Record<string, (...args: any) => OptionalPromise<any>>
+>({
   cartLocalStorageKey,
   fetchers,
   mutators,
   createCartIfNotFound,
-  queryClientConfig
+  queryClientConfig,
+  extraHooks
 }: {
   cartLocalStorageKey: string
   fetchers: {
-    fetchCart: (cartId: string) => Promise<Cart | null>
+    fetchCart: (cartId: string) => OptionalPromise<Cart | null>
   }
   mutators: StorefrontMutators<NoInfer<Cart>>
   createCartIfNotFound?: boolean
   queryClientConfig?: QueryClientConfig
+  extraHooks?: ExtraHooks
 }) {
   const queryClient = new QueryClient(queryClientConfig)
 
@@ -125,6 +137,7 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
         cartLocalStorageKey,
         options: { ...options }
       })
-    }
+    },
+    ...(extraHooks as OmitIndexSignature<ExtraHooks>)
   }
 }

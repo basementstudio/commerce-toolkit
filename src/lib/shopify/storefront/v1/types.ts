@@ -13,3 +13,5 @@ export type UserError = {
 export type BarebonesCart = { id: string }
 
 export type NoInfer<T> = [T][T extends any ? 0 : never]
+
+export type OptionalPromise<T> = Promise<T> | T
