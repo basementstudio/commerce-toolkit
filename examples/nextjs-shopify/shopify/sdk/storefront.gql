@@ -1,0 +1,61 @@
+fragment Image on Image {
+  id
+  altText
+  originalSrc
+  width
+  height
+}
+
+fragment Cart on Cart {
+  id
+  checkoutUrl
+  lines(first: 250) {
+    edges {
+      node {
+        id
+        quantity
+        merchandise {
+          ... on ProductVariant {
+            id
+            selectedOptions {
+              name
+              value
+            }
+            title
+            priceV2 {
+              amount
+              currencyCode
+            }
+            image {
+              ...Image
+            }
+            product {
+              id
+              title
+              handle
+              description
+            }
+          }
+        }
+        estimatedCost {
+          subtotalAmount {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+  estimatedCost {
+    subtotalAmount {
+      amount
+      currencyCode
+    }
+  }
+}
+
+query FetchCart($id: ID!) {
+  cart(id: $id) {
+    ...Cart
+  }
+}

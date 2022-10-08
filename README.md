@@ -1,161 +1,73 @@
-# React Dropify 
+# bsmnt Commerce Toolkit
 
-Let's drop some cool stuff 🔥
+This is an official Yarn v1 starter turborepo.
 
-![react](https://user-images.githubusercontent.com/13522179/174338656-b1644ca5-f768-45ce-8576-b342f0675fae.png)
+## What's inside?
 
+This turborepo uses [Yarn](https://classic.yarnpkg.com/) as a package manager. It includes the following packages/apps:
 
-`react-dropify` is the best library for interacting with the Shopify Storefront API (SFAPI).
+### Apps and Packages
 
-- ✅ Start quickly with ready-made queries.
-- ✅ Grab the full power of the SFAPI with custom GraphQL queries.
-- ✅ Type safe with a built in, ready-to-go GraphQL x TypeScript codegen.
-- ✅ Cart state saved to `localStorage`, and provided via React Context.
-- ✅ Drop ready, with hooks to easily create countdowns and newsletter forms.
+- `docs`: a [Next.js](https://nextjs.org) app
+- `web`: another [Next.js](https://nextjs.org) app
+- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
-Hyped already? Let's start.
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-## Getting Started
+### Utilities
 
-### 1. Install it
+This turborepo has some additional tools already setup for you:
 
-```zsh
-yarn add react-dropify
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
+
+### Build
+
+To build all apps and packages, run the following command:
+
+```
+cd my-turborepo
+yarn run build
 ```
 
-### 2. Create a Custom App on Shopify and grab your Storefront Access Token.
+### Develop
 
-See [instructions here](https://help.shopify.com/en/manual/apps/custom-apps). If you find it hard to create the Custom App, please let us know and we can expand on this point.
+To develop all apps and packages, run the following command:
 
-Save the Storefront Access Token as a public `.env` variable.
-
-⁉️ The Storefront API Access Token can be public. In fact, the API is optimized for being accessed from the client.
-
-### 3. Get your Store Domain Name.
-
-This is generally something like `<your-store>.myshopify.com`.
-
-Save the Store Domain Name as a public `.env` variable.
-
-### 3. Create `./react-dropify/config.js` at the root of your project.
-
-```js
-// ./react-dropify/config.js
-
-// Example showing how you'd name your environment variables in Next.js.
-// Make sure you follow the convention of your chosen framework.
-// And please, delete these comments!
-
-/**
- * @type {import('react-dropify/generate').ReactDropifyConfig}
- */
-module.exports = {
-  domain: process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN,
-  accessToken: process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN
-}
+```
+cd my-turborepo
+yarn run dev
 ```
 
-⁉️ The Storefront API Access Token can be public. In fact, the API is optimized for being accessed from the client.
+### Remote Caching
 
-### 4. Get your SDK
+Turborepo can use a technique known as [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
-Simply run
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
 
-```zsh
-yarn react-dropify generate
+```
+cd my-turborepo
+npx turbo login
 ```
 
-Tip:
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
 
-```js
-  // package.json
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
 
-  "scripts": {
-     // your scripts...
-    "generate": "yarn react-dropify generate",
-  },
+```
+npx turbo link
 ```
 
-## Let's see the results!
+## Useful Links
 
-Congratulations, you now have a type safe SDK to interact with the SFAPI. Open up `./react-dropify/sdk.ts`. It should look something like this:
+Learn more about the power of Turborepo:
 
-```ts
-import config from './config'
-import { createReactDropifySdk } from './generated'
-
-export const reactDropifySdk = createReactDropifySdk(config)
-```
-
-`reactDropifySdk` contains some basic queries, such as:
-
-- `_GetAllProducts`
-- `_GetAllCollections`
-- `_GetProductByHandle`
-- ... etc
-
-What's even cooler is that you can define **custom queries** in `.graphql` files, and if you run the codegen again, you'll get all of those queries available (and type safe) on `reactDropifySdk` 💥
-
-Isn't that amazing?
-
-## Using the `StorefrontProvider`
-
-The `StorefrontProvider` is a React Context Provider which manages cart state. Wrap it on your `App` component.
-
-```tsx
-// Example using Next.js
-
-import { AppProps } from 'next/app'
-import { StorefrontProvider } from 'react-dropify'
-import { reactDropifySdk } from '~/lib/react-dropify/sdk'
-
-const App = ({ Component, pageProps }: AppProps) => {
-  return (
-    <StorefrontProvider appCartId="<store>-cart-id" client={reactDropifySdk}>
-      <Component {...pageProps} />
-    </StorefrontProvider>
-  )
-}
-
-export default App
-```
-
-And then, somewhere in your app:
-
-```tsx
-import { useStorefront } from 'react-dropify'
-
-const Component = () => {
-  const {
-    cart,
-    cartItemsCount,
-    cartToggleState,
-    onAddLineItem,
-    onRemoveLineItem,
-    onUpdateLineItem
-  } = useStorefront()
-
-  return <div />
-}
-```
-
-When you add an item to cart, the provider:
-
-1. will check on `localStorage` to see if there's a cart id stored there.
-2. will fetch the cart **only when needed**, and will cache the result using [swr](https://swr.vercel.app/).
-3. will report errors to an event emitter.
-
----
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
-## Authors
-
-- Santiago Moran ([@morangsantiago](https://twitter.com/morangsantiago)) – [basement.studio](https://basement.studio)
-- Julian Benegas ([@julianbenegas8](https://twitter.com/julianbenegas8)) – [basement.studio](https://basement.studio)
+- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
+- [Caching](https://turborepo.org/docs/core-concepts/caching)
+- [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching)
+- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
+- [Configuration Options](https://turborepo.org/docs/reference/configuration)
+- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)

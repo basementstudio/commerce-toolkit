@@ -1,0 +1,23 @@
+{
+  "name": "nextjs-shopify",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "generate": "yarn sdk-gen generate --dir shopify/sdk"
+  },
+  "dependencies": {
+    "@bsmnt/storefront-hooks": "*",
+    "@bsmnt/sdk-gen": "*",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "tsconfig": "*",
+    "typescript": "^4.8.4"
+  }
+}
