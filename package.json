@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:packages": "turbo run build --filter=@bsmnt/storefront-hooks --filter=@bsmnt/sdk-gen",
+    "build:packages": "turbo run build --filter=@bsmnt/storefront-hooks --filter=@bsmnt/drop --filter=@bsmnt/sdk-gen",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "generate": "turbo run generate",

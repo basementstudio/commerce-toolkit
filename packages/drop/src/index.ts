@@ -1,5 +1,5 @@
 export { calculateCountdownState } from "./calculate-countdown-state";
-export { DropProvider, useDrop } from "./provider";
+export { DropProvider, useDropStore } from "./provider";
 export {
   zeroPad,
   getTimeDelta,

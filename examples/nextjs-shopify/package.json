@@ -10,6 +10,7 @@
     "generate": "yarn sdk-gen generate --dir shopify/sdk"
   },
   "dependencies": {
+    "@bsmnt/drop": "*",
     "@bsmnt/storefront-hooks": "*",
     "@bsmnt/sdk-gen": "*",
     "next": "12.3.1",

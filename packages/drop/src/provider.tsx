@@ -1,91 +1,101 @@
-import * as React from 'react'
-import create from 'zustand'
-import createContext from 'zustand/context'
-import shallow from 'zustand/shallow'
+import * as React from "react";
+import create, { StoreApi, UseBoundStore } from "zustand";
+import shallow from "zustand/shallow";
 
-import { calculateCountdownState } from './calculate-countdown-state'
-import { dateOrTimestampToTimestamp, getFormattedTimeDelta } from './utils'
+import { calculateCountdownState } from "./calculate-countdown-state";
+import { dateOrTimestampToTimestamp, getFormattedTimeDelta } from "./utils";
 
 interface DropContext {
-  progress: number | null
-  timeRemaining: number
-  isComplete: boolean
-  endTimestamp: number
-  startTimestamp: number | null
-  update: () => void
-  humanTimeRemaining: ReturnType<typeof getFormattedTimeDelta>
-  countdownState: 'running' | 'complete' | 'exiting'
-  setCountdownState: (state: 'running' | 'complete' | 'exiting') => void
+  progress: number | null;
+  timeRemaining: number;
+  isComplete: boolean;
+  endTimestamp: number;
+  startTimestamp: number | null;
+  update: () => void;
+  humanTimeRemaining: ReturnType<typeof getFormattedTimeDelta>;
+  countdownState: "running" | "complete" | "exiting";
+  setCountdownState: (state: "running" | "complete" | "exiting") => void;
 }
 
-const { Provider, useStore: useDrop } = createContext<DropContext>()
+const Context = React.createContext<
+  UseBoundStore<StoreApi<DropContext>> | undefined
+>(undefined);
 
 type DropProviderProps = {
-  children?: React.ReactNode
-  countdownChildren?: React.ReactNode
-  endDate: Date | number
-  startDate?: Date | number
-  exitDelay?: number
-}
+  children?: React.ReactNode;
+  countdownChildren?: React.ReactNode;
+  endDate: Date | number;
+  startDate?: Date | number;
+  exitDelay?: number;
+};
 
 const DropProvider = ({
   children,
   endDate,
   startDate,
   exitDelay,
-  countdownChildren
+  countdownChildren,
 }: DropProviderProps) => {
-  const { endTimestamp, startTimestamp } = React.useMemo(() => {
-    const endTimestamp = dateOrTimestampToTimestamp(endDate)
+  const [store] = React.useState(() => {
+    const endTimestamp = dateOrTimestampToTimestamp(endDate);
     const startTimestamp = startDate
       ? dateOrTimestampToTimestamp(startDate)
-      : null
+      : null;
 
     if (startTimestamp && startTimestamp >= endTimestamp) {
       throw new Error(
-        'startDate must be before endDate. Please check your start and end dates.'
-      )
+        "startDate must be before endDate. Please check your start and end dates."
+      );
     }
 
-    return { endTimestamp, startTimestamp }
-  }, [endDate, startDate])
+    return create<DropContext>((set) => {
+      const state = calculateCountdownState(endTimestamp, startTimestamp);
+      return {
+        ...state,
+        endTimestamp,
+        startTimestamp,
+        countdownState: state.humanTimeRemaining.isComplete
+          ? "complete"
+          : "running",
+        update() {
+          set(calculateCountdownState(endTimestamp, startTimestamp));
+        },
+        setCountdownState(countdownState: DropContext["countdownState"]) {
+          set({ countdownState });
+        },
+      };
+    });
+  });
+
+  store((state) => state.countdownState);
 
   return (
-    <Provider
-      createStore={() =>
-        create<DropContext>((set) => {
-          const state = calculateCountdownState(endTimestamp, startTimestamp)
-          return {
-            ...state,
-            endTimestamp,
-            startTimestamp,
-            countdownState: state.humanTimeRemaining.isComplete
-              ? 'complete'
-              : 'running',
-            update() {
-              set(calculateCountdownState(endTimestamp, startTimestamp))
-            },
-            setCountdownState(countdownState: DropContext['countdownState']) {
-              set({ countdownState })
-            }
-          }
-        })
-      }
-    >
+    <Context.Provider value={store}>
       <Renderer exitDelay={exitDelay} countdownChildren={countdownChildren}>
         {children}
       </Renderer>
-    </Provider>
-  )
-}
+    </Context.Provider>
+  );
+};
+
+const useDropStore = () => {
+  const store = React.useContext(Context);
+  if (!store) {
+    throw new Error(
+      "useDropStore must be used within a DropProvider. Did you forget to include it?"
+    );
+  }
+
+  return store;
+};
 
 function Renderer({
   countdownChildren,
   exitDelay = 0,
-  children
+  children,
 }: {
-  children?: React.ReactNode
-} & Pick<DropProviderProps, 'countdownChildren' | 'exitDelay'>) {
+  children?: React.ReactNode;
+} & Pick<DropProviderProps, "countdownChildren" | "exitDelay">) {
   const {
     isComplete,
     humanIsComplete,
@@ -93,8 +103,8 @@ function Renderer({
     endTimestamp,
     startTimestamp,
     update,
-    setCountdownState
-  } = useDrop(
+    setCountdownState,
+  } = useDropStore()(
     React.useCallback(
       (state) => ({
         isComplete: state.isComplete,
@@ -103,56 +113,58 @@ function Renderer({
         endTimestamp: state.endTimestamp,
         startTimestamp: state.startTimestamp,
         setCountdownState: state.setCountdownState,
-        update: state.update
+        update: state.update,
       }),
       []
     ),
     shallow
-  )
+  );
 
   React.useEffect(() => {
-    if (isComplete) return
-    const interval = window.setInterval(update, 1000)
+    if (isComplete) return;
+    const interval = setInterval(update, 1000);
 
     return () => {
-      window.clearInterval(interval)
-    }
-  }, [endTimestamp, startTimestamp, isComplete, update])
+      clearInterval(interval);
+    };
+  }, [endTimestamp, startTimestamp, isComplete, update]);
 
   React.useEffect(() => {
     switch (countdownState) {
-      case 'running':
+      case "running":
         if (humanIsComplete) {
-          setCountdownState(exitDelay > 0 ? 'exiting' : 'complete')
+          setCountdownState(exitDelay > 0 ? "exiting" : "complete");
         }
-        break
-      case 'exiting': {
-        const timeout = window.setTimeout(() => {
-          setCountdownState('complete')
-        }, exitDelay ?? 0)
+        break;
+      case "exiting": {
+        const timeout = setTimeout(() => {
+          setCountdownState("complete");
+        }, exitDelay ?? 0);
         return () => {
-          window.clearTimeout(timeout)
-        }
+          clearTimeout(timeout);
+        };
       }
       default:
-        break
+        break;
     }
 
-    return
-  }, [countdownState, exitDelay, humanIsComplete, setCountdownState])
+    return;
+  }, [countdownState, exitDelay, humanIsComplete, setCountdownState]);
 
   return (
     <>
       {(!countdownChildren || isComplete) && <Memo>{children}</Memo>}
-      {countdownChildren && countdownState !== 'complete' && (
+      {countdownChildren && countdownState !== "complete" && (
         <Memo>{countdownChildren}</Memo>
       )}
     </>
-  )
+  );
 }
 
 const Memo = React.memo(({ children }: { children?: React.ReactNode }) => {
-  return <>{children}</>
-})
+  return <>{children}</>;
+});
 
-export { DropContext, DropProvider, useDrop }
+Memo.displayName = "Memo";
+
+export { DropProvider, useDropStore };
