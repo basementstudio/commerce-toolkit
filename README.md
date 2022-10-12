@@ -342,7 +342,7 @@ Pull requests are welcome. Issues are welcome. For major changes, please open an
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](./license/)
 
 ## Authors
 
