@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "yarn sdk-gen generate --dir src/storefront/gql-sdk"
+    "generate": "yarn sdk-gen generate --dir src/storefront/sdk-gen"
   },
   "dependencies": {
     "@bsmnt/drop": "*",

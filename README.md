@@ -9,17 +9,19 @@ This toolkit has helped us—[basement.studio](https://basement.studio/)—ship 
 This repository currently holds three packages:
 
 1. `@bsmnt/storefront-hooks`: React Hooks to manage storefront client-side state.
-    - ✅ Manage the whole cart lifecycle with the help of [`@tanstack/react-query`](https://tanstack.com/query/v4) and `localStorage`
-    - ✅ Easily manage your cart mutations (like adding stuff into it)
-    - ✅ An opinionated, but powerful, way to structure storefront hooks
+
+   - ✅ Manage the whole cart lifecycle with the help of [`@tanstack/react-query`](https://tanstack.com/query/v4) and `localStorage`
+   - ✅ Easily manage your cart mutations (like adding stuff into it)
+   - ✅ An opinionated, but powerful, way to structure storefront hooks
 
 2. `@bsmnt/sdk-gen`: a CLI that generates a type-safe, graphql SDK.
-    - ✅ Easily connect to any GraphQL API
-    - ✅ Generated TypeScript types from your queries
+
+   - ✅ Easily connect to any GraphQL API
+   - ✅ Generated TypeScript types from your queries
 
 3. `@bsmnt/drop`: Helpers for managing a countdown. Generally used to create hype around a merch drop.
-    - ✅ Create your "countdown" in just a couple of minutes
-    - ✅ Reveal your site only when the drop is ready to go ([see this example from one of our KarlJacobs drops](https://twitter.com/MikaelSargsyan/status/1578131832331272224))
+   - ✅ Create your "countdown" in just a couple of minutes
+   - ✅ Reveal your site only when the drop is ready to go ([see this example from one of our KarlJacobs drops](https://twitter.com/MikaelSargsyan/status/1578131832331272224))
 
 These play really well together, but can also be used separately. Let's see how they work!
 
@@ -33,18 +35,18 @@ yarn add @bsmnt/storefront-hooks @tanstack/react-query
 
 This package exports:
 
-- `createStorefrontHooks`: *function* that creates the hooks needed to interact with the cart.
+- `createStorefrontHooks`: _function_ that creates the hooks needed to interact with the cart.
 
 ```ts
 import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
 
 export const hooks = createStorefrontHooks({
-  cartLocalStorageKey: "",     // to save cart id in local storage
-  fetchers: {},                // hooks will use these internally
-  mutators: {},                // hooks will use these internally
+  cartLocalStorageKey: "", // to save cart id in local storage
+  fetchers: {}, // hooks will use these internally
+  mutators: {}, // hooks will use these internally
   createCartIfNotFound: false, // defaults to false. if true, will create a cart if none is found
-  extraHooks: {},              // other hooks you want to add here just to keep the code organized
-  queryClientConfig: {},       // internal query client config
+  extraHooks: {}, // other hooks you want to add here just to keep the code organized
+  queryClientConfig: {}, // internal query client config
 });
 ```
 
@@ -169,7 +171,6 @@ module.exports = {
   endpoint: "",
   headers: {},
 };
-
 ```
 
 ```gql
@@ -222,13 +223,11 @@ import config from "./config";
 import { createSdk } from "./generated";
 
 export const bsmntSdk = createSdk(config);
-
 ```
 
 And that's all. You should be able to use that to hit your GraphQL API in a type safe manner.
 
-↳ For a standard way to use this with the [Shopify Storefront API](https://shopify.dev/api/storefront), take a look at our example [With Next.js + Shopify](./examples/nextjs-shopify/shopify/gql-sdk).
-
+↳ For a standard way to use this with the [Shopify Storefront API](https://shopify.dev/api/storefront), take a look at our example [With Next.js + Shopify](./examples/nextjs-shopify/src/storefront/sdk-gen).
 
 <br />
 

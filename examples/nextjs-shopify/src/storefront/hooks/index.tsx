@@ -1,5 +1,5 @@
 import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
-import { bsmntSdk } from "../gql-sdk/sdk";
+import { bsmntSdk } from "../sdk-gen/sdk";
 
 export const {
   QueryClientProvider,
