@@ -239,7 +239,7 @@ yarn add @bsmnt/drop
 
 This package exports:
 
-- `DropProvider`: _Context Provider_ for the `drop` store
+- `DropProvider`: _Context Provider_ for the `dropStore`
 - `useDropStore`: _Hook_ that consumes the `DropProvider` context and returns the `dropStore`
 - `zeroPad`: _utility_ to pad a number with zeroes
 
