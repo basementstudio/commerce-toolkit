@@ -1,5 +1,4 @@
 /* eslint-disable */
-// @ts-nocheck
 import { GraphQLClient } from 'graphql-request';
 import * as Dom from 'graphql-request/dist/types.dom';
 import gql from 'graphql-tag';

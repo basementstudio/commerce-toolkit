@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { useCartQuery } from "../shopify/storefront-hooks";
+import { useCartQuery } from "../storefront/hooks";
 
 export default function Home() {
   const { data } = useCartQuery({ createCartIfNotFound: true });

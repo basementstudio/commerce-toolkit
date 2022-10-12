@@ -1,4 +1,4 @@
-import { QueryClientProvider } from "../shopify/storefront-hooks";
+import { QueryClientProvider } from "../storefront/hooks";
 import { DropProvider, useDropStore } from "@bsmnt/drop";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
