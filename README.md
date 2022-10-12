@@ -21,7 +21,7 @@ This repository currently holds three packages:
 
 3. `@bsmnt/drop`: Helpers for managing a countdown. Generally used to create hype around a merch drop.
    - ✅ Create your "countdown" in just a couple of minutes
-   - ✅ Reveal your site only when the drop is ready to go ([see this example from one of our KarlJacobs drops](https://twitter.com/MikaelSargsyan/status/1578131832331272224))
+   - ✅ Reveal your site only when the drop is ready to go ([see this example from one of our drops](https://twitter.com/MikaelSargsyan/status/1578131832331272224))
 
 These play really well together, but can also be used separately. Let's see how they work!
 
