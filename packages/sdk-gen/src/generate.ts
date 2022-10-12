@@ -71,7 +71,11 @@ export async function main(args: Args) {
   );
   fs.writeFileSync(
     path.join(bgsdkDirectoryPath, "generated/index.ts"),
-    "/* eslint-disable */\n" + sdkCodegen.content + "\n" + extraGenerated
+    "/* eslint-disable */\n" +
+      "// @ts-nocheck\n" +
+      sdkCodegen.content +
+      "\n" +
+      extraGenerated
   );
   const skdFilePath = path.join(bgsdkDirectoryPath, "sdk.ts");
   if (!fs.existsSync(skdFilePath)) {
