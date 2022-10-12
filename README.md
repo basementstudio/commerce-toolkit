@@ -11,7 +11,7 @@ This repository currently holds three packages:
 1. `@bsmnt/storefront-hooks`: React Hooks to manage storefront client-side state.
     - ✅ Manage the whole cart lifecycle with the help of [`@tanstack/react-query`](https://tanstack.com/query/v4) and `localStorage`
     - ✅ Easily manage your cart mutations (like adding stuff into it)
-    - ✅ An opinionated, but powerful, way to structure your code
+    - ✅ An opinionated, but powerful, way to structure storefront hooks
 
 2. `@bsmnt/sdk-gen`: a CLI that generates a type-safe, graphql SDK.
     - ✅ Easily connect to any GraphQL API
