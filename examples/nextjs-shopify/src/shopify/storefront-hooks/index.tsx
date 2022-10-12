@@ -1,5 +1,5 @@
 import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
-import { bsmntSdk } from "../sdk/sdk";
+import { bsmntSdk } from "../gql-sdk/sdk";
 
 export const {
   QueryClientProvider,
@@ -13,7 +13,7 @@ export const {
   fetchers: {
     fetchCart: async (cartId) => {
       const { cart } = await bsmntSdk.FetchCart({ id: cartId });
-      if (cart === undefined) throw new Error("Cart not found");
+      if (cart === undefined) throw new Error("Request failed");
       return cart;
     },
   },
