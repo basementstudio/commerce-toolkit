@@ -31,6 +31,116 @@ These play really well together, but can also be used separately. Let's see how 
 yarn add @bsmnt/storefront-hooks @tanstack/react-query
 ```
 
+This package exports:
+
+- `createStorefrontHooks`: *function* that creates the hooks needed to interact with the cart.
+
+```ts
+import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
+
+export const hooks = createStorefrontHooks({
+  cartLocalStorageKey: "",     // to save cart id in local storage
+  fetchers: {},                // hooks will use these internally
+  mutators: {},                // hooks will use these internally
+  createCartIfNotFound: false, // defaults to false. if true, will create a cart if none is found
+  extraHooks: {},              // other hooks you want to add here just to keep the code organized
+  queryClientConfig: {},       // internal query client config
+});
+```
+
+Take a look at some examples:
+
+<details>
+    <summary>Example with <code>localStorage</code></summary>
+    
+```ts
+// todo
+```
+</details>
+<details>
+    <summary>Example with <code>@bsmnt/sdk-gen</code></summary>
+
+```bash
+# Given the following file tree:
+.
+└── storefront/
+    ├── sdk-gen/
+    │   └── sdk.ts # generated with @bsmnt/sdk-gen
+    └── hooks.ts # <- we'll work here
+```
+
+This example depends on [@bsmnt/sdk-gen](#bsmntsdk-gen).
+
+```ts
+// ./storefront/hooks.ts
+
+import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
+import { bsmntSdk } from "../gql-sdk/sdk";
+
+export const hooks = createStorefrontHooks({
+  cartLocalStorageKey: "<my-store>",
+  fetchers: {
+    fetchCart: async (cartId) => {
+      const { cart } = await bsmntSdk.FetchCart({ id: cartId });
+      if (cart === undefined) throw new Error("Request failed");
+      return cart;
+    },
+  },
+  mutators: {
+    addLineItemsToCart: async (cartId, lines) => {
+      const { cartLinesAdd } = await bsmntSdk.AddLineItem({
+        cartId,
+        lines,
+      });
+      return {
+        data: cartLinesAdd?.cart,
+        userErrors: cartLinesAdd?.userErrors,
+      };
+    },
+    createCart: async () => {
+      const { cartCreate } = await bsmntSdk.CreateCart();
+      return {
+        data: cartCreate?.cart,
+        userErrors: cartCreate?.userErrors,
+      };
+    },
+    createCartWithLines: async (lines) => {
+      const { cartCreate } = await bsmntSdk.CreateCartWithLines({ lines });
+      return {
+        data: cartCreate?.cart,
+        userErrors: cartCreate?.userErrors,
+      };
+    },
+    removeLineItemsFromCart: async (cartId, lineIds) => {
+      const { cartLinesRemove } = await bsmntSdk.RemoveLineItem({
+        cartId,
+        lineIds,
+      });
+      return {
+        data: cartLinesRemove?.cart,
+        userErrors: cartLinesRemove?.userErrors,
+      };
+    },
+    updateLineItemsInCart: async (cartId, lines) => {
+      const { cartLinesUpdate } = await bsmntSdk.UpdateLineItem({
+        cartId,
+        lines: lines.map((l) => ({
+          id: l.merchandiseId,
+          quantity: l.quantity,
+          attributes: l.attributes,
+        })),
+      });
+      return {
+        data: cartLinesUpdate?.cart,
+        userErrors: cartLinesUpdate?.userErrors,
+      };
+    },
+  },
+});
+```
+
+</details>
+
 <br />
  
 ## `@bsmnt/sdk-gen`
