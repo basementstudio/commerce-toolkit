@@ -1,9 +1,11 @@
-import * as React from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import { useCartQuery } from "../shopify/storefront-hooks";
 
 export default function Home() {
+  const { data } = useCartQuery({ createCartIfNotFound: true });
+
   return (
     <div className={styles.container}>
       <Head>
@@ -50,6 +52,11 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+        </div>
+
+        <div>
+          <h1>Cart: </h1>
+          <pre>{data ? JSON.stringify(data, null, 2) : "null"}</pre>
         </div>
       </main>
 

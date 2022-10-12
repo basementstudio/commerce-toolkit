@@ -1,12 +1,12 @@
-import * as React from "react";
 import { QueryClientProvider } from "../shopify/storefront-hooks";
 import { DropProvider, useDropStore } from "@bsmnt/drop";
 import "../styles/globals.css";
+import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <DropProvider
-      endDate={Date.now() + 1000 * 10}
+      endDate={Date.now() + 1000 * 5}
       countdownChildren={<Countdown />}
     >
       <QueryClientProvider>

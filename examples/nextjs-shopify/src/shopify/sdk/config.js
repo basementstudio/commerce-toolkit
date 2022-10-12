@@ -3,10 +3,10 @@
  */
 module.exports = {
   // eslint-disable-next-line turbo/no-undeclared-env-vars
-  endpoint: process.env.STOREFRONT_API_ENDPOINT,
+  endpoint: process.env.NEXT_PUBLIC_STOREFRONT_API_ENDPOINT,
   headers: {
     "x-shopify-storefront-access-token":
       // eslint-disable-next-line turbo/no-undeclared-env-vars
-      process.env.STOREFRONT_API_ACCESS_TOKEN,
+      process.env.NEXT_PUBLIC_STOREFRONT_API_ACCESS_TOKEN,
   },
 };

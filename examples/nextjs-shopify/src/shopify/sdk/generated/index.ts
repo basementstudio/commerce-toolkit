@@ -6632,16 +6632,54 @@ export enum WeightUnit {
   Pounds = 'POUNDS'
 }
 
-export type ImageFragment = { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null };
-
-export type CartFragment = { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } };
-
 export type FetchCartQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
 export type FetchCartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null };
+
+export type CreateCartMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateCartMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+
+export type CreateCartWithLinesMutationVariables = Exact<{
+  lines: Array<CartLineInput> | CartLineInput;
+}>;
+
+
+export type CreateCartWithLinesMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+
+export type AddLineItemMutationVariables = Exact<{
+  cartId: Scalars['ID'];
+  lines: Array<CartLineInput> | CartLineInput;
+}>;
+
+
+export type AddLineItemMutation = { __typename?: 'Mutation', cartLinesAdd?: { __typename?: 'CartLinesAddPayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+
+export type UpdateLineItemMutationVariables = Exact<{
+  cartId: Scalars['ID'];
+  lines: Array<CartLineUpdateInput> | CartLineUpdateInput;
+}>;
+
+
+export type UpdateLineItemMutation = { __typename?: 'Mutation', cartLinesUpdate?: { __typename?: 'CartLinesUpdatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+
+export type RemoveLineItemMutationVariables = Exact<{
+  cartId: Scalars['ID'];
+  lineIds: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+
+export type RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+
+export type ImageFragment = { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null };
+
+export type CartFragment = { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } };
+
+export type CartCreatePayloadFragment = { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> };
 
 export const ImageFragmentDoc = gql`
     fragment Image on Image {
@@ -6701,10 +6739,78 @@ export const CartFragmentDoc = gql`
   }
 }
     ${ImageFragmentDoc}`;
+export const CartCreatePayloadFragmentDoc = gql`
+    fragment CartCreatePayload on CartCreatePayload {
+  cart {
+    ...Cart
+  }
+  userErrors {
+    code
+    field
+    message
+  }
+}
+    ${CartFragmentDoc}`;
 export const FetchCartDocument = gql`
     query FetchCart($id: ID!) {
   cart(id: $id) {
     ...Cart
+  }
+}
+    ${CartFragmentDoc}`;
+export const CreateCartDocument = gql`
+    mutation CreateCart {
+  cartCreate {
+    ...CartCreatePayload
+  }
+}
+    ${CartCreatePayloadFragmentDoc}`;
+export const CreateCartWithLinesDocument = gql`
+    mutation CreateCartWithLines($lines: [CartLineInput!]!) {
+  cartCreate(input: {lines: $lines}) {
+    ...CartCreatePayload
+  }
+}
+    ${CartCreatePayloadFragmentDoc}`;
+export const AddLineItemDocument = gql`
+    mutation AddLineItem($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart {
+      ...Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
+    ${CartFragmentDoc}`;
+export const UpdateLineItemDocument = gql`
+    mutation UpdateLineItem($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+  cartLinesUpdate(cartId: $cartId, lines: $lines) {
+    cart {
+      ...Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
+    ${CartFragmentDoc}`;
+export const RemoveLineItemDocument = gql`
+    mutation RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart {
+      ...Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
   }
 }
     ${CartFragmentDoc}`;
@@ -6718,6 +6824,21 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     FetchCart(variables: FetchCartQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<FetchCartQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FetchCartQuery>(FetchCartDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'FetchCart', 'query');
+    },
+    CreateCart(variables?: CreateCartMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateCartMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateCartMutation>(CreateCartDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateCart', 'mutation');
+    },
+    CreateCartWithLines(variables: CreateCartWithLinesMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateCartWithLinesMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateCartWithLinesMutation>(CreateCartWithLinesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateCartWithLines', 'mutation');
+    },
+    AddLineItem(variables: AddLineItemMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddLineItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddLineItemMutation>(AddLineItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddLineItem', 'mutation');
+    },
+    UpdateLineItem(variables: UpdateLineItemMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateLineItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateLineItemMutation>(UpdateLineItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpdateLineItem', 'mutation');
+    },
+    RemoveLineItem(variables: RemoveLineItemMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<RemoveLineItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<RemoveLineItemMutation>(RemoveLineItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'RemoveLineItem', 'mutation');
     }
   };
 }

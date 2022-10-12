@@ -4,7 +4,6 @@ import {
   QueryClientProvider,
   QueryClientProviderProps,
 } from "@tanstack/react-query";
-import * as React from "react";
 
 import * as addLines from "./mutations/add-lines";
 import * as removeLines from "./mutations/remove-lines";
