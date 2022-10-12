@@ -1,12 +1,13 @@
 import { QueryClientProvider } from "../storefront/hooks";
-import { DropProvider, useDropStore } from "@bsmnt/drop";
+import { DropProvider } from "@bsmnt/drop";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import { Countdown } from "../components/countdown";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <DropProvider
-      endDate={Date.now() + 1000 * 5}
+      endDate={Date.now() + 1000 * 5} // set this to 5 seconds from now just to test
       countdownChildren={<Countdown />}
     >
       <QueryClientProvider>
@@ -15,21 +16,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </DropProvider>
   );
 }
-
-const Countdown = () => {
-  const humanTimeRemaining = useDropStore()(
-    (state) => state.humanTimeRemaining
-  );
-  return (
-    <div>
-      <h1>Countdown</h1>
-      <div>
-        {humanTimeRemaining.days} days {humanTimeRemaining.hours} hours{" "}
-        {humanTimeRemaining.minutes} minutes {humanTimeRemaining.seconds}{" "}
-        seconds
-      </div>
-    </div>
-  );
-};
-
-export default MyApp;

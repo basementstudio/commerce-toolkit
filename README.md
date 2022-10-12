@@ -53,14 +53,14 @@ export const hooks = createStorefrontHooks({
 Take a look at some examples:
 
 <details>
-    <summary>Example with <code>localStorage</code></summary>
+    <summary>Simple example, with <code>localStorage</code></summary>
     
 ```ts
 // todo
 ```
 </details>
 <details>
-    <summary>Example with <code>@bsmnt/sdk-gen</code></summary>
+    <summary>Complete example, with <code>@bsmnt/sdk-gen</code></summary>
 
 ```bash
 # Given the following file tree:
@@ -236,6 +236,92 @@ And that's all. You should be able to use that to hit your GraphQL API in a type
 ```zsh
 yarn add @bsmnt/drop
 ```
+
+This package exports:
+
+- `DropProvider`: _Context Provider_ for the `drop` store
+- `useDropStore`: _Hook_ that consumes the `DropProvider` context and returns the `dropStore`
+- `zeroPad`: _utility_ to pad a number with zeroes
+
+To use, just wrap the `DropProvider` wherever you want to add your countdown. For example with Next.js:
+
+```tsx
+// _app.tsx_
+import type { AppProps } from "next/app";
+import { DropProvider } from "@bsmnt/drop";
+import { Countdown } from "../components/countdown";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <DropProvider
+      endDate={Date.now() + 1000 * 5} // set this to 5 seconds from now just to test
+      countdownChildren={<Countdown />}
+    >
+      <Component {...pageProps} />
+    </DropProvider>
+  );
+}
+```
+
+And then your Countdown may look something like:
+
+```tsx
+import { useDropStore } from "@bsmnt/drop";
+
+export const Countdown = () => {
+  const humanTimeRemaining = useDropStore()(
+    (state) => state.humanTimeRemaining
+  );
+
+  return (
+    <div>
+      <h1>Countdown</h1>
+      <ul>
+        <li>Days: {humanTimeRemaining.days}</li>
+        <li>Hours: {humanTimeRemaining.hours}</li>
+        <li>Minutes: {humanTimeRemaining.minutes}</li>
+        <li>Seconds: {humanTimeRemaining.seconds}</li>
+      </ul>
+    </div>
+  );
+};
+```
+
+<details>
+<summary>Important note regarding SSR</summary>
+
+If you render `humanTimeRemaining.seconds`, there's a high chance that your server will render something different than your client, as that value will change each second. What you can do is wait until you're safe in the client until you render:
+
+```tsx
+import { useEffect, useState } from "react";
+import { useDropStore } from "@bsmnt/drop";
+
+const Countdown = () => {
+  const humanTimeRemaining = useDropStore()(
+    (state) => state.humanTimeRemaining
+  );
+
+  const [hasRenderedOnce, setHasRenderedOnce] = useState(false);
+
+  useEffect(() => {
+    setHasRenderedOnce(true);
+  }, []);
+
+  return (
+    <div>
+      <h1>Countdown</h1>
+      <ul>
+        <li>Days: {humanTimeRemaining.days}</li>
+        <li>Hours: {humanTimeRemaining.hours}</li>
+        <li>Minutes: {hasRenderedOnce ? humanTimeRemaining.minutes : "59"}</li>
+        <li>Seconds: {hasRenderedOnce ? humanTimeRemaining.seconds : "59"}</li>
+      </ul>
+    </div>
+  );
+};
+```
+
+</details>
 
 <br />
 
