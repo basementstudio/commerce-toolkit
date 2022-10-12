@@ -49,6 +49,15 @@ yarn add @bsmnt/drop
 
 <br />
 
+## Examples
+
+Some examples to get you started:
+
+- [With Next.js + Shopify](./examples/nextjs-shopify)
+- [With Next.js + `localStorage`](./examples/nextjs-localstorage)
+
+<br />
+
 ---
 
 ## Contributing
