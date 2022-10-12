@@ -41,12 +41,12 @@ This package exports:
 import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
 
 export const hooks = createStorefrontHooks({
-  cartLocalStorageKey: "", // to save cart id in local storage
-  fetchers: {}, // hooks will use these internally
-  mutators: {}, // hooks will use these internally
+  cartLocalStorageKey: "",     // to save cart id in local storage
+  fetchers: {},                // hooks will use these internally
+  mutators: {},                // hooks will use these internally
   createCartIfNotFound: false, // defaults to false. if true, will create a cart if none is found
-  extraHooks: {}, // other hooks you want to add here just to keep the code organized
-  queryClientConfig: {}, // internal query client config
+  extraHooks: {},              // other hooks you want to add here just to keep the code organized
+  queryClientConfig: {},       // internal query client config
 });
 ```
 
