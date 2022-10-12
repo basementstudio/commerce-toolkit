@@ -270,7 +270,7 @@ import { useDropStore } from "@bsmnt/drop";
 
 export const Countdown = () => {
   const humanTimeRemaining = useDropStore()(
-    (state) => state.humanTimeRemaining // keep in mind this is zustand, so I can slice this store
+    (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
   );
 
   return (
@@ -298,7 +298,7 @@ import { useDropStore } from "@bsmnt/drop";
 
 const Countdown = () => {
   const humanTimeRemaining = useDropStore()(
-    (state) => state.humanTimeRemaining // keep in mind this is zustand, so I can slice this store
+    (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
   );
 
   const [hasRenderedOnce, setHasRenderedOnce] = useState(false);
