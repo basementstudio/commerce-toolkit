@@ -149,6 +149,87 @@ export const hooks = createStorefrontHooks({
 yarn add @bsmnt/sdk-gen --dev && yarn add graphql graphql-request
 ```
 
+This package installs a CLI with a single command: `generate`. Running it will hit your GraphQL endpoint and generate TypeScript types from your queries and mutations.
+
+```bash
+# By default, you can have a file tree like the following:
+.
+└── sdk-gen/
+    ├── config.js
+    └── documents.gql
+```
+
+```js
+// ./sdk-gen/config.js
+
+/**
+ * @type {import("@bsmnt/sdk-gen").Config}
+ */
+module.exports = {
+  endpoint: "",
+  headers: {},
+};
+
+```
+
+```gql
+# ./sdk-gen/document.gql
+
+query FetchCart($id: ID!) {
+  cart(id: $id) {
+    id
+    lines {
+      # ...
+    }
+    checkoutURL
+    # ... any other key you want to fetch
+  }
+}
+
+```
+
+And then you can run `generate`:
+
+```zsh
+yarn sdk-gen generate
+```
+
+This will look inside `./sdk-gen/` for a `config.js` file, and for all your `.{graphql,gql}` files under that directory.
+
+If you want to use a custom directory (and not the default, which is `./sdk-gen/`), you can use the `--dir` argument.
+
+```zsh
+yarn sdk-gen generate --dir ./my-custom/directory
+```
+
+After running the generator, you should get the following result:
+
+```bash
+.
+└── sdk-gen/
+    ├── config.js
+    ├── documents.gql
+    ├── generated/              # <- generated
+    │   ├── index.ts
+    │   └── graphql.schema.json
+    └── sdk.ts                  # <- generated
+```
+
+Inside `sdk.ts`, you'll have the `bsmntSdk` being exported:
+
+```ts
+import config from "./config";
+import { createSdk } from "./generated";
+
+export const bsmntSdk = createSdk(config);
+
+```
+
+And that's all. You should be able to use that to hit your GraphQL API in a type safe manner.
+
+↳ For a standard way to use this with the [Shopify Storefront API](https://shopify.dev/api/storefront), take a look at our example [With Next.js + Shopify](./examples/nextjs-shopify/shopify/gql-sdk).
+
+
 <br />
 
 ## `@bsmnt/drop`
