@@ -41,12 +41,12 @@ This package exports:
 import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
 
 export const hooks = createStorefrontHooks({
-  cartLocalStorageKey: "",     // to save cart id in local storage
-  fetchers: {},                // hooks will use these internally
-  mutators: {},                // hooks will use these internally
+  cartLocalStorageKey: "", // to save cart id in local storage
+  fetchers: {}, // hooks will use these internally
+  mutators: {}, // hooks will use these internally
   createCartIfNotFound: false, // defaults to false. if true, will create a cart if none is found
-  extraHooks: {},              // other hooks you want to add here just to keep the code organized
-  queryClientConfig: {},       // internal query client config
+  extraHooks: {}, // other hooks you want to add here just to keep the code organized
+  queryClientConfig: {}, // internal query client config
 });
 ```
 
@@ -239,26 +239,26 @@ yarn add @bsmnt/drop
 
 This package exports:
 
-- `DropProvider`: _Context Provider_ for the `dropStore`
-- `useDropStore`: _Hook_ that consumes the `DropProvider` context and returns the `dropStore`
+- `CountdownProvider`: _Context Provider_ for the `CountdownStore`
+- `useCountdownStore`: _Hook_ that consumes the `CountdownProvider` context and returns the `CountdownStore`
 - `zeroPad`: _utility_ to pad a number with zeroes
 
-To use, just wrap the `DropProvider` wherever you want to add your countdown. For example with Next.js:
+To use, just wrap the `CountdownProvider` wherever you want to add your countdown. For example with Next.js:
 
 ```tsx
 // _app.tsx_
 import type { AppProps } from "next/app";
-import { DropProvider } from "@bsmnt/drop";
+import { CountdownProvider } from "@bsmnt/drop";
 import { Countdown } from "../components/countdown";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <DropProvider
+    <CountdownProvider
       endDate={Date.now() + 1000 * 5} // set this to 5 seconds from now just to test
       countdownChildren={<Countdown />}
     >
       <Component {...pageProps} />
-    </DropProvider>
+    </CountdownProvider>
   );
 }
 ```
@@ -266,10 +266,10 @@ export default function App({ Component, pageProps }: AppProps) {
 And then your Countdown may look something like:
 
 ```tsx
-import { useDropStore } from "@bsmnt/drop";
+import { useCountdownStore } from "@bsmnt/drop";
 
 export const Countdown = () => {
-  const humanTimeRemaining = useDropStore()(
+  const humanTimeRemaining = useCountdownStore()(
     (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
   );
 
@@ -294,10 +294,10 @@ If you render `humanTimeRemaining.seconds`, there's a high chance that your serv
 
 ```tsx
 import { useEffect, useState } from "react";
-import { useDropStore } from "@bsmnt/drop";
+import { useCountdownStore } from "@bsmnt/drop";
 
 const Countdown = () => {
-  const humanTimeRemaining = useDropStore()(
+  const humanTimeRemaining = useCountdownStore()(
     (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
   );
 
