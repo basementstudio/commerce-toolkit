@@ -1,0 +1,186 @@
+# QUERIES
+
+query _FetchCart($id: ID!) {
+  cart(id: $id) {
+    ..._Cart
+  }
+}
+
+# MUTATIONS
+
+mutation _CreateCart {
+  cartCreate {
+    ..._CartCreatePayload
+  }
+}
+mutation _CreateCartWithLines($lines: [CartLineInput!]!) {
+  cartCreate(input: { lines: $lines }) {
+    ..._CartCreatePayload
+  }
+}
+
+mutation _AddLineItem($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart {
+      ..._Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+mutation _UpdateLineItem($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+  cartLinesUpdate(cartId: $cartId, lines: $lines) {
+    cart {
+      ..._Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+mutation _RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart {
+      ..._Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+# FRAGMENTS
+
+fragment _Image on Image {
+  id
+  altText
+  originalSrc
+  width
+  height
+}
+
+fragment _Cart on Cart {
+  id
+  checkoutUrl
+  lines(first: 250) {
+    edges {
+      node {
+        id
+        quantity
+        merchandise {
+          ... on ProductVariant {
+            id
+            selectedOptions {
+              name
+              value
+            }
+            title
+            priceV2 {
+              amount
+              currencyCode
+            }
+            image {
+              ..._Image
+            }
+            product {
+              id
+              title
+              handle
+              description
+            }
+          }
+        }
+        estimatedCost {
+          subtotalAmount {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+  estimatedCost {
+    subtotalAmount {
+      amount
+      currencyCode
+    }
+  }
+}
+
+fragment _CartCreatePayload on CartCreatePayload {
+  cart {
+    ..._Cart
+  }
+  userErrors {
+    code
+    field
+    message
+  }
+}
+
+fragment _Product on Product {
+  id
+  title
+  description
+  handle
+  productType
+  tags
+  options {
+    name
+    values
+  }
+  variants(first: 250) {
+    edges {
+      node {
+        id
+        title
+        availableForSale
+        quantityAvailable
+        compareAtPriceV2 {
+          amount
+          currencyCode
+        }
+        priceV2 {
+          amount
+          currencyCode
+        }
+        image {
+          ..._Image
+        }
+        selectedOptions {
+          name
+          value
+        }
+      }
+    }
+  }
+  priceRange {
+    minVariantPrice {
+      amount
+      currencyCode
+    }
+    maxVariantPrice {
+      amount
+      currencyCode
+    }
+  }
+  productType
+  onlineStoreUrl
+  availableForSale
+  images(first: 250) {
+    edges {
+      node {
+        ..._Image
+      }
+    }
+  }
+}
