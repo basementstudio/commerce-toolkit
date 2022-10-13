@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useDropStore } from "@bsmnt/drop";
+import { useCountdownStore } from "@bsmnt/drop";
 
 export const Countdown = () => {
-  const humanTimeRemaining = useDropStore()(
+  const humanTimeRemaining = useCountdownStore()(
     (state) => state.humanTimeRemaining
   );
 
