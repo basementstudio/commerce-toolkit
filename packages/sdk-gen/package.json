@@ -1,7 +1,7 @@
 {
   "name": "@bsmnt/sdk-gen",
   "author": "basement.studio <dev@basement.studio>",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": "./dist/index.js",
   "types": "./dist/types.d.ts",
   "bin": {
@@ -14,9 +14,6 @@
   "scripts": {
     "dev": "yarn build --watch",
     "build": "tsup ./src/index.ts && tsup ./src/types.ts --dts-only"
-  },
-  "engines": {
-    "node": "16.x"
   },
   "peerDependencies": {
     "graphql": ">=16",

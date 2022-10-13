@@ -1,10 +1,7 @@
 {
   "name": "@bsmnt/storefront-hooks",
   "author": "basement.studio <dev@basement.studio>",
-  "version": "0.1.0",
-  "engines": {
-    "node": "16.x"
-  },
+  "version": "1.0.0",
   "files": [
     "dist/**/*"
   ],
