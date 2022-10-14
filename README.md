@@ -1,159 +1,351 @@
-# React Dropify 
+# BSMNT Commerce Toolkit
 
-Let's drop some cool stuff 🔥
+![commerce-toolkit](https://user-images.githubusercontent.com/40034115/195423154-223a8187-5c3c-4caa-a19a-843b07d1684a.jpeg)
 
-![react](https://user-images.githubusercontent.com/13522179/174338656-b1644ca5-f768-45ce-8576-b342f0675fae.png)
+Welcome to the **BSMNT Commerce Toolkit**: packages to help you ship better storefronts, faster, and with more confidence.
 
+This toolkit has helped us—[basement.studio](https://basement.studio/)—ship reliable storefronts that could handle crazy amounts of traffic. Some of them include: [shopmrbeast.com](https://shopmrbeast.com/), [karljacobs.co](https://karljacobs.co/), [shopmrballen.com](https://shopmrballen.com/), and [ranboo.fashion](https://ranboo.fashion/).
 
-`react-dropify` is the best library for interacting with the Shopify Storefront API (SFAPI).
+This repository currently holds three packages:
 
-- ✅ Start quickly with ready-made queries.
-- ✅ Grab the full power of the SFAPI with custom GraphQL queries.
-- ✅ Type safe with a built in, ready-to-go GraphQL x TypeScript codegen.
-- ✅ Cart state saved to `localStorage`, and provided via React Context.
-- ✅ Drop ready, with hooks to easily create countdowns and newsletter forms.
+1. `@bsmnt/storefront-hooks`: React Hooks to manage storefront client-side state.
 
-Hyped already? Let's start.
+   - ✅ Manage the whole cart lifecycle with the help of [`@tanstack/react-query`](https://tanstack.com/query/v4) and `localStorage`
+   - ✅ Easily manage your cart mutations (like adding stuff into it)
+   - ✅ An opinionated, but powerful, way to structure storefront hooks
 
-## Getting Started
+2. `@bsmnt/sdk-gen`: a CLI that generates a type-safe, graphql SDK.
 
-### 1. Install it
+   - ✅ Easily connect to any GraphQL API
+   - ✅ Generated TypeScript types from your queries
+   - ✅ Lighter than avarage, as it doesn't depend on `graphql` directly nor as a peer
 
-```zsh
-yarn add react-dropify
-```
+3. `@bsmnt/drop`: Helpers for managing a countdown. Generally used to create hype around a merch drop.
+   - ✅ Create your "countdown" in just a couple of minutes
+   - ✅ Reveal your site only when the drop is ready to go ([see this example from one of our drops](https://twitter.com/MikaelSargsyan/status/1578131832331272224))
 
-### 2. Create a Custom App on Shopify and grab your Storefront Access Token.
+These play really well together, but can also be used separately. Let's see how they work!
 
-See [instructions here](https://help.shopify.com/en/manual/apps/custom-apps). If you find it hard to create the Custom App, please let us know and we can expand on this point.
+<br />
 
-Save the Storefront Access Token as a public `.env` variable.
-
-⁉️ The Storefront API Access Token can be public. In fact, the API is optimized for being accessed from the client.
-
-### 3. Get your Store Domain Name.
-
-This is generally something like `<your-store>.myshopify.com`.
-
-Save the Store Domain Name as a public `.env` variable.
-
-### 3. Create `./react-dropify/config.js` at the root of your project.
-
-```js
-// ./react-dropify/config.js
-
-// Example showing how you'd name your environment variables in Next.js.
-// Make sure you follow the convention of your chosen framework.
-// And please, delete these comments!
-
-/**
- * @type {import('react-dropify/generate').ReactDropifyConfig}
- */
-module.exports = {
-  domain: process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN,
-  accessToken: process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN
-}
-```
-
-⁉️ The Storefront API Access Token can be public. In fact, the API is optimized for being accessed from the client.
-
-### 4. Get your SDK
-
-Simply run
+## `@bsmnt/storefront-hooks`
 
 ```zsh
-yarn react-dropify generate
+yarn add @bsmnt/storefront-hooks @tanstack/react-query
 ```
 
-Tip:
+This package exports:
 
-```js
-  // package.json
-
-  "scripts": {
-     // your scripts...
-    "generate": "yarn react-dropify generate",
-  },
-```
-
-## Let's see the results!
-
-Congratulations, you now have a type safe SDK to interact with the SFAPI. Open up `./react-dropify/sdk.ts`. It should look something like this:
+- `createStorefrontHooks`: _function_ that creates the hooks needed to interact with the cart.
 
 ```ts
-import config from './config'
-import { createReactDropifySdk } from './generated'
+import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
 
-export const reactDropifySdk = createReactDropifySdk(config)
+export const hooks = createStorefrontHooks({
+  cartLocalStorageKey: "", // to save cart id in local storage
+  fetchers: {}, // hooks will use these internally
+  mutators: {}, // hooks will use these internally
+  createCartIfNotFound: false, // defaults to false. if true, will create a cart if none is found
+  extraHooks: {}, // other hooks you want to add here just to keep the code organized
+  queryClientConfig: {}, // internal query client config
+});
 ```
 
-`reactDropifySdk` contains some basic queries, such as:
+Take a look at some examples:
 
-- `_GetAllProducts`
-- `_GetAllCollections`
-- `_GetProductByHandle`
-- ... etc
+<details>
+    <summary>Simple example, with <code>localStorage</code></summary>
+    
+```ts
+// todo
+```
+</details>
+<details>
+    <summary>Complete example, with <code>@bsmnt/sdk-gen</code></summary>
 
-What's even cooler is that you can define **custom queries** in `.graphql` files, and if you run the codegen again, you'll get all of those queries available (and type safe) on `reactDropifySdk` 💥
+```bash
+# Given the following file tree:
+.
+└── storefront/
+    ├── sdk-gen/
+    │   └── sdk.ts # generated with @bsmnt/sdk-gen
+    └── hooks.ts # <- we'll work here
+```
 
-Isn't that amazing?
+This example depends on [@bsmnt/sdk-gen](#bsmntsdk-gen).
 
-## Using the `StorefrontProvider`
+```ts
+// ./storefront/hooks.ts
 
-The `StorefrontProvider` is a React Context Provider which manages cart state. Wrap it on your `App` component.
+import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
+import { bsmntSdk } from "../gql-sdk/sdk";
+
+export const hooks = createStorefrontHooks({
+  cartLocalStorageKey: "<my-store>",
+  fetchers: {
+    fetchCart: async (cartId) => {
+      const { cart } = await bsmntSdk.FetchCart({ id: cartId });
+      if (cart === undefined) throw new Error("Request failed");
+      return cart;
+    },
+  },
+  mutators: {
+    addLineItemsToCart: async (cartId, lines) => {
+      const { cartLinesAdd } = await bsmntSdk.AddLineItem({
+        cartId,
+        lines,
+      });
+      return {
+        data: cartLinesAdd?.cart,
+        userErrors: cartLinesAdd?.userErrors,
+      };
+    },
+    createCart: async () => {
+      const { cartCreate } = await bsmntSdk.CreateCart();
+      return {
+        data: cartCreate?.cart,
+        userErrors: cartCreate?.userErrors,
+      };
+    },
+    createCartWithLines: async (lines) => {
+      const { cartCreate } = await bsmntSdk.CreateCartWithLines({ lines });
+      return {
+        data: cartCreate?.cart,
+        userErrors: cartCreate?.userErrors,
+      };
+    },
+    removeLineItemsFromCart: async (cartId, lineIds) => {
+      const { cartLinesRemove } = await bsmntSdk.RemoveLineItem({
+        cartId,
+        lineIds,
+      });
+      return {
+        data: cartLinesRemove?.cart,
+        userErrors: cartLinesRemove?.userErrors,
+      };
+    },
+    updateLineItemsInCart: async (cartId, lines) => {
+      const { cartLinesUpdate } = await bsmntSdk.UpdateLineItem({
+        cartId,
+        lines: lines.map((l) => ({
+          id: l.merchandiseId,
+          quantity: l.quantity,
+          attributes: l.attributes,
+        })),
+      });
+      return {
+        data: cartLinesUpdate?.cart,
+        userErrors: cartLinesUpdate?.userErrors,
+      };
+    },
+  },
+});
+```
+
+</details>
+
+<br />
+ 
+## `@bsmnt/sdk-gen`
+
+```zsh
+yarn add @bsmnt/sdk-gen --dev
+```
+
+This package installs a CLI with a single command: `generate`. Running it will hit your GraphQL endpoint and generate TypeScript types from your queries and mutations.
+
+```bash
+# By default, you can have a file tree like the following:
+.
+└── sdk-gen/
+    ├── config.js
+    └── documents.gql
+```
+
+```js
+// ./sdk-gen/config.js
+
+/**
+ * @type {import("@bsmnt/sdk-gen").Config}
+ */
+module.exports = {
+  endpoint: "",
+  headers: {},
+};
+```
+
+```gql
+# ./sdk-gen/document.gql
+
+query FetchCart($id: ID!) {
+  cart(id: $id) {
+    id
+    lines {
+      # ...
+    }
+    checkoutURL
+    # ... any other key you want to fetch
+  }
+}
+
+```
+
+And then you can run `generate`:
+
+```zsh
+yarn sdk-gen generate
+```
+
+This will look inside `./sdk-gen/` for a `config.js` file, and for all your `.{graphql,gql}` files under that directory.
+
+If you want to use a custom directory (and not the default, which is `./sdk-gen/`), you can use the `--dir` argument.
+
+```zsh
+yarn sdk-gen generate --dir ./my-custom/directory
+```
+
+After running the generator, you should get the following result:
+
+```bash
+.
+└── sdk-gen/
+    ├── config.js
+    ├── documents.gql
+    ├── generated/              # <- generated
+    │   ├── index.ts
+    │   └── graphql.schema.json
+    └── sdk.ts                  # <- generated
+```
+
+Inside `sdk.ts`, you'll have the `bsmntSdk` being exported:
+
+```ts
+import config from "./config";
+import { createSdk } from "./generated";
+
+export const bsmntSdk = createSdk(config);
+```
+
+And that's all. You should be able to use that to hit your GraphQL API in a type safe manner.
+
+An added benefit is that this sdk doesn't depend on `graphql`. Many GraphQL Clients require it as a peer dependency (e.g [`graphql-request`](https://github.com/prisma-labs/graphql-request/blob/master/package.json#L53)), which adds important KBs to the bundle.
+
+↳ For a standard way to use this with the [Shopify Storefront API](https://shopify.dev/api/storefront), take a look at our example [With Next.js + Shopify](./examples/nextjs-shopify/src/storefront/sdk-gen).
+
+<br />
+
+## `@bsmnt/drop`
+
+```zsh
+yarn add @bsmnt/drop
+```
+
+This package exports:
+
+- `CountdownProvider`: _Context Provider_ for the `CountdownStore`
+- `useCountdownStore`: _Hook_ that consumes the `CountdownProvider` context and returns the `CountdownStore`
+- `zeroPad`: _utility_ to pad a number with zeroes
+
+To use, just wrap the `CountdownProvider` wherever you want to add your countdown. For example with Next.js:
 
 ```tsx
-// Example using Next.js
+// _app.tsx_
+import type { AppProps } from "next/app";
+import { CountdownProvider } from "@bsmnt/drop";
+import { Countdown } from "../components/countdown";
 
-import { AppProps } from 'next/app'
-import { StorefrontProvider } from 'react-dropify'
-import { reactDropifySdk } from '~/lib/react-dropify/sdk'
-
-const App = ({ Component, pageProps }: AppProps) => {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <StorefrontProvider appCartId="<store>-cart-id" client={reactDropifySdk}>
+    <CountdownProvider
+      endDate={Date.now() + 1000 * 5} // set this to 5 seconds from now just to test
+      countdownChildren={<Countdown />}
+    >
       <Component {...pageProps} />
-    </StorefrontProvider>
-  )
+    </CountdownProvider>
+  );
 }
-
-export default App
 ```
 
-And then, somewhere in your app:
+And then your Countdown may look something like:
 
 ```tsx
-import { useStorefront } from 'react-dropify'
+import { useCountdownStore } from "@bsmnt/drop";
 
-const Component = () => {
-  const {
-    cart,
-    cartItemsCount,
-    cartToggleState,
-    onAddLineItem,
-    onRemoveLineItem,
-    onUpdateLineItem
-  } = useStorefront()
+export const Countdown = () => {
+  const humanTimeRemaining = useCountdownStore()(
+    (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
+  );
 
-  return <div />
-}
+  return (
+    <div>
+      <h1>Countdown</h1>
+      <ul>
+        <li>Days: {humanTimeRemaining.days}</li>
+        <li>Hours: {humanTimeRemaining.hours}</li>
+        <li>Minutes: {humanTimeRemaining.minutes}</li>
+        <li>Seconds: {humanTimeRemaining.seconds}</li>
+      </ul>
+    </div>
+  );
+};
 ```
 
-When you add an item to cart, the provider:
+<details>
+<summary>Important note regarding SSR</summary>
 
-1. will check on `localStorage` to see if there's a cart id stored there.
-2. will fetch the cart **only when needed**, and will cache the result using [swr](https://swr.vercel.app/).
-3. will report errors to an event emitter.
+If you render `humanTimeRemaining.seconds`, there's a high chance that your server will render something different than your client, as that value will change each second. What you can do is wait until you're safe in the client until you render:
+
+```tsx
+import { useEffect, useState } from "react";
+import { useCountdownStore } from "@bsmnt/drop";
+
+const Countdown = () => {
+  const humanTimeRemaining = useCountdownStore()(
+    (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
+  );
+
+  const [hasRenderedOnce, setHasRenderedOnce] = useState(false);
+
+  useEffect(() => {
+    setHasRenderedOnce(true);
+  }, []);
+
+  return (
+    <div>
+      <h1>Countdown</h1>
+      <ul>
+        <li>Days: {humanTimeRemaining.days}</li>
+        <li>Hours: {humanTimeRemaining.hours}</li>
+        <li>Minutes: {hasRenderedOnce ? humanTimeRemaining.minutes : "59"}</li>
+        <li>Seconds: {hasRenderedOnce ? humanTimeRemaining.seconds : "59"}</li>
+      </ul>
+    </div>
+  );
+};
+```
+
+</details>
+
+<br />
+
+## Examples
+
+Some examples to get you started:
+
+- [With Next.js + Shopify](./examples/nextjs-shopify)
+- [With Next.js + `localStorage`](./examples/nextjs-localstorage)
+
+<br />
 
 ---
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. Issues are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](./LICENSE/)
 
 ## Authors
 
