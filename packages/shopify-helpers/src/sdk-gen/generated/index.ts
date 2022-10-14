@@ -6636,6 +6636,35 @@ export type _FetchCartQueryVariables = Exact<{
 
 export type _FetchCartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null };
 
+export type _GetProductByHandleQueryVariables = Exact<{
+  handle: Scalars['String'];
+}>;
+
+
+export type _GetProductByHandleQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } | null };
+
+export type _GetAllProductsQueryVariables = Exact<{
+  startAfter?: InputMaybe<Scalars['String']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type _GetAllProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } };
+
+export type _GetProductsOnCollectionQueryVariables = Exact<{
+  startAfter?: InputMaybe<Scalars['String']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID'];
+}>;
+
+
+export type _GetProductsOnCollectionQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } } | null };
+
+export type _GetCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type _GetCollectionsQuery = { __typename?: 'QueryRoot', collections: { __typename?: 'CollectionConnection', edges: Array<{ __typename?: 'CollectionEdge', node: { __typename?: 'Collection', id: string, handle: string, title: string, products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } } }> } };
+
 export type _CreateCartMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6816,6 +6845,60 @@ export const _FetchCartDocument = `
   }
 }
     ${_CartFragmentDoc}`;
+export const _GetProductByHandleDocument = `
+    query _GetProductByHandle($handle: String!) {
+  product(handle: $handle) {
+    ..._Product
+  }
+}
+    ${_ProductFragmentDoc}`;
+export const _GetAllProductsDocument = `
+    query _GetAllProducts($startAfter: String, $pageSize: Int = 250) {
+  products(first: $pageSize, after: $startAfter) {
+    edges {
+      cursor
+      node {
+        ..._Product
+      }
+    }
+  }
+}
+    ${_ProductFragmentDoc}`;
+export const _GetProductsOnCollectionDocument = `
+    query _GetProductsOnCollection($startAfter: String, $pageSize: Int = 250, $id: ID!) {
+  collection(id: $id) {
+    products(first: $pageSize, after: $startAfter) {
+      edges {
+        cursor
+        node {
+          ..._Product
+        }
+      }
+    }
+  }
+}
+    ${_ProductFragmentDoc}`;
+export const _GetCollectionsDocument = `
+    query _GetCollections {
+  collections(first: 200) {
+    edges {
+      node {
+        id
+        handle
+        title
+        products(first: 200) {
+          edges {
+            cursor
+            node {
+              ..._Product
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${_ProductFragmentDoc}`;
 export const _CreateCartDocument = `
     mutation _CreateCart {
   cartCreate {
@@ -6877,6 +6960,18 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
     _FetchCart(variables: _FetchCartQueryVariables, options?: C): Promise<_FetchCartQuery> {
       return requester<_FetchCartQuery, _FetchCartQueryVariables>(_FetchCartDocument, variables, options) as Promise<_FetchCartQuery>;
+    },
+    _GetProductByHandle(variables: _GetProductByHandleQueryVariables, options?: C): Promise<_GetProductByHandleQuery> {
+      return requester<_GetProductByHandleQuery, _GetProductByHandleQueryVariables>(_GetProductByHandleDocument, variables, options) as Promise<_GetProductByHandleQuery>;
+    },
+    _GetAllProducts(variables?: _GetAllProductsQueryVariables, options?: C): Promise<_GetAllProductsQuery> {
+      return requester<_GetAllProductsQuery, _GetAllProductsQueryVariables>(_GetAllProductsDocument, variables, options) as Promise<_GetAllProductsQuery>;
+    },
+    _GetProductsOnCollection(variables: _GetProductsOnCollectionQueryVariables, options?: C): Promise<_GetProductsOnCollectionQuery> {
+      return requester<_GetProductsOnCollectionQuery, _GetProductsOnCollectionQueryVariables>(_GetProductsOnCollectionDocument, variables, options) as Promise<_GetProductsOnCollectionQuery>;
+    },
+    _GetCollections(variables?: _GetCollectionsQueryVariables, options?: C): Promise<_GetCollectionsQuery> {
+      return requester<_GetCollectionsQuery, _GetCollectionsQueryVariables>(_GetCollectionsDocument, variables, options) as Promise<_GetCollectionsQuery>;
     },
     _CreateCart(variables?: _CreateCartMutationVariables, options?: C): Promise<_CreateCartMutation> {
       return requester<_CreateCartMutation, _CreateCartMutationVariables>(_CreateCartDocument, variables, options) as Promise<_CreateCartMutation>;
