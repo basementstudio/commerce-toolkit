@@ -1,5 +1,11 @@
 # @bsmnt/shopify-helpers
 
+## 1.2.2
+
+### Patch Changes
+
+- cce9e5b: remove unnecessary file
+
 ## 1.2.1
 
 ### Patch Changes
