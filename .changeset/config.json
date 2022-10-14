@@ -7,5 +7,5 @@
   "access": "public",
   "updateInternalDependencies": "patch",
   "ignore": [],
-  "baseBranch": "jb/turborepo"
+  "baseBranch": "main"
 }
