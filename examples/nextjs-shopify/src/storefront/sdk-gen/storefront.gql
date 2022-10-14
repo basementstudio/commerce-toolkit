@@ -1,0 +1,128 @@
+# QUERIES
+
+query FetchCart($id: ID!) {
+  cart(id: $id) {
+    ...Cart
+  }
+}
+
+# MUTATIONS
+
+mutation CreateCart {
+  cartCreate {
+    ...CartCreatePayload
+  }
+}
+mutation CreateCartWithLines($lines: [CartLineInput!]!) {
+  cartCreate(input: { lines: $lines }) {
+    ...CartCreatePayload
+  }
+}
+
+mutation AddLineItem($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart {
+      ...Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+mutation UpdateLineItem($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+  cartLinesUpdate(cartId: $cartId, lines: $lines) {
+    cart {
+      ...Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+mutation RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart {
+      ...Cart
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}
+
+# FRAGMENTS
+
+fragment Image on Image {
+  id
+  altText
+  originalSrc
+  width
+  height
+}
+
+fragment Cart on Cart {
+  id
+  checkoutUrl
+  lines(first: 250) {
+    edges {
+      node {
+        id
+        quantity
+        merchandise {
+          ... on ProductVariant {
+            id
+            selectedOptions {
+              name
+              value
+            }
+            title
+            priceV2 {
+              amount
+              currencyCode
+            }
+            image {
+              ...Image
+            }
+            product {
+              id
+              title
+              handle
+              description
+            }
+          }
+        }
+        estimatedCost {
+          subtotalAmount {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+  estimatedCost {
+    subtotalAmount {
+      amount
+      currencyCode
+    }
+  }
+}
+
+fragment CartCreatePayload on CartCreatePayload {
+  cart {
+    ...Cart
+  }
+  userErrors {
+    code
+    field
+    message
+  }
+}

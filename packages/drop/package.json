@@ -1,0 +1,31 @@
+{
+  "name": "@bsmnt/drop",
+  "author": "basement.studio <dev@basement.studio>",
+  "version": "1.2.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "sideEffects": false,
+  "scripts": {
+    "dev": "yarn build --watch",
+    "build": "tsup ./src/index.ts --format esm,cjs --dts"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16"
+  },
+  "dependencies": {
+    "zustand": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsconfig": "*",
+    "tsup": "^6.2.3",
+    "type-fest": "^3.0.0",
+    "typescript": "^4.8.4"
+  }
+}
