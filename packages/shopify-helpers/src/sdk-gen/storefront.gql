@@ -6,6 +6,60 @@ query _FetchCart($id: ID!) {
   }
 }
 
+query _GetProductByHandle($handle: String!) {
+  product(handle: $handle) {
+    ..._Product
+  }
+}
+
+query _GetAllProducts($startAfter: String, $pageSize: Int = 250) {
+  products(first: $pageSize, after: $startAfter) {
+    edges {
+      cursor
+      node {
+        ..._Product
+      }
+    }
+  }
+}
+
+query _GetProductsOnCollection(
+  $startAfter: String
+  $pageSize: Int = 250
+  $id: ID!
+) {
+  collection(id: $id) {
+    products(first: $pageSize, after: $startAfter) {
+      edges {
+        cursor
+        node {
+          ..._Product
+        }
+      }
+    }
+  }
+}
+
+query _GetCollections {
+  collections(first: 200) {
+    edges {
+      node {
+        id
+        handle
+        title
+        products(first: 200) {
+          edges {
+            cursor
+            node {
+              ..._Product
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 # MUTATIONS
 
 mutation _CreateCart {

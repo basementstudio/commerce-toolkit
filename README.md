@@ -148,7 +148,7 @@ export const hooks = createStorefrontHooks({
 ## `@bsmnt/sdk-gen`
 
 ```zsh
-yarn add @bsmnt/sdk-gen --dev && yarn add graphql graphql-request
+yarn add @bsmnt/sdk-gen --dev
 ```
 
 This package installs a CLI with a single command: `generate`. Running it will hit your GraphQL endpoint and generate TypeScript types from your queries and mutations.

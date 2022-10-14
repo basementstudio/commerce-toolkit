@@ -15,18 +15,17 @@
     "dev": "yarn build --watch",
     "build": "tsup ./src/index.ts && tsup ./src/types.ts --dts-only"
   },
-  "peerDependencies": {
-    "graphql": ">=16",
-    "graphql-request": ">=3"
-  },
+  "peerDependencies": {},
   "dependencies": {
     "@graphql-codegen/cli": "^2.3.0",
     "@graphql-codegen/introspection": "^2.1.0",
     "@graphql-codegen/typescript": "^2.4.1",
-    "@graphql-codegen/typescript-graphql-request": "^4.3.2",
+    "@graphql-codegen/typescript-generic-sdk": "^3.0.2",
     "@graphql-codegen/typescript-operations": "^2.2.1",
     "arg": "^5.0.1",
+    "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.0",
+    "isomorphic-unfetch": "^3.1.0",
     "zod": "^3.14.4"
   },
   "devDependencies": {

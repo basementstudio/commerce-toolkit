@@ -36,20 +36,22 @@ export async function main(args: Args) {
           documents: [
             bgsdkDirectoryPath + "/**/*.{gql,graphql}",
             bgsdkDirectoryPath + "/*.{gql,graphql}",
-            // defaultGqlPath + "/**/*.{gql,graphql}",
           ],
           plugins: [
             "typescript",
             "typescript-operations",
-            "typescript-graphql-request",
+            "typescript-generic-sdk",
           ],
+          config: {
+            useTypeImports: true,
+            documentMode: "string",
+          },
         },
         [__dirname + "/generated/graphql.schema.json"]: {
           plugins: ["introspection"],
           config: {
             documentMode: "documentNode",
             withHooks: true,
-            gqlImport: "graphql-request#gql",
           },
         },
       },
@@ -71,11 +73,7 @@ export async function main(args: Args) {
   );
   fs.writeFileSync(
     path.join(bgsdkDirectoryPath, "generated/index.ts"),
-    "/* eslint-disable */\n" +
-      "// @ts-nocheck\n" +
-      sdkCodegen.content +
-      "\n" +
-      extraGenerated
+    "/* eslint-disable */\n" + sdkCodegen.content + "\n" + extraGenerated
   );
   const skdFilePath = path.join(bgsdkDirectoryPath, "sdk.ts");
   if (!fs.existsSync(skdFilePath)) {
@@ -93,22 +91,63 @@ function createDirIfDoesNotExist(p: string) {
 
 const extraGenerated = `import type { Config } from "@bsmnt/sdk-gen";
 
+// @ts-ignore
+const fetch = global.fetch || require("isomorphic-unfetch");
+
+type ClientOptions = {
+  noThrowOnErrors?: boolean;
+};
+
 export const createSdk = ({
   endpoint,
-  headers
-}: Config) => {
-  const graphQLClient = new GraphQLClient(endpoint, {
-    headers: {
-      accept: 'application/json',
-      'Content-Type': 'application/json',
-      ...headers
+  headers,
+  clientOptions,
+}: Config & { clientOptions?: ClientOptions }) => {
+  const client: Requester = async (doc, vars, options?: ClientOptions) => {
+    const allClientOptions = { ...clientOptions, ...options };
+
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify({
+        query: doc,
+        variables: vars,
+      }),
+    });
+    const json = await response.json();
+    const { errors, data } = json;
+
+    const hasErrors = errors && Array.isArray(errors) && errors.length > 0;
+
+    if (hasErrors && !allClientOptions?.noThrowOnErrors) {
+      const message = \`GraphQL fetch errors:
+
+      \${errors.map((e: any, idx: number) => \`\${idx}. \${e.message}\`).join("\\n")}
+      
+      ——————
+
+      Doc:
+      \${doc}
+      
+      Vars:
+      \${vars}
+      \`;
+
+      throw new Error(message);
     }
-  })
 
-  const generatedSdk = getSdk(graphQLClient)
+    return { ...data, ...(hasErrors ? { errors } : {}) };
+  };
 
-  return { ...generatedSdk, client: graphQLClient }
-}`;
+  const generatedSdk = getSdk(client);
+
+  return { ...generatedSdk, client };
+};
+`;
 
 const sdkFileContents = `import config from './config'
 import { createSdk } from './generated'

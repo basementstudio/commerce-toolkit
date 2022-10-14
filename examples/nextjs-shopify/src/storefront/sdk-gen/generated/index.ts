@@ -1,8 +1,4 @@
 /* eslint-disable */
-// @ts-nocheck
-import { GraphQLClient } from 'graphql-request';
-import * as Dom from 'graphql-request/dist/types.dom';
-import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -6682,7 +6678,7 @@ export type CartFragment = { __typename?: 'Cart', id: string, checkoutUrl: any, 
 
 export type CartCreatePayloadFragment = { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> };
 
-export const ImageFragmentDoc = gql`
+export const ImageFragmentDoc = `
     fragment Image on Image {
   id
   altText
@@ -6691,7 +6687,7 @@ export const ImageFragmentDoc = gql`
   height
 }
     `;
-export const CartFragmentDoc = gql`
+export const CartFragmentDoc = `
     fragment Cart on Cart {
   id
   checkoutUrl
@@ -6740,7 +6736,7 @@ export const CartFragmentDoc = gql`
   }
 }
     ${ImageFragmentDoc}`;
-export const CartCreatePayloadFragmentDoc = gql`
+export const CartCreatePayloadFragmentDoc = `
     fragment CartCreatePayload on CartCreatePayload {
   cart {
     ...Cart
@@ -6752,28 +6748,28 @@ export const CartCreatePayloadFragmentDoc = gql`
   }
 }
     ${CartFragmentDoc}`;
-export const FetchCartDocument = gql`
+export const FetchCartDocument = `
     query FetchCart($id: ID!) {
   cart(id: $id) {
     ...Cart
   }
 }
     ${CartFragmentDoc}`;
-export const CreateCartDocument = gql`
+export const CreateCartDocument = `
     mutation CreateCart {
   cartCreate {
     ...CartCreatePayload
   }
 }
     ${CartCreatePayloadFragmentDoc}`;
-export const CreateCartWithLinesDocument = gql`
+export const CreateCartWithLinesDocument = `
     mutation CreateCartWithLines($lines: [CartLineInput!]!) {
   cartCreate(input: {lines: $lines}) {
     ...CartCreatePayload
   }
 }
     ${CartCreatePayloadFragmentDoc}`;
-export const AddLineItemDocument = gql`
+export const AddLineItemDocument = `
     mutation AddLineItem($cartId: ID!, $lines: [CartLineInput!]!) {
   cartLinesAdd(cartId: $cartId, lines: $lines) {
     cart {
@@ -6787,7 +6783,7 @@ export const AddLineItemDocument = gql`
   }
 }
     ${CartFragmentDoc}`;
-export const UpdateLineItemDocument = gql`
+export const UpdateLineItemDocument = `
     mutation UpdateLineItem($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
   cartLinesUpdate(cartId: $cartId, lines: $lines) {
     cart {
@@ -6801,7 +6797,7 @@ export const UpdateLineItemDocument = gql`
   }
 }
     ${CartFragmentDoc}`;
-export const RemoveLineItemDocument = gql`
+export const RemoveLineItemDocument = `
     mutation RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
   cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
     cart {
@@ -6815,50 +6811,85 @@ export const RemoveLineItemDocument = gql`
   }
 }
     ${CartFragmentDoc}`;
-
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
-
-
-const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
-
-export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+export type Requester<C = {}, E = unknown> = <R, V>(doc: string, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
+export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
-    FetchCart(variables: FetchCartQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<FetchCartQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<FetchCartQuery>(FetchCartDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'FetchCart', 'query');
+    FetchCart(variables: FetchCartQueryVariables, options?: C): Promise<FetchCartQuery> {
+      return requester<FetchCartQuery, FetchCartQueryVariables>(FetchCartDocument, variables, options) as Promise<FetchCartQuery>;
     },
-    CreateCart(variables?: CreateCartMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateCartMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateCartMutation>(CreateCartDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateCart', 'mutation');
+    CreateCart(variables?: CreateCartMutationVariables, options?: C): Promise<CreateCartMutation> {
+      return requester<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables, options) as Promise<CreateCartMutation>;
     },
-    CreateCartWithLines(variables: CreateCartWithLinesMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateCartWithLinesMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateCartWithLinesMutation>(CreateCartWithLinesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateCartWithLines', 'mutation');
+    CreateCartWithLines(variables: CreateCartWithLinesMutationVariables, options?: C): Promise<CreateCartWithLinesMutation> {
+      return requester<CreateCartWithLinesMutation, CreateCartWithLinesMutationVariables>(CreateCartWithLinesDocument, variables, options) as Promise<CreateCartWithLinesMutation>;
     },
-    AddLineItem(variables: AddLineItemMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddLineItemMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<AddLineItemMutation>(AddLineItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddLineItem', 'mutation');
+    AddLineItem(variables: AddLineItemMutationVariables, options?: C): Promise<AddLineItemMutation> {
+      return requester<AddLineItemMutation, AddLineItemMutationVariables>(AddLineItemDocument, variables, options) as Promise<AddLineItemMutation>;
     },
-    UpdateLineItem(variables: UpdateLineItemMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateLineItemMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateLineItemMutation>(UpdateLineItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpdateLineItem', 'mutation');
+    UpdateLineItem(variables: UpdateLineItemMutationVariables, options?: C): Promise<UpdateLineItemMutation> {
+      return requester<UpdateLineItemMutation, UpdateLineItemMutationVariables>(UpdateLineItemDocument, variables, options) as Promise<UpdateLineItemMutation>;
     },
-    RemoveLineItem(variables: RemoveLineItemMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<RemoveLineItemMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<RemoveLineItemMutation>(RemoveLineItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'RemoveLineItem', 'mutation');
+    RemoveLineItem(variables: RemoveLineItemMutationVariables, options?: C): Promise<RemoveLineItemMutation> {
+      return requester<RemoveLineItemMutation, RemoveLineItemMutationVariables>(RemoveLineItemDocument, variables, options) as Promise<RemoveLineItemMutation>;
     }
   };
 }
 export type Sdk = ReturnType<typeof getSdk>;
 import type { Config } from "@bsmnt/sdk-gen";
 
+// @ts-ignore
+const fetch = global.fetch || require("isomorphic-unfetch");
+
+type ClientOptions = {
+  noThrowOnErrors?: boolean;
+};
+
 export const createSdk = ({
   endpoint,
-  headers
-}: Config) => {
-  const graphQLClient = new GraphQLClient(endpoint, {
-    headers: {
-      accept: 'application/json',
-      'Content-Type': 'application/json',
-      ...headers
+  headers,
+  clientOptions,
+}: Config & { clientOptions?: ClientOptions }) => {
+  const client: Requester = async (doc, vars, options?: ClientOptions) => {
+    const allClientOptions = { ...clientOptions, ...options };
+
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify({
+        query: doc,
+        variables: vars,
+      }),
+    });
+    const json = await response.json();
+    const { errors, data } = json;
+
+    const hasErrors = errors && Array.isArray(errors) && errors.length > 0;
+
+    if (hasErrors && !allClientOptions?.noThrowOnErrors) {
+      const message = `GraphQL fetch errors:
+
+      ${errors.map((e: any, idx: number) => `${idx}. ${e.message}`).join("\n")}
+      
+      ——————
+
+      Doc:
+      ${doc}
+      
+      Vars:
+      ${vars}
+      `;
+
+      throw new Error(message);
     }
-  })
 
-  const generatedSdk = getSdk(graphQLClient)
+    return { ...data, ...(hasErrors ? { errors } : {}) };
+  };
 
-  return { ...generatedSdk, client: graphQLClient }
-}
+  const generatedSdk = getSdk(client);
+
+  return { ...generatedSdk, client };
+};
