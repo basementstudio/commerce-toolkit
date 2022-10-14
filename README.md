@@ -18,6 +18,7 @@ This repository currently holds three packages:
 
    - ✅ Easily connect to any GraphQL API
    - ✅ Generated TypeScript types from your queries
+   - ✅ Lighter than avarage, as it doesn't depend on `graphql` directly nor as a peer
 
 3. `@bsmnt/drop`: Helpers for managing a countdown. Generally used to create hype around a merch drop.
    - ✅ Create your "countdown" in just a couple of minutes
@@ -226,6 +227,8 @@ export const bsmntSdk = createSdk(config);
 ```
 
 And that's all. You should be able to use that to hit your GraphQL API in a type safe manner.
+
+An added benefit is that this sdk doesn't depend on `graphql`. Many GraphQL Clients require it as a peer dependency (e.g [`graphql-request`](https://github.com/prisma-labs/graphql-request/blob/master/package.json)), which adds important KBs to the bundle.
 
 ↳ For a standard way to use this with the [Shopify Storefront API](https://shopify.dev/api/storefront), take a look at our example [With Next.js + Shopify](./examples/nextjs-shopify/src/storefront/sdk-gen).
 
