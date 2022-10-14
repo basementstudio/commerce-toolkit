@@ -1,5 +1,11 @@
 # @bsmnt/storefront-hooks
 
+## 1.2.1
+
+### Patch Changes
+
+- update react as peerDependency definition
+
 ## 1.2.0
 
 ### Minor Changes
