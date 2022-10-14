@@ -6629,57 +6629,88 @@ export enum WeightUnit {
   Pounds = 'POUNDS'
 }
 
-export type FetchCartQueryVariables = Exact<{
+export type _FetchCartQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type FetchCartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null };
+export type _FetchCartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null };
 
-export type CreateCartMutationVariables = Exact<{ [key: string]: never; }>;
+export type _GetProductByHandleQueryVariables = Exact<{
+  handle: Scalars['String'];
+}>;
 
 
-export type CreateCartMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _GetProductByHandleQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } | null };
 
-export type CreateCartWithLinesMutationVariables = Exact<{
+export type _GetAllProductsQueryVariables = Exact<{
+  startAfter?: InputMaybe<Scalars['String']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type _GetAllProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } };
+
+export type _GetProductsOnCollectionQueryVariables = Exact<{
+  startAfter?: InputMaybe<Scalars['String']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID'];
+}>;
+
+
+export type _GetProductsOnCollectionQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } } | null };
+
+export type _GetCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type _GetCollectionsQuery = { __typename?: 'QueryRoot', collections: { __typename?: 'CollectionConnection', edges: Array<{ __typename?: 'CollectionEdge', node: { __typename?: 'Collection', id: string, handle: string, title: string, products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } } }> } };
+
+export type _CreateCartMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type _CreateCartMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+
+export type _CreateCartWithLinesMutationVariables = Exact<{
   lines: Array<CartLineInput> | CartLineInput;
 }>;
 
 
-export type CreateCartWithLinesMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _CreateCartWithLinesMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
-export type AddLineItemMutationVariables = Exact<{
+export type _AddLineItemMutationVariables = Exact<{
   cartId: Scalars['ID'];
   lines: Array<CartLineInput> | CartLineInput;
 }>;
 
 
-export type AddLineItemMutation = { __typename?: 'Mutation', cartLinesAdd?: { __typename?: 'CartLinesAddPayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _AddLineItemMutation = { __typename?: 'Mutation', cartLinesAdd?: { __typename?: 'CartLinesAddPayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
-export type UpdateLineItemMutationVariables = Exact<{
+export type _UpdateLineItemMutationVariables = Exact<{
   cartId: Scalars['ID'];
   lines: Array<CartLineUpdateInput> | CartLineUpdateInput;
 }>;
 
 
-export type UpdateLineItemMutation = { __typename?: 'Mutation', cartLinesUpdate?: { __typename?: 'CartLinesUpdatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _UpdateLineItemMutation = { __typename?: 'Mutation', cartLinesUpdate?: { __typename?: 'CartLinesUpdatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
-export type RemoveLineItemMutationVariables = Exact<{
+export type _RemoveLineItemMutationVariables = Exact<{
   cartId: Scalars['ID'];
   lineIds: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
-export type RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
-export type ImageFragment = { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null };
+export type _ImageFragment = { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null };
 
-export type CartFragment = { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } };
+export type _CartFragment = { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } };
 
-export type CartCreatePayloadFragment = { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> };
+export type _CartCreatePayloadFragment = { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> };
 
-export const ImageFragmentDoc = `
-    fragment Image on Image {
+export type _ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } };
+
+export const _ImageFragmentDoc = `
+    fragment _Image on Image {
   id
   altText
   originalSrc
@@ -6687,8 +6718,8 @@ export const ImageFragmentDoc = `
   height
 }
     `;
-export const CartFragmentDoc = `
-    fragment Cart on Cart {
+export const _CartFragmentDoc = `
+    fragment _Cart on Cart {
   id
   checkoutUrl
   lines(first: 250) {
@@ -6709,7 +6740,7 @@ export const CartFragmentDoc = `
               currencyCode
             }
             image {
-              ...Image
+              ..._Image
             }
             product {
               id
@@ -6735,11 +6766,11 @@ export const CartFragmentDoc = `
     }
   }
 }
-    ${ImageFragmentDoc}`;
-export const CartCreatePayloadFragmentDoc = `
-    fragment CartCreatePayload on CartCreatePayload {
+    ${_ImageFragmentDoc}`;
+export const _CartCreatePayloadFragmentDoc = `
+    fragment _CartCreatePayload on CartCreatePayload {
   cart {
-    ...Cart
+    ..._Cart
   }
   userErrors {
     code
@@ -6747,33 +6778,146 @@ export const CartCreatePayloadFragmentDoc = `
     message
   }
 }
-    ${CartFragmentDoc}`;
-export const FetchCartDocument = `
-    query FetchCart($id: ID!) {
+    ${_CartFragmentDoc}`;
+export const _ProductFragmentDoc = `
+    fragment _Product on Product {
+  id
+  title
+  description
+  handle
+  productType
+  tags
+  options {
+    name
+    values
+  }
+  variants(first: 250) {
+    edges {
+      node {
+        id
+        title
+        availableForSale
+        quantityAvailable
+        compareAtPriceV2 {
+          amount
+          currencyCode
+        }
+        priceV2 {
+          amount
+          currencyCode
+        }
+        image {
+          ..._Image
+        }
+        selectedOptions {
+          name
+          value
+        }
+      }
+    }
+  }
+  priceRange {
+    minVariantPrice {
+      amount
+      currencyCode
+    }
+    maxVariantPrice {
+      amount
+      currencyCode
+    }
+  }
+  productType
+  onlineStoreUrl
+  availableForSale
+  images(first: 250) {
+    edges {
+      node {
+        ..._Image
+      }
+    }
+  }
+}
+    ${_ImageFragmentDoc}`;
+export const _FetchCartDocument = `
+    query _FetchCart($id: ID!) {
   cart(id: $id) {
-    ...Cart
+    ..._Cart
   }
 }
-    ${CartFragmentDoc}`;
-export const CreateCartDocument = `
-    mutation CreateCart {
+    ${_CartFragmentDoc}`;
+export const _GetProductByHandleDocument = `
+    query _GetProductByHandle($handle: String!) {
+  product(handle: $handle) {
+    ..._Product
+  }
+}
+    ${_ProductFragmentDoc}`;
+export const _GetAllProductsDocument = `
+    query _GetAllProducts($startAfter: String, $pageSize: Int = 250) {
+  products(first: $pageSize, after: $startAfter) {
+    edges {
+      cursor
+      node {
+        ..._Product
+      }
+    }
+  }
+}
+    ${_ProductFragmentDoc}`;
+export const _GetProductsOnCollectionDocument = `
+    query _GetProductsOnCollection($startAfter: String, $pageSize: Int = 250, $id: ID!) {
+  collection(id: $id) {
+    products(first: $pageSize, after: $startAfter) {
+      edges {
+        cursor
+        node {
+          ..._Product
+        }
+      }
+    }
+  }
+}
+    ${_ProductFragmentDoc}`;
+export const _GetCollectionsDocument = `
+    query _GetCollections {
+  collections(first: 200) {
+    edges {
+      node {
+        id
+        handle
+        title
+        products(first: 200) {
+          edges {
+            cursor
+            node {
+              ..._Product
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${_ProductFragmentDoc}`;
+export const _CreateCartDocument = `
+    mutation _CreateCart {
   cartCreate {
-    ...CartCreatePayload
+    ..._CartCreatePayload
   }
 }
-    ${CartCreatePayloadFragmentDoc}`;
-export const CreateCartWithLinesDocument = `
-    mutation CreateCartWithLines($lines: [CartLineInput!]!) {
+    ${_CartCreatePayloadFragmentDoc}`;
+export const _CreateCartWithLinesDocument = `
+    mutation _CreateCartWithLines($lines: [CartLineInput!]!) {
   cartCreate(input: {lines: $lines}) {
-    ...CartCreatePayload
+    ..._CartCreatePayload
   }
 }
-    ${CartCreatePayloadFragmentDoc}`;
-export const AddLineItemDocument = `
-    mutation AddLineItem($cartId: ID!, $lines: [CartLineInput!]!) {
+    ${_CartCreatePayloadFragmentDoc}`;
+export const _AddLineItemDocument = `
+    mutation _AddLineItem($cartId: ID!, $lines: [CartLineInput!]!) {
   cartLinesAdd(cartId: $cartId, lines: $lines) {
     cart {
-      ...Cart
+      ..._Cart
     }
     userErrors {
       code
@@ -6782,12 +6926,12 @@ export const AddLineItemDocument = `
     }
   }
 }
-    ${CartFragmentDoc}`;
-export const UpdateLineItemDocument = `
-    mutation UpdateLineItem($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+    ${_CartFragmentDoc}`;
+export const _UpdateLineItemDocument = `
+    mutation _UpdateLineItem($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
   cartLinesUpdate(cartId: $cartId, lines: $lines) {
     cart {
-      ...Cart
+      ..._Cart
     }
     userErrors {
       code
@@ -6796,12 +6940,12 @@ export const UpdateLineItemDocument = `
     }
   }
 }
-    ${CartFragmentDoc}`;
-export const RemoveLineItemDocument = `
-    mutation RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
+    ${_CartFragmentDoc}`;
+export const _RemoveLineItemDocument = `
+    mutation _RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
   cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
     cart {
-      ...Cart
+      ..._Cart
     }
     userErrors {
       code
@@ -6810,27 +6954,39 @@ export const RemoveLineItemDocument = `
     }
   }
 }
-    ${CartFragmentDoc}`;
+    ${_CartFragmentDoc}`;
 export type Requester<C = {}, E = unknown> = <R, V>(doc: string, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
-    FetchCart(variables: FetchCartQueryVariables, options?: C): Promise<FetchCartQuery> {
-      return requester<FetchCartQuery, FetchCartQueryVariables>(FetchCartDocument, variables, options) as Promise<FetchCartQuery>;
+    _FetchCart(variables: _FetchCartQueryVariables, options?: C): Promise<_FetchCartQuery> {
+      return requester<_FetchCartQuery, _FetchCartQueryVariables>(_FetchCartDocument, variables, options) as Promise<_FetchCartQuery>;
     },
-    CreateCart(variables?: CreateCartMutationVariables, options?: C): Promise<CreateCartMutation> {
-      return requester<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables, options) as Promise<CreateCartMutation>;
+    _GetProductByHandle(variables: _GetProductByHandleQueryVariables, options?: C): Promise<_GetProductByHandleQuery> {
+      return requester<_GetProductByHandleQuery, _GetProductByHandleQueryVariables>(_GetProductByHandleDocument, variables, options) as Promise<_GetProductByHandleQuery>;
     },
-    CreateCartWithLines(variables: CreateCartWithLinesMutationVariables, options?: C): Promise<CreateCartWithLinesMutation> {
-      return requester<CreateCartWithLinesMutation, CreateCartWithLinesMutationVariables>(CreateCartWithLinesDocument, variables, options) as Promise<CreateCartWithLinesMutation>;
+    _GetAllProducts(variables?: _GetAllProductsQueryVariables, options?: C): Promise<_GetAllProductsQuery> {
+      return requester<_GetAllProductsQuery, _GetAllProductsQueryVariables>(_GetAllProductsDocument, variables, options) as Promise<_GetAllProductsQuery>;
     },
-    AddLineItem(variables: AddLineItemMutationVariables, options?: C): Promise<AddLineItemMutation> {
-      return requester<AddLineItemMutation, AddLineItemMutationVariables>(AddLineItemDocument, variables, options) as Promise<AddLineItemMutation>;
+    _GetProductsOnCollection(variables: _GetProductsOnCollectionQueryVariables, options?: C): Promise<_GetProductsOnCollectionQuery> {
+      return requester<_GetProductsOnCollectionQuery, _GetProductsOnCollectionQueryVariables>(_GetProductsOnCollectionDocument, variables, options) as Promise<_GetProductsOnCollectionQuery>;
     },
-    UpdateLineItem(variables: UpdateLineItemMutationVariables, options?: C): Promise<UpdateLineItemMutation> {
-      return requester<UpdateLineItemMutation, UpdateLineItemMutationVariables>(UpdateLineItemDocument, variables, options) as Promise<UpdateLineItemMutation>;
+    _GetCollections(variables?: _GetCollectionsQueryVariables, options?: C): Promise<_GetCollectionsQuery> {
+      return requester<_GetCollectionsQuery, _GetCollectionsQueryVariables>(_GetCollectionsDocument, variables, options) as Promise<_GetCollectionsQuery>;
     },
-    RemoveLineItem(variables: RemoveLineItemMutationVariables, options?: C): Promise<RemoveLineItemMutation> {
-      return requester<RemoveLineItemMutation, RemoveLineItemMutationVariables>(RemoveLineItemDocument, variables, options) as Promise<RemoveLineItemMutation>;
+    _CreateCart(variables?: _CreateCartMutationVariables, options?: C): Promise<_CreateCartMutation> {
+      return requester<_CreateCartMutation, _CreateCartMutationVariables>(_CreateCartDocument, variables, options) as Promise<_CreateCartMutation>;
+    },
+    _CreateCartWithLines(variables: _CreateCartWithLinesMutationVariables, options?: C): Promise<_CreateCartWithLinesMutation> {
+      return requester<_CreateCartWithLinesMutation, _CreateCartWithLinesMutationVariables>(_CreateCartWithLinesDocument, variables, options) as Promise<_CreateCartWithLinesMutation>;
+    },
+    _AddLineItem(variables: _AddLineItemMutationVariables, options?: C): Promise<_AddLineItemMutation> {
+      return requester<_AddLineItemMutation, _AddLineItemMutationVariables>(_AddLineItemDocument, variables, options) as Promise<_AddLineItemMutation>;
+    },
+    _UpdateLineItem(variables: _UpdateLineItemMutationVariables, options?: C): Promise<_UpdateLineItemMutation> {
+      return requester<_UpdateLineItemMutation, _UpdateLineItemMutationVariables>(_UpdateLineItemDocument, variables, options) as Promise<_UpdateLineItemMutation>;
+    },
+    _RemoveLineItem(variables: _RemoveLineItemMutationVariables, options?: C): Promise<_RemoveLineItemMutation> {
+      return requester<_RemoveLineItemMutation, _RemoveLineItemMutationVariables>(_RemoveLineItemDocument, variables, options) as Promise<_RemoveLineItemMutation>;
     }
   };
 }

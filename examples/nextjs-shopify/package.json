@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:analyze": "cross-env ANALYZE=true yarn build",
     "start": "next start",
     "lint": "next lint",
     "generate": "yarn sdk-gen generate --dir src/storefront/sdk-gen"
@@ -18,6 +19,8 @@
   },
   "devDependencies": {
     "@bsmnt/sdk-gen": "*",
+    "@next/bundle-analyzer": "^12.2.5",
+    "cross-env": "^7.0.3",
     "tsconfig": "*",
     "typescript": "^4.8.4"
   }
