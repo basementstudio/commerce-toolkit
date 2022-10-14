@@ -1,5 +1,11 @@
 # @bsmnt/drop
 
+## 1.2.0
+
+### Minor Changes
+
+- f772e72: Just some cleanup to prepare for public release
+
 ## 1.1.0
 
 ### Minor Changes
