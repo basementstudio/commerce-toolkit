@@ -18,10 +18,10 @@ This repository currently holds three packages:
 
    - ✅ Easily connect to any GraphQL API
    - ✅ Generated TypeScript types from your queries
-   - ✅ Lighter than avarage, as it doesn't depend on `graphql` directly nor as a peer
+   - ✅ Lighter than avarage, as it doesn't depend on `graphql` for production
 
 3. `@bsmnt/drop`: Helpers for managing a countdown. Generally used to create hype around a merch drop.
-   - ✅ Create your "countdown" in just a couple of minutes
+   - ✅ Create your countdown in just a couple of minutes
    - ✅ Reveal your site only when the drop is ready to go ([see this example from one of our drops](https://twitter.com/MikaelSargsyan/status/1578131832331272224))
 
 These play really well together, but can also be used separately. Let's see how they work!
