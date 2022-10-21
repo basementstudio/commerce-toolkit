@@ -249,7 +249,7 @@ This package exports:
 To use, just wrap the `CountdownProvider` wherever you want to add your countdown. For example with Next.js:
 
 ```tsx
-// _app.tsx_
+// _app.tsx
 import type { AppProps } from "next/app";
 import { CountdownProvider } from "@bsmnt/drop";
 import { Countdown } from "../components/countdown";
@@ -259,6 +259,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <CountdownProvider
       endDate={Date.now() + 1000 * 5} // set this to 5 seconds from now just to test
       countdownChildren={<Countdown />}
+      exitDelay={1000} // optional, just to give some time to animate the countdown before finally unmounting it
+      startDate={Date.now()} // optional, just if you need some kind of progress UI
     >
       <Component {...pageProps} />
     </CountdownProvider>
@@ -293,7 +295,33 @@ export const Countdown = () => {
 <details>
 <summary>Important note regarding SSR</summary>
 
-If you render `humanTimeRemaining.seconds`, there's a high chance that your server will render something different than your client, as that value will change each second. What you can do is wait until you're safe in the client until you render:
+If you render `humanTimeRemaining.seconds`, there's a high chance that your server will render something different than your client, as that value will change each second.
+
+In most cases, you can safely `suppressHydrationWarning` (see issue [#21](https://github.com/basementstudio/commerce-toolkit/issues/21) for more info):
+
+```tsx
+import { useCountdownStore } from "@bsmnt/drop";
+
+export const Countdown = () => {
+  const humanTimeRemaining = useCountdownStore()(
+    (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
+  );
+
+  return (
+    <div>
+      <h1>Countdown</h1>
+      <ul>
+        <li suppressHydrationWarning>Days: {humanTimeRemaining.days}</li>
+        <li suppressHydrationWarning>Hours: {humanTimeRemaining.hours}</li>
+        <li suppressHydrationWarning>Minutes: {humanTimeRemaining.minutes}</li>
+        <li suppressHydrationWarning>Seconds: {humanTimeRemaining.seconds}</li>
+      </ul>
+    </div>
+  );
+};
+```
+
+If you don't want to take that risk, a safer option is waiting until your app is hydrated before rendering the real time remaining:
 
 ```tsx
 import { useEffect, useState } from "react";
