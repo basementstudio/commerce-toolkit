@@ -1,5 +1,11 @@
 # @bsmnt/sdk-gen
 
+## 1.2.2
+
+### Patch Changes
+
+- e274b6f: include graphql as a prod dependency to sdk-gen (knowing that it'll be installed as a `devDependency`
+
 ## 1.2.1
 
 ### Patch Changes
