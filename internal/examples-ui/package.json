@@ -1,0 +1,27 @@
+{
+  "name": "examples-ui",
+  "author": "basement.studio <dev@basement.studio>",
+  "version": "1.2.1",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "sideEffects": false,
+  "scripts": {
+    "dev": "yarn build --watch",
+    "build": "tsup ./src/index.ts --format esm,cjs --dts"
+  },
+  "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.0.1",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.26",
+    "styled-components": "^5.3.6",
+    "tsconfig": "*",
+    "typescript": "^4.8.4"
+  }
+}
