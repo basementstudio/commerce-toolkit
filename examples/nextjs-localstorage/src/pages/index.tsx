@@ -1,20 +1,37 @@
-import Head from "next/head";
-import { Header, Hero, Products } from 'examples-ui';
-import { useCartQuery } from "../storefront/hooks";
+import Head from 'next/head'
+import { Header, Hero, Products } from 'examples-ui'
+import { useCartQuery } from '../storefront/hooks'
 import {
   useAddLineItemsToCartMutation,
   useRemoveLineItemsFromCartMutation
-} from '../storefront/hooks';
+} from '../storefront/hooks'
 
 const PRODUCT_LIST = [
-  { id: 1, name: 'Basement Cap', image: { src: '/cap.webp', alt: 'Basement cap' }, price: 19.99 },
-  { id: 2, name: 'Basement Shirt', image: { src: '/shirt.webp', alt: 'Basement shirt' }, price: 39.99 },
-  { id: 3, name: 'Basement Hoodie', image: { src: '/hoodie.webp', alt: 'Basement hoodie' }, price: 49.99 }
+  {
+    id: 1,
+    name: 'Basement Cap',
+    image: { src: '/cap.webp', alt: 'Basement cap' },
+    price: 19.99
+  },
+  {
+    id: 2,
+    name: 'Basement Shirt',
+    image: { src: '/shirt.webp', alt: 'Basement shirt' },
+    price: 39.99
+  },
+  {
+    id: 3,
+    name: 'Basement Hoodie',
+    image: { src: '/hoodie.webp', alt: 'Basement hoodie' },
+    price: 49.99
+  }
 ]
 
 export default function Home() {
-  const { data } = useCartQuery({})
+  const { data } = useCartQuery()
   const { mutate: handleAddToCart } = useAddLineItemsToCartMutation()
+
+  console.log(data)
 
   return (
     <div>
@@ -34,8 +51,15 @@ export default function Home() {
 
       <main>
         <Hero />
-        <Products productList={PRODUCT_LIST} onAddToCart={(product) => handleAddToCart([{ merchandiseId: String(product.id), quantity: 1 }])} />
+        <Products
+          productList={PRODUCT_LIST}
+          onAddToCart={(product) =>
+            handleAddToCart([
+              { merchandiseId: String(product.id), quantity: 1 }
+            ])
+          }
+        />
       </main>
     </div>
-  );
+  )
 }
