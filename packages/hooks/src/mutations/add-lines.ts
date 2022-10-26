@@ -40,6 +40,9 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
         : await mutators.createCartWithLines(lines)
 
       surfaceMutationErrors(data, userErrors, silenceUserErrors)
+
+      if (!cartId) cartLocalStorage.set(data.id)
+
       if (updateCartQueryDataOnSuccess) {
         optimisticCartUpdate.update(data)
       }
