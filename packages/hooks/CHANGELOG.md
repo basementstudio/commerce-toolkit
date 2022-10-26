@@ -1,5 +1,11 @@
 # @bsmnt/storefront-hooks
 
+## 1.2.2
+
+### Patch Changes
+
+- 095b1ca: save cart id on localStorage when creating with lines
+
 ## 1.2.1
 
 ### Patch Changes
