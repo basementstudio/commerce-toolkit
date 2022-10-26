@@ -59,7 +59,7 @@ const StyledGrid = styled.div`
   gap: 32px;
 
   @media screen and (min-width: 768px) {
-    grid-template-columns: repeat(2, minmax(50%, 1fr));
+    grid-template-columns: repeat(2, minmax(auto, 1fr));
   }
 `
 

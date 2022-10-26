@@ -1,7 +1,10 @@
 import Head from "next/head";
 import { Header, Hero, Products } from 'examples-ui';
-import type { Product } from 'examples-ui'
-import { useCallback, useEffect, useState } from "react";
+import { useCartQuery } from "../storefront/hooks";
+import {
+  useAddLineItemsToCartMutation,
+  useRemoveLineItemsFromCartMutation
+} from '../storefront/hooks';
 
 const PRODUCT_LIST = [
   { id: 1, name: 'Basement Cap', image: { src: '/cap.webp', alt: 'Basement cap' }, price: 19.99 },
@@ -10,60 +13,8 @@ const PRODUCT_LIST = [
 ]
 
 export default function Home() {
-  const [cart, setCart] = useState<Product[]>([]);
-
-  useEffect(() => {
-    try {
-      const localStorageProducts = JSON.parse(localStorage.getItem('cart') || '[]');
-      
-      if (!Array.isArray(localStorageProducts)) {
-        localStorage.setItem('cart', JSON.stringify([]));
-        setCart([])
-        return;
-      }
-  
-      setCart(localStorageProducts)
-    } catch (error) {
-      localStorage.setItem('cart', JSON.stringify([]));
-      setCart([])
-    }
-  }, [])
-
-  const addToCart = useCallback((product: Product) => {
-    const newCart = [...cart, product];
-    localStorage.setItem('cart', JSON.stringify(newCart));
-    setCart(newCart);
-  }, [cart])
-  
-  const removeFromCart = useCallback((id: Product['id']) => {
-    const newCart = cart.filter((_product) => _product.id !== id);
-    localStorage.setItem('cart', JSON.stringify(newCart));
-    setCart(newCart);
-  }, [cart])
-
-  const restItem = useCallback((id: Product['id']) => {
-    const newCart = [...cart];
-    const productIndex = newCart.findIndex((_product) => _product.id === id);
-    const productExistsInCart = productIndex > -1;
-
-    if (!productExistsInCart) return
-
-    newCart.splice(productIndex, 1);
-    localStorage.setItem('product', JSON.stringify(newCart));
-    setCart(newCart)
-  }, [cart])
-
-  const sumItem = useCallback((id: Product['id']) => {
-    const newCart = [...cart];
-    const productIndex = newCart.findIndex((_product) => _product.id === id);
-    const productExistsInCart = productIndex > -1;
-
-    if (!productExistsInCart) return
-    
-    newCart.push(newCart[productIndex]);
-    localStorage.setItem('product', JSON.stringify(newCart));
-    setCart(newCart)
-  }, [cart])
+  const { data } = useCartQuery({})
+  const { mutate: handleAddToCart } = useAddLineItemsToCartMutation()
 
   return (
     <div>
@@ -74,16 +25,16 @@ export default function Home() {
       </Head>
 
       <Header
-        cart={cart}
-        removeFromCart={removeFromCart}
-        restItem={restItem}
-        sumItem={sumItem}
+        cart={[]}
+        removeFromCart={() => alert('remove')}
+        restItem={() => alert('rest')}
+        sumItem={() => alert('sum')}
         checkout={() => alert('Checkout 💸')}
       />
 
       <main>
         <Hero />
-        <Products productList={PRODUCT_LIST} onAddToCart={addToCart} />
+        <Products productList={PRODUCT_LIST} onAddToCart={(product) => handleAddToCart([{ merchandiseId: String(product.id), quantity: 1 }])} />
       </main>
     </div>
   );
