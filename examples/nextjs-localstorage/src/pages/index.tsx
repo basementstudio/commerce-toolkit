@@ -1,6 +1,11 @@
 import Head from 'next/head'
 import { Header, Hero, Products } from 'examples-ui'
-import { useCartQuery } from '../storefront/hooks'
+import { useCallback } from 'react'
+
+import {
+  useCartQuery,
+  useUpdateLineItemsInCartMutation
+} from '../storefront/hooks'
 import {
   useAddLineItemsToCartMutation,
   useRemoveLineItemsFromCartMutation
@@ -28,10 +33,66 @@ const PRODUCT_LIST = [
 ]
 
 export default function Home() {
-  const { data } = useCartQuery()
+  const { data } = useCartQuery({ createCartIfNotFound: true })
   const { mutate: handleAddToCart } = useAddLineItemsToCartMutation()
+  const { mutate: handleRemoveItem } = useRemoveLineItemsFromCartMutation()
+  const { mutate: handleUpdateLineItems } = useUpdateLineItemsInCartMutation()
 
-  console.log(data)
+  const amountOfItems =
+    data?.lines.reduce((total, line) => {
+      return total + line.quantity
+    }, 0) ?? 0
+
+  const subtotal =
+    data?.lines.reduce((acum, current) => {
+      const product = PRODUCT_LIST.find(
+        ({ id }) => String(id) === current.merchandiseId
+      )
+
+      if (!product) return acum
+      if (acum === 0) return product.price * current.quantity
+
+      return acum + product.price * current.quantity
+    }, 0) ?? 0
+
+  const restItem = useCallback(
+    (id: string | number) => {
+      const productIndex =
+        data?.lines.findIndex(
+          ({ merchandiseId }) => merchandiseId === String(id)
+        ) ?? -1
+
+      if (productIndex !== -1) {
+        const lines = [...(data?.lines ?? [])]
+        const line = lines[productIndex]!
+
+        if (line.quantity > 1) {
+          lines[productIndex]!.quantity -= 1
+        } else {
+          lines.splice(productIndex, 1)
+        }
+        
+        handleUpdateLineItems(lines)
+      }
+    },
+    [handleUpdateLineItems, data?.lines]
+  )
+
+  const sumItem = useCallback(
+    (id: string | number) => {
+      const productIndex =
+        data?.lines.findIndex(
+          ({ merchandiseId }) => merchandiseId === String(id)
+        ) ?? -1
+
+      if (productIndex !== -1) {
+        const lines = data?.lines ?? []
+        lines[productIndex]!.quantity += 1
+        handleUpdateLineItems(lines)
+      }
+    },
+    [handleUpdateLineItems, data?.lines]
+  )
 
   return (
     <div>
@@ -42,15 +103,30 @@ export default function Home() {
       </Head>
 
       <Header
-        cart={[]}
-        removeFromCart={() => alert('remove')}
-        restItem={() => alert('rest')}
-        sumItem={() => alert('sum')}
-        checkout={() => alert('Checkout 💸')}
+        title="basement"
+        link={{
+          href: 'https://github.com/basementstudio/commerce-toolkit',
+          text: 'GitHub'
+        }}
+        cart={{
+          items: data?.lines ?? [],
+          title: 'Products',
+          products: PRODUCT_LIST,
+          amountOfItems,
+          subtotal,
+          handleRemoveItem: (id: number | string) =>
+            handleRemoveItem([String(id)]),
+          restItem,
+          sumItem,
+          checkout: () => alert('Checkout 💸')
+        }}
       />
 
       <main>
-        <Hero />
+        <Hero
+          title="BSMNT Commerce Toolkit Examples"
+          subtitle="nextjs-localstorage"
+        />
         <Products
           productList={PRODUCT_LIST}
           onAddToCart={(product) =>

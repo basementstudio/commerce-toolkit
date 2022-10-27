@@ -21,7 +21,6 @@ export const {
   cartLocalStorageKey: 'example-nextjs-localstorage',
   fetchers: {
     fetchCart: (cartId: string) => {
-      console.log('Fetching cart')
       const cartFromLocalStorage = localStorage.getItem(cartId)
 
       if (!cartFromLocalStorage) throw new Error('Cart not found')
@@ -38,12 +37,25 @@ export const {
       if (!cartFromLocalStorage) throw new Error('Cart not found')
 
       const cart: Cart = JSON.parse(cartFromLocalStorage)
-      cart.lines = [...cart.lines, ...lines]
+      // Add line if not exists, update quantity if exists
+      const updatedCart = lines.reduce((cart, line) => {
+        const lineIndex = cart.lines.findIndex(
+          (cartLine) => cartLine.merchandiseId === line.merchandiseId
+        )
 
-      localStorage.setItem(cartId, JSON.stringify(cart))
+        if (lineIndex === -1) {
+          cart.lines.push(line)
+        } else {
+          cart.lines[lineIndex]!.quantity += line.quantity
+        }
+
+        return cart
+      }, cart)
+
+      localStorage.setItem(cartId, JSON.stringify(updatedCart))
 
       return {
-        data: cart
+        data: updatedCart
       }
     },
     createCart: () => {
@@ -53,7 +65,6 @@ export const {
       return { data: cart }
     },
     createCartWithLines: (lines) => {
-      console.log('Create')
       const cart = { id: 'cart', lines }
       localStorage.setItem(cart.id, JSON.stringify(cart))
 
@@ -80,17 +91,7 @@ export const {
       if (!cartFromLocalStorage) throw new Error('Cart not found')
 
       const cart: Cart = JSON.parse(cartFromLocalStorage)
-      cart.lines = cart.lines.map((line) => {
-        const lineToUpdate = lines.find(
-          (lineToUpdate) => lineToUpdate.merchandiseId === line.merchandiseId
-        )
-
-        if (lineToUpdate) {
-          return lineToUpdate
-        }
-
-        return line
-      })
+      cart.lines = lines
       localStorage.setItem(cart.id, JSON.stringify(cart))
 
       return {

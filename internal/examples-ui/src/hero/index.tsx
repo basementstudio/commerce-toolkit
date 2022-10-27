@@ -1,12 +1,13 @@
+import { FC } from "react"
 import styled, { createGlobalStyle } from "styled-components"
 import { Container } from "../container"
 
-export const Hero = () => {
+export const Hero: FC<{ title: string, subtitle: string }> = ({ title, subtitle }) => {
   return (
    <Container>
       <StyledHero>
-        <StyledHeroTitle>BSMNT Commerce Toolkit&nbsp;Examples</StyledHeroTitle>
-        <StyledCode>nextjs-shopify</StyledCode>
+        <StyledHeroTitle>{title}</StyledHeroTitle>
+        <StyledCode>{subtitle}</StyledCode>
       </StyledHero>
       <FontStyles />
    </Container>

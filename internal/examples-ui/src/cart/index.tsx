@@ -1,15 +1,15 @@
-import { FC, PropsWithChildren, useMemo } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import styled from 'styled-components'
 import type { Product } from '../products'
 
 export type Cart = {
-  title: string
+  title?: string
   subtotal: number
   items: { merchandiseId: string; quantity: number }[]
-
   products?: Product[]
-  removeFromCart: (id: Product['id']) => void
+  amountOfItems?: number
+  handleRemoveItem: (id: Product['id']) => void
   sumItem: (id: Product['id']) => void
   restItem: (id: Product['id']) => void
   checkout: () => void
@@ -17,39 +17,15 @@ export type Cart = {
 
 export const Cart: FC<PropsWithChildren<Cart>> = ({
   children,
+  title = 'Products',
+  subtotal,
+  items,
   products = [],
-  removeFromCart,
+  handleRemoveItem,
   restItem,
   sumItem,
   checkout
 }) => {
-  const cart = useMemo(() => {
-    return products.reduce<Array<Product & { quantity: number }>>(
-      (acum, current) => {
-        const productIndex = acum.findIndex(
-          (_product) => _product.id === current.id
-        )
-        const productExistsInCart = productIndex > -1
-
-        if (productExistsInCart) {
-          acum[productIndex]!.quantity += 1
-        } else {
-          acum.push({ ...current, quantity: 1 })
-        }
-
-        return acum
-      },
-      []
-    )
-  }, [products])
-
-  const totalPrice = useMemo(() => {
-    return products.reduce<number>((acum, current) => {
-      if (acum === 0) return current.price
-      return acum + current.price
-    }, 0)
-  }, [products])
-
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>{children}</DropdownMenu.Trigger>
@@ -57,7 +33,7 @@ export const Cart: FC<PropsWithChildren<Cart>> = ({
       <DropdownMenu.Portal>
         <StlyedDropdownMenuContent sideOffset={12} align="end">
           <StyledCartHeader>
-            <StyledDropdownMenuLabel>Products</StyledDropdownMenuLabel>
+            <StyledDropdownMenuLabel>{title}</StyledDropdownMenuLabel>
             <StlyedDropdownMenuClose>
               <svg
                 width="24"
@@ -77,7 +53,7 @@ export const Cart: FC<PropsWithChildren<Cart>> = ({
           </StyledCartHeader>
 
           <StyledCartProductList>
-            {cart.length < 1 ? (
+            {items.length < 1 ? (
               <p
                 style={{
                   textAlign: 'center',
@@ -88,59 +64,71 @@ export const Cart: FC<PropsWithChildren<Cart>> = ({
                 Your Cart is Empty
               </p>
             ) : (
-              cart.map((product, index) => (
-                <StyledDropdownMenuCartProduct key={index}>
-                  <StyledCartProductThumbnail>
-                    <img
-                      src={product.image.src}
-                      alt={product.image.alt}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </StyledCartProductThumbnail>
-                  <StyledProductBody>
-                    <div>
-                      <label>{product.name}</label>
-                      <p style={{ marginTop: 8 }}>$ {product.price}</p>
-                    </div>
-                    <StyledProductControls>
-                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <StyledDropdownMenuItemProductControls
-                          onSelect={(e: any) => {
-                            e.preventDefault()
-                            restItem(product.id)
-                          }}
-                        >
-                          -
-                        </StyledDropdownMenuItemProductControls>
-                        <p style={{ margin: '0 12px 0 0' }}>
-                          {product.quantity}
-                        </p>
-                        <StyledDropdownMenuItemProductControls
-                          onSelect={(e: any) => {
-                            e.preventDefault()
-                            sumItem(product.id)
-                          }}
-                        >
-                          +
-                        </StyledDropdownMenuItemProductControls>
-                      </div>
+              items.map((product, index) => {
+                const currentProduct = products.find(
+                  ({ id }) => String(id) === product.merchandiseId
+                )
 
-                      <DropdownMenuItemProductRemove
-                        onSelect={(e: any) => {
-                          e.preventDefault()
-                          removeFromCart(product.id)
-                        }}
-                      >
-                        Remove
-                      </DropdownMenuItemProductRemove>
-                    </StyledProductControls>
-                  </StyledProductBody>
-                </StyledDropdownMenuCartProduct>
-              ))
+                return (
+                  currentProduct && (
+                    <StyledDropdownMenuCartProduct key={index}>
+                      <StyledCartProductThumbnail>
+                        <img
+                          src={currentProduct.image.src}
+                          alt={currentProduct.image.alt}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain'
+                          }}
+                        />
+                      </StyledCartProductThumbnail>
+                      <StyledProductBody>
+                        <div>
+                          <label>{currentProduct.name}</label>
+                          <p style={{ marginTop: 8 }}>
+                            $ {currentProduct.price}
+                          </p>
+                        </div>
+                        <StyledProductControls>
+                          <div
+                            style={{ display: 'flex', alignItems: 'center' }}
+                          >
+                            <StyledDropdownMenuItemProductControls
+                              onSelect={(e: any) => {
+                                e.preventDefault()
+                                restItem(currentProduct.id)
+                              }}
+                            >
+                              -
+                            </StyledDropdownMenuItemProductControls>
+                            <p style={{ margin: '0 12px 0 0' }}>
+                              {product.quantity}
+                            </p>
+                            <StyledDropdownMenuItemProductControls
+                              onSelect={(e: any) => {
+                                e.preventDefault()
+                                sumItem(currentProduct.id)
+                              }}
+                            >
+                              +
+                            </StyledDropdownMenuItemProductControls>
+                          </div>
+
+                          <DropdownMenuItemProductRemove
+                            onSelect={(e: any) => {
+                              e.preventDefault()
+                              handleRemoveItem(currentProduct.id)
+                            }}
+                          >
+                            Remove
+                          </DropdownMenuItemProductRemove>
+                        </StyledProductControls>
+                      </StyledProductBody>
+                    </StyledDropdownMenuCartProduct>
+                  )
+                )
+              })
             )}
           </StyledCartProductList>
 
@@ -155,11 +143,11 @@ export const Cart: FC<PropsWithChildren<Cart>> = ({
           <StyledDropdownMenuGroupCartCheckout>
             <StyledCartCheckoutPrice>
               <p>Subtotal</p>
-              <p>$ {totalPrice.toFixed(2)}</p>
+              <p>$ {subtotal.toFixed(2)}</p>
             </StyledCartCheckoutPrice>
             <DropdownMenuItemCheckoutButton
               onSelect={checkout}
-              disabled={cart.length < 1}
+              disabled={items.length < 1}
             >
               Checkout
             </DropdownMenuItemCheckoutButton>
