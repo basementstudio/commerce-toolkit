@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- 687fd41: Remove createStandardStorefrontClient as it was too big with no real benefit for now
+- 687fd41: Remove `createStandardStorefrontClient` as it was too big with no real benefit for now. Instead of using `createStandardStorefrontClient`, you now should use [`@bsmnt/sdk-gen`](https://github.com/basementstudio/commerce-toolkit#bsmntsdk-gen)
 
 ## 1.2.2
 
