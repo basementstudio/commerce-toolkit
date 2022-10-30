@@ -1,6 +1,6 @@
 # @bsmnt/shopify-helpers
 
-Internal, legacy use only. Although you can install at your risk:
+Internal use only (for now). Install at your risk:
 
 ```zsh
 yarn add @bsmnt/shopify-helpers
@@ -8,5 +8,4 @@ yarn add @bsmnt/shopify-helpers
 
 Exports:
 
-- `createStandardShopifyStorefrontSdk`: _function_ to create a shopify storefront sdk with pre made queries. We generally recommend you don't use this, and actually create the queries that fit your use case.
-- `useProductHelper`: _Hook_ that helps manage product state, such as options available, options selected, and variant selected.
+- `useProductFormHelper`: _Hook_ that helps manage product form state, such as options available, options selected, and variant selected.
