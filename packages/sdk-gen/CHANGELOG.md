@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 687fd41: Remove createStandardStorefrontClient as it was too big with no real benefit for now
+- 687fd41: Access `fetch` from `globalThis` instead of `global`, as using `global` is unreliable.
 
 ## 1.2.2
 
