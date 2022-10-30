@@ -1,5 +1,11 @@
 # @bsmnt/sdk-gen
 
+## 1.2.3
+
+### Patch Changes
+
+- 687fd41: Remove createStandardStorefrontClient as it was too big with no real benefit for now
+
 ## 1.2.2
 
 ### Patch Changes

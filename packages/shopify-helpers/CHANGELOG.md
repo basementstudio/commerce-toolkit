@@ -1,5 +1,11 @@
 # @bsmnt/shopify-helpers
 
+## 2.0.0
+
+### Major Changes
+
+- 687fd41: Remove createStandardStorefrontClient as it was too big with no real benefit for now
+
 ## 1.2.2
 
 ### Patch Changes
