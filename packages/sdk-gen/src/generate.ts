@@ -95,8 +95,7 @@ function createDirIfDoesNotExist(p: string) {
 
 const extraGenerated = `import type { Config } from "@bsmnt/sdk-gen";
 
-// @ts-ignore
-const fetch = global.fetch || require("isomorphic-unfetch");
+const fetch = globalThis.fetch || require("isomorphic-unfetch");
 
 type ClientOptions = {
   noThrowOnErrors?: boolean;
