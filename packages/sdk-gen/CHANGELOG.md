@@ -1,5 +1,11 @@
 # @bsmnt/sdk-gen
 
+## 1.2.3
+
+### Patch Changes
+
+- 687fd41: Access `fetch` from `globalThis` instead of `global`, as using `global` is unreliable.
+
 ## 1.2.2
 
 ### Patch Changes
