@@ -1,7 +1,7 @@
 {
   "name": "@bsmnt/sdk-gen",
   "author": "basement.studio <dev@basement.studio>",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "main": "./dist/index.js",
   "types": "./dist/types.d.ts",
   "bin": {
