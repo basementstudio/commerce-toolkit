@@ -43,6 +43,7 @@ export async function main(args: Args) {
             "typescript-generic-sdk",
           ],
           config: {
+            dedupeFragments: true,
             useTypeImports: true,
             documentMode: "string",
           },
