@@ -14,26 +14,26 @@ import {
 const PRODUCT_LIST = [
   {
     id: 1,
-    name: 'Basement Cap',
-    image: { src: '/cap.webp', alt: 'Basement cap' },
+    name: 'Black baseball Cap',
+    image: { src: '/cap.jpg', alt: 'A BLACK cap' },
     price: 19.99
   },
   {
     id: 2,
-    name: 'Basement Shirt',
-    image: { src: '/shirt.webp', alt: 'Basement shirt' },
+    name: 'Plain white t-shirt',
+    image: { src: '/tshirt.jpg', alt: 'Plain white shirt' },
     price: 39.99
   },
   {
     id: 3,
-    name: 'Basement Hoodie',
-    image: { src: '/hoodie.webp', alt: 'Basement hoodie' },
+    name: 'Hoodie audere',
+    image: { src: '/hoodie.jpg', alt: 'White hoodie' },
     price: 49.99
   }
 ]
 
 export default function Home() {
-  const { data } = useCartQuery({ createCartIfNotFound: true })
+  const { data } = useCartQuery()
   const { mutate: handleAddToCart } = useAddLineItemsToCartMutation()
   const { mutate: handleRemoveItem } = useRemoveLineItemsFromCartMutation()
   const { mutate: handleUpdateLineItems } = useUpdateLineItemsInCartMutation()
@@ -103,7 +103,6 @@ export default function Home() {
       </Head>
 
       <Header
-        title="basement"
         link={{
           href: 'https://github.com/basementstudio/commerce-toolkit',
           text: 'GitHub'

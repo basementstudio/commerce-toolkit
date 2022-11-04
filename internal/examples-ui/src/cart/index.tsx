@@ -79,7 +79,8 @@ export const Cart: FC<PropsWithChildren<Cart>> = ({
                           style={{
                             width: '100%',
                             height: '100%',
-                            objectFit: 'contain'
+                            objectFit: 'cover',
+                            borderRadius: 4
                           }}
                         />
                       </StyledCartProductThumbnail>
@@ -229,14 +230,14 @@ const DropdownMenuItemCheckoutButton = styled(DropdownMenu.Item)`
   font-size: 1.4rem;
   width: 100%;
   padding: 8px;
-  background-color: #ff4d00;
+  background-color: #0024ad;
   border: 0;
   border-radius: 4px;
   margin-top: 32px;
 
   &:hover,
   &:focus {
-    outline-color: ${(props) => (props.disabled ? null : '#ff4d00')};
+    outline-color: ${(props) => (props.disabled ? null : '#0024AD')};
     outline-style: ${(props) => (props.disabled ? null : 'solid')};
     outline-offset: ${(props) => (props.disabled ? null : '4px')};
     outline-width: ${(props) => (props.disabled ? null : '1px')};
@@ -246,14 +247,14 @@ const DropdownMenuItemCheckoutButton = styled(DropdownMenu.Item)`
 const DropdownMenuItemProductRemove = styled(DropdownMenu.Item)`
   border: 0;
   margin-left: 32px;
-  background-color: #ff4d00;
+  background-color: #0024ad;
   border-radius: 4px;
   padding: 4px 8px;
   cursor: pointer;
 
   &:hover,
   &:focus {
-    outline-color: #ff4d00;
+    outline-color: #0024ad;
     outline-style: solid;
     outline-offset: 4px;
     outline-width: 1px;
@@ -278,7 +279,7 @@ const StyledDropdownMenuItemProductControls = styled(DropdownMenu.Item)`
 
   &:hover,
   &:focus {
-    outline-color: #ff4d00;
+    outline-color: #0024ad;
     outline-style: solid;
     outline-offset: 4px;
     outline-width: 1px;
@@ -294,7 +295,7 @@ const StlyedDropdownMenuClose = styled(DropdownMenu.Item)`
 
   &:hover,
   &:focus {
-    outline-color: #ff4d00;
+    outline-color: #0024ad;
     outline-style: solid;
     outline-offset: 4px;
     outline-width: 1px;

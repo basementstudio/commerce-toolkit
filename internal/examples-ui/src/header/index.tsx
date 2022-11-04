@@ -65,7 +65,7 @@ const StyledLink = styled.a`
 
   &:hover,
   &:focus {
-    outline-color: #ff4d00;
+    outline-color: #0024ad;
     outline-style: solid;
     outline-offset: 4px;
     outline-width: 1px;
@@ -79,11 +79,11 @@ const StyledCartButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  background-color: #ff4d00;
+  background-color: #0024ad;
 
   &:hover,
   &:focus {
-    outline-color: #ff4d00;
+    outline-color: #0024ad;
     outline-style: solid;
     outline-offset: 4px;
     outline-width: 1px;
