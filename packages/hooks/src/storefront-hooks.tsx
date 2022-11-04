@@ -21,7 +21,7 @@ import {
 
 type MutatorResult<Data> = {
   data: Data | null | undefined;
-  userErrors: UserError[] | undefined;
+  userErrors?: UserError[] | undefined;
   silenceUserErrors?: boolean;
 };
 
@@ -70,7 +70,7 @@ type StorefrontMutators<Cart> = CartMutators<Cart>;
  */
 export function createStorefrontHooks<
   Cart extends BarebonesCart,
-  ExtraHooks extends Record<string, (...args: any) => OptionalPromise<any>>
+  ExtraHooks = Record<string, (...args: any) => OptionalPromise<any>>
 >({
   cartLocalStorageKey,
   fetchers,
