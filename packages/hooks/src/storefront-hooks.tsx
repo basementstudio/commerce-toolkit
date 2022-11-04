@@ -4,6 +4,7 @@ import {
   QueryClientProvider,
   QueryClientProviderProps,
 } from "@tanstack/react-query";
+import * as cartOpenState from "./helpers/use-cart-open-state";
 
 import * as addLines from "./mutations/add-lines";
 import * as removeLines from "./mutations/remove-lines";
@@ -77,6 +78,7 @@ export function createStorefrontHooks<
   createCartIfNotFound,
   queryClientConfig,
   extraHooks,
+  cartOpenStateOptions,
 }: {
   cartLocalStorageKey: string;
   fetchers: {
@@ -85,6 +87,7 @@ export function createStorefrontHooks<
   mutators: StorefrontMutators<NoInfer<Cart>>;
   createCartIfNotFound?: boolean;
   queryClientConfig?: QueryClientConfig;
+  cartOpenStateOptions?: cartOpenState.UseCartOpenStateOptions;
   extraHooks?: ExtraHooks;
 }) {
   const queryClient = new QueryClient(queryClientConfig);
@@ -94,6 +97,7 @@ export function createStorefrontHooks<
       // @ts-ignore
       return <QueryClientProvider {...props} client={queryClient} />;
     },
+    // QUERIES
     useCartQuery: (options?: cartQuery.UseCartQueryUserOptions<Cart>) => {
       return cartQuery.useCartQuery({
         cartLocalStorageKey,
@@ -106,6 +110,7 @@ export function createStorefrontHooks<
         },
       });
     },
+    // MUTATIONS
     useOptimisticCartUpdate: () => {
       return cartQuery.useOptimisticCartUpdate<Cart>();
     },
@@ -139,6 +144,11 @@ export function createStorefrontHooks<
         options: { ...options },
       });
     },
+    // CART OPEN STATE
+    useCartOpenState: () => {
+      return cartOpenState.useCartOpenState({ ...cartOpenStateOptions });
+    },
+    // EXTRA HOOKS
     ...(extraHooks as OmitIndexSignature<ExtraHooks>),
   };
 }

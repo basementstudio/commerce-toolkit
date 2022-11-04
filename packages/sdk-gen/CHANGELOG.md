@@ -1,5 +1,19 @@
 # @bsmnt/sdk-gen
 
+## 1.2.4
+
+### Patch Changes
+
+- 75198f9: * Add `dedupeFragments` to codegen config. *It cleans the generated schema to avoid recurrent references to the same fragment in one query.\*
+
+  > Issue related: https://github.com/dotansimha/graphql-code-generator/issues/3063
+
+## 1.2.3
+
+### Patch Changes
+
+- 687fd41: Access `fetch` from `globalThis` instead of `global`, as using `global` is unreliable.
+
 ## 1.2.2
 
 ### Patch Changes
