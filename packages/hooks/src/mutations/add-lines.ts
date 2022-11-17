@@ -1,4 +1,5 @@
 import { MutationOptions, useMutation } from '@tanstack/react-query'
+import type { EventEmitterType } from '../events'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
 import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
@@ -16,7 +17,8 @@ type InternalOptions<Cart> = AddLineItemsToCartMutationUserOptions<Cart>
 export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
   mutators,
   cartLocalStorageKey,
-  options
+  options,
+  storefrontEvents
 }: {
   mutators: Pick<
     CartMutators<Cart>,
@@ -24,6 +26,7 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
   >
   cartLocalStorageKey: string
   options: InternalOptions<Cart>
+  storefrontEvents?: EventEmitterType
 }) => {
   const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
   const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
@@ -41,7 +44,24 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
 
       surfaceMutationErrors(data, userErrors, silenceUserErrors)
 
-      if (!cartId) cartLocalStorage.set(data.id)
+      if (!cartId) {
+        cartLocalStorage.set(data.id)
+        if (storefrontEvents) {
+          storefrontEvents.emit('createCartSuccess', data)
+          storefrontEvents.emit('allSuccesses', {
+            type: 'createCartSuccess',
+            data
+          })
+        }
+      } else {
+        if (storefrontEvents) {
+          storefrontEvents.emit('addLineItemSuccess', data)
+          storefrontEvents.emit('allSuccesses', {
+            type: 'addLineItemSuccess',
+            data
+          })
+        }
+      }
 
       if (updateCartQueryDataOnSuccess) {
         optimisticCartUpdate.update(data)

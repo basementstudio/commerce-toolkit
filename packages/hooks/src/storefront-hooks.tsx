@@ -4,6 +4,7 @@ import {
   QueryClientProvider,
   QueryClientProviderProps,
 } from "@tanstack/react-query";
+import { createStorefrontEvents, EventEmitterType } from "./events";
 import * as cartOpenState from "./helpers/use-cart-open-state";
 
 import * as addLines from "./mutations/add-lines";
@@ -75,6 +76,7 @@ export function createStorefrontHooks<
   cartLocalStorageKey,
   fetchers,
   mutators,
+  autoEmitEvents = false,
   createCartIfNotFound,
   queryClientConfig,
   extraHooks,
@@ -86,11 +88,13 @@ export function createStorefrontHooks<
   };
   mutators: StorefrontMutators<NoInfer<Cart>>;
   createCartIfNotFound?: boolean;
+  autoEmitEvents?: boolean;
   queryClientConfig?: QueryClientConfig;
   cartOpenStateOptions?: cartOpenState.UseCartOpenStateOptions;
   extraHooks?: ExtraHooks;
 }) {
   const queryClient = new QueryClient(queryClientConfig);
+  const storefrontEvents = createStorefrontEvents<Cart>() as OmitIndexSignature<EventEmitterType>;
 
   return {
     QueryClientProvider: (props: Omit<QueryClientProviderProps, "client">) => {
@@ -124,6 +128,7 @@ export function createStorefrontHooks<
         },
         cartLocalStorageKey,
         options: { ...options },
+        storefrontEvents: autoEmitEvents ? storefrontEvents : undefined,
       });
     },
     useUpdateLineItemsInCartMutation: (
@@ -133,6 +138,7 @@ export function createStorefrontHooks<
         mutators: { updateLineItemsInCart: mutators.updateLineItemsInCart },
         cartLocalStorageKey,
         options: { ...options },
+        storefrontEvents: autoEmitEvents ? storefrontEvents : undefined,
       });
     },
     useRemoveLineItemsFromCartMutation: (
@@ -142,12 +148,14 @@ export function createStorefrontHooks<
         mutators: { removeLineItemsFromCart: mutators.removeLineItemsFromCart },
         cartLocalStorageKey,
         options: { ...options },
+        storefrontEvents: autoEmitEvents ? storefrontEvents : undefined,
       });
     },
     // CART OPEN STATE
     useCartOpenState: () => {
       return cartOpenState.useCartOpenState({ ...cartOpenStateOptions });
     },
+    storefrontEvents,
     // EXTRA HOOKS
     ...(extraHooks as OmitIndexSignature<ExtraHooks>),
   };
