@@ -1,10 +1,9 @@
 import { MutationOptions, useMutation } from '@tanstack/react-query'
-import type { EventEmitterType } from '../events'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
 import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
 import { useOptimisticCartUpdate } from '../queries/cart'
-import { CartMutators } from '../storefront-hooks'
+import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart, LineItem } from '../types'
 
 export type AddLineItemsToCartMutationUserOptions<Cart> = {
@@ -18,7 +17,7 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
   mutators,
   cartLocalStorageKey,
   options,
-  storefrontEvents
+  logging
 }: {
   mutators: Pick<
     CartMutators<Cart>,
@@ -26,16 +25,15 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
   >
   cartLocalStorageKey: string
   options: InternalOptions<Cart>
-  storefrontEvents?: EventEmitterType
+  logging?: Logging<Cart>
 }) => {
   const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
   const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
+  const cartId = cartLocalStorage.get()
 
   return useMutation(
     ['addLineItemsToCart'],
     async (lines: LineItem[]) => {
-      const cartId = cartLocalStorage.get()
-
       const { updateCartQueryDataOnSuccess = true } = options
 
       const { data, userErrors, silenceUserErrors } = cartId
@@ -46,21 +44,6 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
 
       if (!cartId) {
         cartLocalStorage.set(data.id)
-        if (storefrontEvents) {
-          storefrontEvents.emit('createCartSuccess', data)
-          storefrontEvents.emit('allSuccesses', {
-            type: 'createCartSuccess',
-            data
-          })
-        }
-      } else {
-        if (storefrontEvents) {
-          storefrontEvents.emit('addLineItemSuccess', data)
-          storefrontEvents.emit('allSuccesses', {
-            type: 'addLineItemSuccess',
-            data
-          })
-        }
       }
 
       if (updateCartQueryDataOnSuccess) {
@@ -68,6 +51,24 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
       }
       return data
     },
-    options?.mutationOptions
+    {
+      ...options?.mutationOptions,
+      onError(error) {
+        if (logging?.onError) {
+          logging.onError(
+            cartId ? 'addLineItemError' : 'createCartError',
+            error as Error
+          )
+        }
+      },
+      onSuccess(data) {
+        if (logging?.onSuccess) {
+          logging.onSuccess(
+            cartId ? 'addLineItemSuccess' : 'createCartSuccess',
+            data
+          )
+        }
+      }
+    }
   )
 }

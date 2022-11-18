@@ -1,5 +1,4 @@
 import { MutationOptions, useMutation } from '@tanstack/react-query'
-import { EventEmitterType } from '../events'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
 import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
@@ -17,13 +16,11 @@ type InternalOptions<Cart> = RemoveLineItemsFromCartMutationUserOptions<Cart>
 export const useRemoveLineItemsFromCartMutation = <Cart extends BarebonesCart>({
   mutators,
   cartLocalStorageKey,
-  options,
-  storefrontEvents
+  options
 }: {
   mutators: Pick<CartMutators<Cart>, 'removeLineItemsFromCart'>
   cartLocalStorageKey: string
   options: InternalOptions<Cart>
-  storefrontEvents?: EventEmitterType
 }) => {
   const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
   const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
@@ -46,13 +43,6 @@ export const useRemoveLineItemsFromCartMutation = <Cart extends BarebonesCart>({
       surfaceMutationErrors(data, userErrors, silenceUserErrors)
       if (updateCartQueryDataOnSuccess) {
         optimisticCartUpdate.update(data)
-      }
-      if (storefrontEvents) {
-        storefrontEvents.emit('removeLineItemSuccess', data)
-        storefrontEvents.emit('allSuccesses', {
-          type: 'removeLineItemSuccess',
-          data
-        })
       }
       return data
     },

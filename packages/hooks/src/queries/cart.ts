@@ -1,10 +1,9 @@
 import { QueryOptions, useQuery, useQueryClient } from '@tanstack/react-query'
 import * as React from 'react'
-import { EventEmitterType } from '../events'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
 import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
-import { CartMutators } from '../storefront-hooks'
+import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart, OptionalPromise } from '../types'
 
 export type CartFetcher<Cart> = (cartId: string) => OptionalPromise<Cart>
@@ -23,28 +22,21 @@ export const useCartQuery = <Cart extends BarebonesCart>({
   mutators,
   cartLocalStorageKey,
   options,
-  storefrontEvents
+  logging
 }: {
   fetchCart: CartFetcher<Cart | null>
   mutators: Pick<CartMutators<Cart>, 'createCart'>
   cartLocalStorageKey: string
   options: Options<Cart>
-  storefrontEvents?: EventEmitterType
+  logging?: Logging<Cart>
 }) => {
   const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
 
   const createCart = React.useCallback(async () => {
     const { data, userErrors, silenceUserErrors } = await mutators.createCart()
     surfaceMutationErrors(data, userErrors, silenceUserErrors)
-    if (storefrontEvents) {
-      storefrontEvents.emit('createCartSuccess', data)
-      storefrontEvents.emit('allSuccesses', {
-        type: 'createCartSuccess',
-        data: data
-      })
-    }
     return data
-  }, [mutators, storefrontEvents])
+  }, [mutators])
 
   return useQuery<Cart | null>(
     cartQueryKey,
@@ -72,7 +64,19 @@ export const useCartQuery = <Cart extends BarebonesCart>({
 
       return cart
     },
-    options?.queryOptions
+    {
+      ...options?.queryOptions,
+      onError(error) {
+        if (logging?.onError) {
+          logging.onError('createCartError', error as Error)
+        }
+      },
+      onSuccess(data) {
+        if (logging?.onSuccess) {
+          logging.onSuccess('createCartSuccess', data)
+        }
+      }
+    }
   )
 }
 
