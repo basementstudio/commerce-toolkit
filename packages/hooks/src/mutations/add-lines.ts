@@ -29,13 +29,13 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
 }) => {
   const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
   const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
-  const cartId = cartLocalStorage.get()
 
   return useMutation(
     ['addLineItemsToCart'],
     async (lines: LineItem[]) => {
       const { updateCartQueryDataOnSuccess = true } = options
 
+      const cartId = cartLocalStorage.get()
       const { data, userErrors, silenceUserErrors } = cartId
         ? await mutators.addLineItemsToCart(cartId, lines)
         : await mutators.createCartWithLines(lines)
@@ -53,7 +53,11 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
     },
     {
       ...options?.mutationOptions,
-      onError(error) {
+      onError(error, variables, context) {
+        const cartId = cartLocalStorage.get()
+
+        if (options?.mutationOptions?.onError)
+          options?.mutationOptions?.onError(error, variables, context)
         if (logging?.onError) {
           logging.onError(
             cartId ? 'addLineItemError' : 'createCartError',
@@ -61,7 +65,11 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
           )
         }
       },
-      onSuccess(data) {
+      onSuccess(data, variables, context) {
+        const cartId = cartLocalStorage.get()
+
+        if (options?.mutationOptions?.onSuccess)
+          options?.mutationOptions?.onSuccess(data, variables, context)
         if (logging?.onSuccess) {
           logging.onSuccess(
             cartId ? 'addLineItemSuccess' : 'createCartSuccess',
