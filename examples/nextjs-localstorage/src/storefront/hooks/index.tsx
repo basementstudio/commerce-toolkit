@@ -98,5 +98,13 @@ export const {
         data: cart
       }
     }
+  },
+  logging: {
+    onError(type, error) {
+      console.info({ type, error })
+    },
+    onSuccess(type, data) {
+      console.info({ type, data })
+    }
   }
 })

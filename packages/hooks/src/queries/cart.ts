@@ -1,4 +1,8 @@
-import { QueryOptions, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryOptions
+} from '@tanstack/react-query'
 import * as React from 'react'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
@@ -11,7 +15,7 @@ export type CartFetcher<Cart> = (cartId: string) => OptionalPromise<Cart>
 const cartQueryKey = ['cart']
 
 export type UseCartQueryUserOptions<Cart> = {
-  queryOptions?: QueryOptions<Cart | null>
+  queryOptions?: UseQueryOptions<Cart | null>
   createCartIfNotFound?: boolean
 }
 
@@ -46,16 +50,21 @@ export const useCartQuery = <Cart extends BarebonesCart>({
         if (options?.createCartIfNotFound) {
           const newCart = await createCart()
           cartLocalStorage.set(newCart.id)
+          // @ts-ignore
+          newCart.__sfhooks_is_new = true
           return newCart
         }
         return null
       }
+
       const cart = await fetchCart(cartId)
 
       if (!cart) {
         if (options?.createCartIfNotFound) {
           const newCart = await createCart()
           cartLocalStorage.set(newCart.id)
+          // @ts-ignore
+          newCart.__sfhooks_is_new = true
           return newCart
         }
         cartLocalStorage.clear()
@@ -67,13 +76,30 @@ export const useCartQuery = <Cart extends BarebonesCart>({
     {
       ...options?.queryOptions,
       onError(error) {
+        if (options?.queryOptions?.onError) {
+          options.queryOptions.onError(error)
+        }
         if (logging?.onError) {
-          logging.onError('createCartError', error as Error)
+          logging.onError('fetchCartError', error as Error)
         }
       },
       onSuccess(data) {
+        // @ts-ignore
+        const isNew: boolean = data?.__sfhooks_is_new
+        if (isNew) {
+          // @ts-ignore
+          delete data.__sfhooks_is_new
+        }
+
+        if (options?.queryOptions?.onSuccess) {
+          options.queryOptions.onSuccess(data)
+        }
+
         if (logging?.onSuccess) {
-          logging.onSuccess('createCartSuccess', data)
+          logging.onSuccess(
+            isNew ? 'createCartSuccess' : 'fetchCartSuccess',
+            data
+          )
         }
       }
     }

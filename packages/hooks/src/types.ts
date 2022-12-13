@@ -24,8 +24,11 @@ export type OmitIndexSignature<ObjectType> = {
 }
 
 type STOREFRONT_EVENT_MAP<Cart extends BarebonesCart> = {
+  fetchCartError: Error
+  fetchCartSuccess: Cart | null | undefined
   createCartError: Error
   createCartSuccess: Cart | null | undefined
+  createCartWithLinesSuccess: Cart | null | undefined
   addLineItemError: Error
   addLineItemSuccess: Cart | null | undefined
   updateLineItemError: Error
@@ -38,6 +41,7 @@ export type MutationError<Cart extends BarebonesCart> = {
   type: keyof Pick<
     STOREFRONT_EVENT_MAP<Cart>,
     | 'addLineItemError'
+    | 'fetchCartError'
     | 'createCartError'
     | 'removeLineItemError'
     | 'updateLineItemError'
@@ -49,7 +53,9 @@ export type MutationSuccess<Cart extends BarebonesCart> = {
   type: keyof Pick<
     STOREFRONT_EVENT_MAP<Cart>,
     | 'addLineItemSuccess'
+    | 'fetchCartSuccess'
     | 'createCartSuccess'
+    | 'createCartWithLinesSuccess'
     | 'removeLineItemSuccess'
     | 'updateLineItemSuccess'
   >

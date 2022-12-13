@@ -43,6 +43,9 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
       surfaceMutationErrors(data, userErrors, silenceUserErrors)
 
       if (!cartId) {
+        // means we needed to create the cart first
+        // @ts-ignore
+        data.__sfhooks_is_new = true
         cartLocalStorage.set(data.id)
       }
 
@@ -54,25 +57,27 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
     {
       ...options?.mutationOptions,
       onError(error, variables, context) {
-        const cartId = cartLocalStorage.get()
-
-        if (options?.mutationOptions?.onError)
-          options?.mutationOptions?.onError(error, variables, context)
+        if (options?.mutationOptions?.onError) {
+          options.mutationOptions.onError(error, variables, context)
+        }
         if (logging?.onError) {
-          logging.onError(
-            cartId ? 'addLineItemError' : 'createCartError',
-            error as Error
-          )
+          logging.onError('addLineItemError', error as Error)
         }
       },
       onSuccess(data, variables, context) {
-        const cartId = cartLocalStorage.get()
+        // @ts-ignore
+        const isNew: boolean = data?.__sfhooks_is_new
+        if (isNew) {
+          // @ts-ignore
+          delete data.__sfhooks_is_new
+        }
 
-        if (options?.mutationOptions?.onSuccess)
-          options?.mutationOptions?.onSuccess(data, variables, context)
+        if (options?.mutationOptions?.onSuccess) {
+          options.mutationOptions.onSuccess(data, variables, context)
+        }
         if (logging?.onSuccess) {
           logging.onSuccess(
-            cartId ? 'addLineItemSuccess' : 'createCartSuccess',
+            isNew ? 'createCartWithLinesSuccess' : 'addLineItemSuccess',
             data
           )
         }

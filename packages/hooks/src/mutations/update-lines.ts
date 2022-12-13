@@ -1,4 +1,4 @@
-import { MutationOptions, useMutation } from '@tanstack/react-query'
+import { useMutation, UseMutationOptions } from '@tanstack/react-query'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
 import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
@@ -7,7 +7,7 @@ import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart, LineItem } from '../types'
 
 export type UpdateLineItemsInCartMutationUserOptions<Cart> = {
-  mutationOptions?: MutationOptions<Cart, unknown, LineItem[]>
+  mutationOptions?: UseMutationOptions<Cart, unknown, LineItem[]>
   updateCartQueryDataOnSuccess?: boolean
 }
 
@@ -50,15 +50,17 @@ export const useUpdateLineItemsInCartMutation = <Cart extends BarebonesCart>({
     {
       ...options?.mutationOptions,
       onError(error, variables, context) {
-        if (options?.mutationOptions?.onError)
-          options?.mutationOptions?.onError(error, variables, context)
+        if (options?.mutationOptions?.onError) {
+          options.mutationOptions.onError(error, variables, context)
+        }
         if (logging?.onError) {
           logging.onError('updateLineItemError', error as Error)
         }
       },
       onSuccess(data, variables, context) {
-        if (options?.mutationOptions?.onSuccess)
-          options?.mutationOptions?.onSuccess(data, variables, context)
+        if (options?.mutationOptions?.onSuccess) {
+          options.mutationOptions.onSuccess(data, variables, context)
+        }
         if (logging?.onSuccess) {
           logging.onSuccess('updateLineItemSuccess', data)
         }

@@ -51,15 +51,17 @@ export const useRemoveLineItemsFromCartMutation = <Cart extends BarebonesCart>({
     {
       ...options?.mutationOptions,
       onError(error, variables, context) {
-        if (options?.mutationOptions?.onError)
-          options?.mutationOptions?.onError(error, variables, context)
+        if (options?.mutationOptions?.onError) {
+          options.mutationOptions.onError(error, variables, context)
+        }
         if (logging?.onError) {
           logging.onError('removeLineItemError', error as Error)
         }
       },
       onSuccess(data, variables, context) {
-        if (options?.mutationOptions?.onSuccess)
-          options?.mutationOptions?.onSuccess(data, variables, context)
+        if (options?.mutationOptions?.onSuccess) {
+          options.mutationOptions.onSuccess(data, variables, context)
+        }
         if (logging?.onSuccess) {
           logging.onSuccess('removeLineItemSuccess', data)
         }

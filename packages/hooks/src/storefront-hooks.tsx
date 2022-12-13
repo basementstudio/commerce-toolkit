@@ -72,9 +72,10 @@ type StorefrontMutators<Cart> = CartMutators<Cart>
  *   cartLocalStorageKey: 'my-store',
  *   fetchers: {
  *     fetchCart: async (cartId) => {
- *       const { cart } = await reactDropifySdk.FetchCart({ id: cartId })
- *       return cart
- *     }
+ *       const { cart } = await bsmntSdk.FetchCart({ id: cartId });
+ *       if (cart === undefined) throw new Error("Request failed");
+ *       return cart;
+ *     },
  *   },
  *   mutators: {
  *     ...yourMutators
@@ -122,7 +123,8 @@ export function createStorefrontHooks<
           ...options,
           createCartIfNotFound:
             options?.createCartIfNotFound ?? createCartIfNotFound
-        }
+        },
+        logging
       })
     },
     // MUTATIONS
@@ -150,20 +152,9 @@ export function createStorefrontHooks<
         cartLocalStorageKey,
         options: {
           ...options,
-          mutationOptions: {
-            ...options?.mutationOptions,
-            onError(error) {
-              if (logging?.onError) {
-                logging.onError('updateLineItemError', error as Error)
-              }
-            },
-            onSuccess(data) {
-              if (logging?.onSuccess) {
-                logging.onSuccess('updateLineItemSuccess', data)
-              }
-            }
-          }
-        }
+          mutationOptions: options?.mutationOptions
+        },
+        logging
       })
     },
     useRemoveLineItemsFromCartMutation: (
@@ -174,20 +165,9 @@ export function createStorefrontHooks<
         cartLocalStorageKey,
         options: {
           ...options,
-          mutationOptions: {
-            ...options?.mutationOptions,
-            onError(error) {
-              if (logging?.onError) {
-                logging.onError('removeLineItemError', error as Error)
-              }
-            },
-            onSuccess(data) {
-              if (logging?.onSuccess) {
-                logging.onSuccess('removeLineItemSuccess', data)
-              }
-            }
-          }
-        }
+          mutationOptions: options?.mutationOptions
+        },
+        logging
       })
     },
     // CART OPEN STATE
