@@ -7,8 +7,8 @@ const configSchema = z.object({
   headers: z.record(z.string()).optional(),
   parameters: z.object({
     inputMaybeValue: z.string().optional(),
-    avoidOptionals: boolean().optional(),
-    maybeValue: string().optional()
+    avoidOptionals: z.boolean().optional(),
+    maybeValue: z.string().optional()
   }).optional(),
 });
 
