@@ -1,5 +1,15 @@
 # @bsmnt/sdk-gen
 
+## 1.2.5
+
+### Patch Changes
+
+- 72e86a6: Add optional params to sdk-gen config.
+
+  - MaybeValue: Set type for Maybe in the generated file. Accepts a string.
+  - InputMaybeValue: Set type for InputMaybe in the generated file. Accepts a string.
+  - AvoidOptionals: If true it disables optional types on the generated schema. Accepts true or false.
+
 ## 1.2.4
 
 ### Patch Changes
