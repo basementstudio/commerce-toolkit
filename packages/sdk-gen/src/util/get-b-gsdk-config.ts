@@ -5,6 +5,11 @@ import { z } from "zod";
 const configSchema = z.object({
   endpoint: z.string(),
   headers: z.record(z.string()).optional(),
+  parameters: z.object({
+    inputMaybeValue: z.string().optional(),
+    avoidOptionals: z.boolean().optional(),
+    maybeValue: z.string().optional()
+  }).optional(),
 });
 
 export type BGsdkConfig = z.infer<typeof configSchema>;
