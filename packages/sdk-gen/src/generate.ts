@@ -46,6 +46,7 @@ export async function main(args: Args) {
             dedupeFragments: true,
             useTypeImports: true,
             documentMode: "string",
+            ...config.parameters
           },
         },
         [__dirname + "/generated/graphql.schema.json"]: {
