@@ -6,6 +6,12 @@ Welcome to the **BSMNT Commerce Toolkit**: packages to help you ship better stor
 
 This toolkit has helped us—[basement.studio](https://basement.studio/)—ship reliable storefronts that could handle crazy amounts of traffic. Some of them include: [shopmrbeast.com](https://shopmrbeast.com/), [karljacobs.co](https://karljacobs.co/), [shopmrballen.com](https://shopmrballen.com/), and [ranboo.fashion](https://ranboo.fashion/).
 
+<hr />
+
+<b><i>💡 If you're looking for an example with Next.js + Shopify, check out [our example here](./examples/nextjs-shopify).</i></b>
+
+<hr />
+
 This repository currently holds three packages:
 
 1. `@bsmnt/storefront-hooks`: React Hooks to manage storefront client-side state.
