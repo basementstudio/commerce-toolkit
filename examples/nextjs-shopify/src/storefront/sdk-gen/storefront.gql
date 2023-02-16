@@ -6,6 +6,14 @@ query FetchCart($id: ID!) {
   }
 }
 
+query FetchCollections {
+  collections(first: 250) {
+    nodes {
+      ...Collection
+    }
+  }
+}
+
 # MUTATIONS
 
 mutation CreateCart {
@@ -63,7 +71,7 @@ mutation RemoveLineItem($cartId: ID!, $lineIds: [ID!]!) {
 fragment Image on Image {
   id
   altText
-  originalSrc
+  url
   width
   height
 }
@@ -72,43 +80,41 @@ fragment Cart on Cart {
   id
   checkoutUrl
   lines(first: 250) {
-    edges {
-      node {
-        id
-        quantity
-        merchandise {
-          ... on ProductVariant {
-            id
-            selectedOptions {
-              name
-              value
-            }
-            title
-            priceV2 {
-              amount
-              currencyCode
-            }
-            image {
-              ...Image
-            }
-            product {
-              id
-              title
-              handle
-              description
-            }
+    nodes {
+      id
+      quantity
+      merchandise {
+        ... on ProductVariant {
+          id
+          selectedOptions {
+            name
+            value
           }
-        }
-        estimatedCost {
-          subtotalAmount {
+          title
+          priceV2 {
             amount
             currencyCode
           }
+          image {
+            ...Image
+          }
+          product {
+            id
+            title
+            handle
+            description
+          }
+        }
+      }
+      cost {
+        subtotalAmount {
+          amount
+          currencyCode
         }
       }
     }
   }
-  estimatedCost {
+  cost {
     subtotalAmount {
       amount
       currencyCode
@@ -124,5 +130,75 @@ fragment CartCreatePayload on CartCreatePayload {
     code
     field
     message
+  }
+}
+
+fragment Collection on Collection {
+  id
+  title
+  handle
+  descriptionHtml
+  products(first: 250) {
+    nodes {
+      ...Product
+    }
+  }
+}
+
+fragment Product on Product {
+  id
+  title
+  descriptionHtml
+  handle
+  productType
+  tags
+  options {
+    name
+    values
+  }
+  variants(first: 250) {
+    nodes {
+      ...ProductVariant
+    }
+  }
+  priceRange {
+    minVariantPrice {
+      amount
+      currencyCode
+    }
+    maxVariantPrice {
+      amount
+      currencyCode
+    }
+  }
+  productType
+  onlineStoreUrl
+  availableForSale
+  images(first: 20) {
+    nodes {
+      ...Image
+    }
+  }
+}
+
+fragment ProductVariant on ProductVariant {
+  id
+  title
+  availableForSale
+  quantityAvailable
+  compareAtPriceV2 {
+    amount
+    currencyCode
+  }
+  priceV2 {
+    amount
+    currencyCode
+  }
+  image {
+    ...Image
+  }
+  selectedOptions {
+    name
+    value
   }
 }

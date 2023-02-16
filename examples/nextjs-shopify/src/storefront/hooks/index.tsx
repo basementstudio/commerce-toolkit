@@ -1,5 +1,5 @@
-import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
-import { bsmntSdk } from "../sdk-gen/sdk";
+import { createStorefrontHooks } from '@bsmnt/storefront-hooks'
+import { storefront } from '../sdk-gen/sdk'
 
 export const {
   QueryClientProvider,
@@ -7,65 +7,67 @@ export const {
   useAddLineItemsToCartMutation,
   useOptimisticCartUpdate,
   useRemoveLineItemsFromCartMutation,
-  useUpdateLineItemsInCartMutation,
+  useUpdateLineItemsInCartMutation
 } = createStorefrontHooks({
-  cartLocalStorageKey: "example-nextjs-shopify",
+  cartLocalStorageKey: 'example-nextjs-shopify',
   fetchers: {
     fetchCart: async (cartId) => {
-      const { cart } = await bsmntSdk.FetchCart({ id: cartId });
-      if (cart === undefined) throw new Error("Request failed");
-      return cart;
-    },
+      const { cart } = await storefront.FetchCart({ id: cartId })
+      if (cart === undefined) throw new Error('Request failed')
+      return cart
+    }
   },
   mutators: {
     addLineItemsToCart: async (cartId, lines) => {
-      const { cartLinesAdd } = await bsmntSdk.AddLineItem({
+      const { cartLinesAdd } = await storefront.AddLineItem({
         cartId,
-        lines,
-      });
+        lines
+      })
       return {
         data: cartLinesAdd?.cart,
-        userErrors: cartLinesAdd?.userErrors,
-      };
+        userErrors: cartLinesAdd?.userErrors
+      }
     },
     createCart: async () => {
-      const { cartCreate } = await bsmntSdk.CreateCart();
+      const { cartCreate } = await storefront.CreateCart()
       return {
         data: cartCreate?.cart,
-        userErrors: cartCreate?.userErrors,
-      };
+        userErrors: cartCreate?.userErrors
+      }
     },
     createCartWithLines: async (lines) => {
-      const { cartCreate } = await bsmntSdk.CreateCartWithLines({ lines });
+      const { cartCreate } = await storefront.CreateCartWithLines({ lines })
       return {
         data: cartCreate?.cart,
-        userErrors: cartCreate?.userErrors,
-      };
+        userErrors: cartCreate?.userErrors
+      }
     },
     removeLineItemsFromCart: async (cartId, lineIds) => {
-      const { cartLinesRemove } = await bsmntSdk.RemoveLineItem({
+      const { cartLinesRemove } = await storefront.RemoveLineItem({
         cartId,
-        lineIds,
-      });
+        lineIds
+      })
       return {
         data: cartLinesRemove?.cart,
-        userErrors: cartLinesRemove?.userErrors,
-      };
+        userErrors: cartLinesRemove?.userErrors
+      }
     },
     updateLineItemsInCart: async (cartId, lines) => {
-      const { cartLinesUpdate } = await bsmntSdk.UpdateLineItem({
+      const { cartLinesUpdate } = await storefront.UpdateLineItem({
         cartId,
         lines: lines.map((l) => ({
           id: l.merchandiseId,
           quantity: l.quantity,
-          attributes: l.attributes,
-        })),
-      });
+          attributes: l.attributes
+        }))
+      })
       return {
         data: cartLinesUpdate?.cart,
-        userErrors: cartLinesUpdate?.userErrors,
-      };
-    },
+        userErrors: cartLinesUpdate?.userErrors
+      }
+    }
   },
-  createCartIfNotFound: true,
-});
+  createCartIfNotFound: true
+})
+
+export { useProductFormHelper } from './use-product-form-helper'

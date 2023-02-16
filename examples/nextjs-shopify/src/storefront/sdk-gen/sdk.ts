@@ -1,4 +1,4 @@
-import config from "./config";
-import { createSdk } from "./generated";
+import config from './config'
+import { createSdk } from './generated'
 
-export const bsmntSdk = createSdk(config);
+export const storefront = createSdk(config)
