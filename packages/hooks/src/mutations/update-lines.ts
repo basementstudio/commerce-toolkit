@@ -1,7 +1,7 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
-import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
+import { useCartCookieManager } from '../helpers/use-cart-cookie-manager'
 import { useOptimisticCartUpdate } from '../queries/cart'
 import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart, LineItem } from '../types'
@@ -15,22 +15,22 @@ type InternalOptions<Cart> = UpdateLineItemsInCartMutationUserOptions<Cart>
 
 export const useUpdateLineItemsInCartMutation = <Cart extends BarebonesCart>({
   mutators,
-  cartLocalStorageKey,
+  cartCookieKey,
   options,
   logging
 }: {
   mutators: Pick<CartMutators<Cart>, 'updateLineItemsInCart'>
-  cartLocalStorageKey: string
+  cartCookieKey: string
   options: InternalOptions<Cart>
   logging?: Logging<Cart>
 }) => {
-  const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
+  const cartCookieManager = useCartCookieManager(cartCookieKey)
   const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
 
   return useMutation(
     ['updateLineItemsInCart'],
     async (lines: LineItem[]) => {
-      const cartId = cartLocalStorage.get()
+      const cartId = cartCookieManager.get()
       if (!cartId) {
         throw new Error(
           'Cart not found while trying to update line items in it'
