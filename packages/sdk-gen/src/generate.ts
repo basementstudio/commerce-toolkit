@@ -5,11 +5,17 @@ import path from 'path'
 import { Args } from '.'
 import { getBGsdkConfig } from './util/get-b-gsdk-config'
 import { getBGsdkDirectoryPath } from './util/get-b-gsdk-directory-path'
+import {
+  addToEslintIgnore,
+  appendEslintDisableToEachFileInDirectory
+} from './util/disable-linters'
 
 export async function main(args: Args) {
   console.log('Generating...')
 
-  const bgsdkDirectoryPath = getBGsdkDirectoryPath(process.cwd(), args['--dir'])
+  const dir = args['--dir'] || 'sdk-gen'
+
+  const bgsdkDirectoryPath = getBGsdkDirectoryPath(process.cwd(), dir)
   const config = getBGsdkConfig(bgsdkDirectoryPath)
 
   await generate({
@@ -29,11 +35,22 @@ export async function main(args: Args) {
     extraGenerated
   )
 
-  // add eslint disable and ts nocheck to `types.ts` generated file
-  // at the beginning of the file
-  const typesFilePath = path.join(bgsdkDirectoryPath, 'generated', 'types.ts')
-  const typesFileContents = fs.readFileSync(typesFilePath, 'utf-8')
-  fs.writeFileSync(typesFilePath, `${topLevelAppend}\n${typesFileContents}`)
+  try {
+    // add eslint disable and ts nocheck at the beginning of each generated file
+    appendEslintDisableToEachFileInDirectory(
+      path.join(bgsdkDirectoryPath, 'generated')
+    )
+  } catch (error) {
+    console.log(
+      'failed to eslint-disable to generated files, trying to add to eslintignore.'
+    )
+    try {
+      // add to eslintignore
+      addToEslintIgnore(path.join(dir, 'generated'))
+    } catch (error) {
+      console.log('failed to add to eslintignore. skipping...')
+    }
+  }
 
   // sdk file
   const skdFilePath = path.join(bgsdkDirectoryPath, 'sdk.ts')

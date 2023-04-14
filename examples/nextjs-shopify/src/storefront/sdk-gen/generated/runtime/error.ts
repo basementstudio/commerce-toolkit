@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // @ts-nocheck
 export class GenqlError extends Error {
     errors: Array<GraphqlError> = []
