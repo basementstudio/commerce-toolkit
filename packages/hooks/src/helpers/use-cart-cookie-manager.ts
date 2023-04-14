@@ -8,7 +8,7 @@ export const useCartCookieManager = (key: string) => {
     return {
       set: (id: string) => {
         if (!isClient) return
-        Cookies.set(`${key}-cart-id`, id, {
+        Cookies.set(key, id, {
           sameSite: 'strict',
           secure: true,
           expires: 365 // one year
@@ -16,11 +16,11 @@ export const useCartCookieManager = (key: string) => {
       },
       get: () => {
         if (!isClient) return
-        return Cookies.get(`${key}-cart-id`)
+        return Cookies.get(key)
       },
       clear: () => {
         if (!isClient) return
-        return Cookies.remove(`${key}-cart-id`)
+        return Cookies.remove(key)
       }
     }
   }, [key])
