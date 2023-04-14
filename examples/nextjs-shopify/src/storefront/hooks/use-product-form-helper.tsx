@@ -1,16 +1,12 @@
 import { useCallback, useMemo, useState } from 'react'
-
-import type { ProductFragment, ProductVariant } from '../sdk-gen/generated'
+import { Product, ProductVariant } from '../sdk-gen/generated'
 
 type BareBonesVariant = Pick<
   ProductVariant,
   'availableForSale' | 'compareAtPriceV2' | 'priceV2' | 'selectedOptions' | 'id'
 >
 
-type BareBonesProduct = Pick<
-  ProductFragment,
-  'options' | 'availableForSale'
-> & {
+type BareBonesProduct = Pick<Product, 'options' | 'availableForSale'> & {
   variants: { nodes: Array<BareBonesVariant> }
 } & { [key: string]: unknown }
 
