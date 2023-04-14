@@ -29,6 +29,12 @@ export async function main(args: Args) {
     extraGenerated
   )
 
+  // add eslint disable and ts nocheck to `types.ts` generated file
+  // at the beginning of the file
+  const typesFilePath = path.join(bgsdkDirectoryPath, 'generated', 'types.ts')
+  const typesFileContents = fs.readFileSync(typesFilePath, 'utf-8')
+  fs.writeFileSync(typesFilePath, `${topLevelAppend}\n${typesFileContents}`)
+
   // sdk file
   const skdFilePath = path.join(bgsdkDirectoryPath, 'sdk.ts')
   if (!fs.existsSync(skdFilePath)) {
@@ -60,4 +66,8 @@ const sdkFileContents = `import config from './config'
 import { createSdk } from './generated'
 
 export const bsmntSdk = createSdk(config)
+`
+
+const topLevelAppend = `/* eslint-disable */
+// @ts-nocheck
 `

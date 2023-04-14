@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@bsmnt/storefront-hooks": "1.3.1-next.0",
+    "@bsmnt/storefront-hooks": "*",
     "examples-ui": "*",
     "next": "12.3.1",
     "react": "18.2.0",
