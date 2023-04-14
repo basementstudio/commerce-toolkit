@@ -1,7 +1,7 @@
 import { MutationOptions, useMutation } from '@tanstack/react-query'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
-import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
+import { useCartCookieManager } from '../helpers/use-cart-cookie-manager'
 import { useOptimisticCartUpdate } from '../queries/cart'
 import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart, LineItem } from '../types'
@@ -15,7 +15,7 @@ type InternalOptions<Cart> = AddLineItemsToCartMutationUserOptions<Cart>
 
 export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
   mutators,
-  cartLocalStorageKey,
+  cartCookieKey,
   options,
   logging
 }: {
@@ -23,11 +23,11 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
     CartMutators<Cart>,
     'addLineItemsToCart' | 'createCartWithLines'
   >
-  cartLocalStorageKey: string
+  cartCookieKey: string
   options: InternalOptions<Cart>
   logging?: Logging<Cart>
 }) => {
-  const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
+  const cartCookieManager = useCartCookieManager(cartCookieKey)
   const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
 
   return useMutation(
@@ -35,7 +35,7 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
     async (lines: LineItem[]) => {
       const { updateCartQueryDataOnSuccess = true } = options
 
-      const cartId = cartLocalStorage.get()
+      const cartId = cartCookieManager.get()
       const { data, userErrors, silenceUserErrors } = cartId
         ? await mutators.addLineItemsToCart(cartId, lines)
         : await mutators.createCartWithLines(lines)
@@ -46,7 +46,7 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
         // means we needed to create the cart first
         // @ts-ignore
         data.__sfhooks_is_new = true
-        cartLocalStorage.set(data.id)
+        cartCookieManager.set(data.id)
       }
 
       if (updateCartQueryDataOnSuccess) {

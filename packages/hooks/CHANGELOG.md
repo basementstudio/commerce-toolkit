@@ -1,10 +1,16 @@
 # @bsmnt/storefront-hooks
 
-## 1.3.1-next.0
+## 2.0.1
 
 ### Patch Changes
 
-- 7be03f0: Migrate from graphql-codegen to Genql, an amazing graphql client generator
+- 1a956b7: Clean up cart cookie name
+
+## 2.0.0
+
+### Major Changes
+
+- 5893f57: use cookie instead of local storage for storing cart id, and remove `extraHooks` option
 
 ## 1.3.0
 

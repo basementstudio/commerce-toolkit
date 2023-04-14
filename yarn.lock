@@ -165,6 +165,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@bsmnt/storefront-hooks@1.3.1-next.0":
+  version "1.3.1-next.0"
+  resolved "https://registry.yarnpkg.com/@bsmnt/storefront-hooks/-/storefront-hooks-1.3.1-next.0.tgz#46376c056fa242aad5e37ac1196a64b918f2aef4"
+  integrity sha512-LWQ9CM56iNufRg0c4NC1ZIxeWX4ETdD6qH8Hbo7yBZciRJ7u7sylTbj7zLWadQd9IzgtqCNigJ2ShhnAG+W9Dw==
+
 "@changesets/apply-release-plan@^6.1.1":
   version "6.1.1"
   resolved "https://registry.npmjs.org/@changesets/apply-release-plan/-/apply-release-plan-6.1.1.tgz"
@@ -1066,6 +1071,11 @@
   integrity sha512-Q0Op0hdWbYd1iahB+IFNQcWXFq4O0Q5MwQP7uN0souuQ4rPg1vEYcnIOfr1gY+M+6rc8FGoRaBO1mOOvL29sEQ==
   dependencies:
     ci-info "^3.1.0"
+
+"@types/js-cookie@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-3.0.3.tgz#d6bfbbdd0c187354ca555213d1962f6d0691ff4e"
+  integrity sha512-Xe7IImK09HP1sv2M/aI+48a20VX+TdRJucfq4vfRVy6nWN8PYPOEnlMRSgxJAgYQIXJVL8dZ4/ilAM7dWNaOww==
 
 "@types/json-schema@^7.0.9":
   version "7.0.11"
@@ -3015,6 +3025,11 @@ joycon@^3.0.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/joycon/-/joycon-3.1.1.tgz"
   integrity sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==
+
+js-cookie@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.1.tgz#9e39b4c6c2f56563708d7d31f6f5f21873a92414"
+  integrity sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"

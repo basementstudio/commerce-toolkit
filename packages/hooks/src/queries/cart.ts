@@ -6,7 +6,7 @@ import {
 import * as React from 'react'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
-import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
+import { useCartCookieManager } from '../helpers/use-cart-cookie-manager'
 import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart, OptionalPromise } from '../types'
 
@@ -24,17 +24,17 @@ type Options<Cart> = UseCartQueryUserOptions<Cart>
 export const useCartQuery = <Cart extends BarebonesCart>({
   fetchCart,
   mutators,
-  cartLocalStorageKey,
+  cartCookieKey,
   options,
   logging
 }: {
   fetchCart: CartFetcher<Cart | null>
   mutators: Pick<CartMutators<Cart>, 'createCart'>
-  cartLocalStorageKey: string
+  cartCookieKey: string
   options: Options<Cart>
   logging?: Logging<Cart>
 }) => {
-  const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
+  const cartCookieManager = useCartCookieManager(cartCookieKey)
 
   const createCart = React.useCallback(async () => {
     const { data, userErrors, silenceUserErrors } = await mutators.createCart()
@@ -45,11 +45,11 @@ export const useCartQuery = <Cart extends BarebonesCart>({
   return useQuery<Cart | null>(
     cartQueryKey,
     async () => {
-      const cartId = cartLocalStorage.get()
+      const cartId = cartCookieManager.get()
       if (!cartId) {
         if (options?.createCartIfNotFound) {
           const newCart = await createCart()
-          cartLocalStorage.set(newCart.id)
+          cartCookieManager.set(newCart.id)
           // @ts-ignore
           newCart.__sfhooks_is_new = true
           return newCart
@@ -62,12 +62,12 @@ export const useCartQuery = <Cart extends BarebonesCart>({
       if (!cart) {
         if (options?.createCartIfNotFound) {
           const newCart = await createCart()
-          cartLocalStorage.set(newCart.id)
+          cartCookieManager.set(newCart.id)
           // @ts-ignore
           newCart.__sfhooks_is_new = true
           return newCart
         }
-        cartLocalStorage.clear()
+        cartCookieManager.clear()
         throw new Error(`Cart with id ${cartId} not found.`)
       }
 
