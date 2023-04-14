@@ -1,7 +1,7 @@
 import { MutationOptions, useMutation } from '@tanstack/react-query'
 
 import { surfaceMutationErrors } from '../helpers/error-handling'
-import { useCartLocalStorage } from '../helpers/use-cart-local-storage'
+import { useCartCookieManager } from '../helpers/use-cart-cookie-manager'
 import { useOptimisticCartUpdate } from '../queries/cart'
 import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart } from '../types'
@@ -15,22 +15,22 @@ type InternalOptions<Cart> = RemoveLineItemsFromCartMutationUserOptions<Cart>
 
 export const useRemoveLineItemsFromCartMutation = <Cart extends BarebonesCart>({
   mutators,
-  cartLocalStorageKey,
+  cartCookieKey,
   options,
   logging
 }: {
   mutators: Pick<CartMutators<Cart>, 'removeLineItemsFromCart'>
-  cartLocalStorageKey: string
+  cartCookieKey: string
   options: InternalOptions<Cart>
   logging?: Logging<Cart>
 }) => {
-  const cartLocalStorage = useCartLocalStorage(cartLocalStorageKey)
+  const cartCookieManager = useCartCookieManager(cartCookieKey)
   const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
 
   return useMutation(
     ['removeLineItemsFromCart'],
     async (lineIds: string[]) => {
-      const cartId = cartLocalStorage.get()
+      const cartId = cartCookieManager.get()
       if (!cartId) {
         throw new Error(
           'Cart not found while trying to remove line items from it'

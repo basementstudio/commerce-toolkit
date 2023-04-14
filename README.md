@@ -45,16 +45,15 @@ This package exports:
 - `createStorefrontHooks`: _function_ that creates the hooks needed to interact with the cart.
 
 ```ts
-import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
+import { createStorefrontHooks } from '@bsmnt/storefront-hooks'
 
 export const hooks = createStorefrontHooks({
-  cartLocalStorageKey: "", // to save cart id in local storage
+  cartCookieKey: '', // to save cart id in cookie
   fetchers: {}, // hooks will use these internally
   mutators: {}, // hooks will use these internally
   createCartIfNotFound: false, // defaults to false. if true, will create a cart if none is found
-  extraHooks: {}, // other hooks you want to add here just to keep the code organized
-  queryClientConfig: {}, // internal query client config
-});
+  queryClientConfig: {} // internal query client config
+})
 ```
 
 Take a look at some examples:
@@ -83,52 +82,52 @@ This example depends on [@bsmnt/sdk-gen](#bsmntsdk-gen).
 ```ts
 // ./storefront/hooks.ts
 
-import { createStorefrontHooks } from "@bsmnt/storefront-hooks";
-import { bsmntSdk } from "../gql-sdk/sdk";
+import { createStorefrontHooks } from '@bsmnt/storefront-hooks'
+import { bsmntSdk } from '../gql-sdk/sdk'
 
 export const hooks = createStorefrontHooks({
-  cartLocalStorageKey: "<my-store>",
+  cartCookieKey: '<my-store>',
   fetchers: {
     fetchCart: async (cartId) => {
-      const { cart } = await bsmntSdk.FetchCart({ id: cartId });
-      if (cart === undefined) throw new Error("Request failed");
-      return cart;
-    },
+      const { cart } = await bsmntSdk.FetchCart({ id: cartId })
+      if (cart === undefined) throw new Error('Request failed')
+      return cart
+    }
   },
   mutators: {
     addLineItemsToCart: async (cartId, lines) => {
       const { cartLinesAdd } = await bsmntSdk.AddLineItem({
         cartId,
-        lines,
-      });
+        lines
+      })
       return {
         data: cartLinesAdd?.cart,
-        userErrors: cartLinesAdd?.userErrors,
-      };
+        userErrors: cartLinesAdd?.userErrors
+      }
     },
     createCart: async () => {
-      const { cartCreate } = await bsmntSdk.CreateCart();
+      const { cartCreate } = await bsmntSdk.CreateCart()
       return {
         data: cartCreate?.cart,
-        userErrors: cartCreate?.userErrors,
-      };
+        userErrors: cartCreate?.userErrors
+      }
     },
     createCartWithLines: async (lines) => {
-      const { cartCreate } = await bsmntSdk.CreateCartWithLines({ lines });
+      const { cartCreate } = await bsmntSdk.CreateCartWithLines({ lines })
       return {
         data: cartCreate?.cart,
-        userErrors: cartCreate?.userErrors,
-      };
+        userErrors: cartCreate?.userErrors
+      }
     },
     removeLineItemsFromCart: async (cartId, lineIds) => {
       const { cartLinesRemove } = await bsmntSdk.RemoveLineItem({
         cartId,
-        lineIds,
-      });
+        lineIds
+      })
       return {
         data: cartLinesRemove?.cart,
-        userErrors: cartLinesRemove?.userErrors,
-      };
+        userErrors: cartLinesRemove?.userErrors
+      }
     },
     updateLineItemsInCart: async (cartId, lines) => {
       const { cartLinesUpdate } = await bsmntSdk.UpdateLineItem({
@@ -136,16 +135,16 @@ export const hooks = createStorefrontHooks({
         lines: lines.map((l) => ({
           id: l.merchandiseId,
           quantity: l.quantity,
-          attributes: l.attributes,
-        })),
-      });
+          attributes: l.attributes
+        }))
+      })
       return {
         data: cartLinesUpdate?.cart,
-        userErrors: cartLinesUpdate?.userErrors,
-      };
-    },
-  },
-});
+        userErrors: cartLinesUpdate?.userErrors
+      }
+    }
+  }
+})
 ```
 
 </details>
@@ -175,9 +174,9 @@ This package installs a CLI with a single command: `generate`. Running it will h
  * @type {import("@bsmnt/sdk-gen").Config}
  */
 module.exports = {
-  endpoint: "",
-  headers: {},
-};
+  endpoint: '',
+  headers: {}
+}
 ```
 
 ```gql
@@ -226,10 +225,10 @@ After running the generator, you should get the following result:
 Inside `sdk.ts`, you'll have the `bsmntSdk` being exported:
 
 ```ts
-import config from "./config";
-import { createSdk } from "./generated";
+import config from './config'
+import { createSdk } from './generated'
 
-export const bsmntSdk = createSdk(config);
+export const bsmntSdk = createSdk(config)
 ```
 
 And that's all. You should be able to use that to hit your GraphQL API in a type safe manner.
@@ -256,9 +255,9 @@ To use, just wrap the `CountdownProvider` wherever you want to add your countdow
 
 ```tsx
 // _app.tsx
-import type { AppProps } from "next/app";
-import { CountdownProvider } from "@bsmnt/drop";
-import { Countdown } from "../components/countdown";
+import type { AppProps } from 'next/app'
+import { CountdownProvider } from '@bsmnt/drop'
+import { Countdown } from '../components/countdown'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -270,19 +269,19 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <Component {...pageProps} />
     </CountdownProvider>
-  );
+  )
 }
 ```
 
 And then your Countdown may look something like:
 
 ```tsx
-import { useCountdownStore } from "@bsmnt/drop";
+import { useCountdownStore } from '@bsmnt/drop'
 
 export const Countdown = () => {
   const humanTimeRemaining = useCountdownStore()(
     (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
-  );
+  )
 
   return (
     <div>
@@ -294,8 +293,8 @@ export const Countdown = () => {
         <li>Seconds: {humanTimeRemaining.seconds}</li>
       </ul>
     </div>
-  );
-};
+  )
+}
 ```
 
 <details>
@@ -306,12 +305,12 @@ If you render `humanTimeRemaining.seconds`, there's a high chance that your serv
 In most cases, you can safely `suppressHydrationWarning` (see issue [#21](https://github.com/basementstudio/commerce-toolkit/issues/21) for more info):
 
 ```tsx
-import { useCountdownStore } from "@bsmnt/drop";
+import { useCountdownStore } from '@bsmnt/drop'
 
 export const Countdown = () => {
   const humanTimeRemaining = useCountdownStore()(
     (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
-  );
+  )
 
   return (
     <div>
@@ -323,26 +322,26 @@ export const Countdown = () => {
         <li suppressHydrationWarning>Seconds: {humanTimeRemaining.seconds}</li>
       </ul>
     </div>
-  );
-};
+  )
+}
 ```
 
 If you don't want to take that risk, a safer option is waiting until your app is hydrated before rendering the real time remaining:
 
 ```tsx
-import { useEffect, useState } from "react";
-import { useCountdownStore } from "@bsmnt/drop";
+import { useEffect, useState } from 'react'
+import { useCountdownStore } from '@bsmnt/drop'
 
 const Countdown = () => {
   const humanTimeRemaining = useCountdownStore()(
     (state) => state.humanTimeRemaining // keep in mind this is zustand, so you can slice this store
-  );
+  )
 
-  const [hasRenderedOnce, setHasRenderedOnce] = useState(false);
+  const [hasRenderedOnce, setHasRenderedOnce] = useState(false)
 
   useEffect(() => {
-    setHasRenderedOnce(true);
-  }, []);
+    setHasRenderedOnce(true)
+  }, [])
 
   return (
     <div>
@@ -350,12 +349,12 @@ const Countdown = () => {
       <ul>
         <li>Days: {humanTimeRemaining.days}</li>
         <li>Hours: {humanTimeRemaining.hours}</li>
-        <li>Minutes: {hasRenderedOnce ? humanTimeRemaining.minutes : "59"}</li>
-        <li>Seconds: {hasRenderedOnce ? humanTimeRemaining.seconds : "59"}</li>
+        <li>Minutes: {hasRenderedOnce ? humanTimeRemaining.minutes : '59'}</li>
+        <li>Seconds: {hasRenderedOnce ? humanTimeRemaining.seconds : '59'}</li>
       </ul>
     </div>
-  );
-};
+  )
+}
 ```
 
 </details>

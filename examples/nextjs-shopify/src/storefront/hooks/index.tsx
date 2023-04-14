@@ -9,7 +9,7 @@ export const {
   useRemoveLineItemsFromCartMutation,
   useUpdateLineItemsInCartMutation
 } = createStorefrontHooks({
-  cartLocalStorageKey: 'example-nextjs-shopify',
+  cartCookieKey: 'example-nextjs-shopify',
   fetchers: {
     fetchCart: async (cartId) => {
       const { cart } = await storefront.FetchCart({ id: cartId })

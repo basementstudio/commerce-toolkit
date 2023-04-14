@@ -69,7 +69,7 @@ type StorefrontMutators<Cart> = CartMutators<Cart>
  *   useAddLineItemsToCartMutation,
  *   ...rest
  * } = createStorefrontHooks({
- *   cartLocalStorageKey: 'my-store',
+ *   cartCookieKey: 'my-store',
  *   fetchers: {
  *     fetchCart: async (cartId) => {
  *       const { cart } = await bsmntSdk.FetchCart({ id: cartId });
@@ -82,20 +82,16 @@ type StorefrontMutators<Cart> = CartMutators<Cart>
  *   }
  * })
  */
-export function createStorefrontHooks<
-  Cart extends BarebonesCart,
-  ExtraHooks = Record<string, (...args: any) => OptionalPromise<any>>
->({
-  cartLocalStorageKey,
+export function createStorefrontHooks<Cart extends BarebonesCart>({
+  cartCookieKey,
   fetchers,
   mutators,
   createCartIfNotFound,
   queryClientConfig,
-  extraHooks,
   cartOpenStateOptions,
   logging
 }: {
-  cartLocalStorageKey: string
+  cartCookieKey: string
   fetchers: {
     fetchCart: (cartId: string) => OptionalPromise<Cart | null>
   }
@@ -103,7 +99,6 @@ export function createStorefrontHooks<
   createCartIfNotFound?: boolean
   queryClientConfig?: QueryClientConfig
   cartOpenStateOptions?: cartOpenState.UseCartOpenStateOptions
-  extraHooks?: ExtraHooks
   logging?: Logging<Cart>
 }) {
   const queryClient = new QueryClient(queryClientConfig)
@@ -116,7 +111,7 @@ export function createStorefrontHooks<
     // QUERIES
     useCartQuery: (options?: cartQuery.UseCartQueryUserOptions<Cart>) => {
       return cartQuery.useCartQuery({
-        cartLocalStorageKey,
+        cartCookieKey,
         fetchCart: fetchers.fetchCart,
         mutators: { createCart: mutators.createCart },
         options: {
@@ -139,7 +134,7 @@ export function createStorefrontHooks<
           addLineItemsToCart: mutators.addLineItemsToCart,
           createCartWithLines: mutators.createCartWithLines
         },
-        cartLocalStorageKey,
+        cartCookieKey,
         options: { ...options },
         logging
       })
@@ -149,7 +144,7 @@ export function createStorefrontHooks<
     ) => {
       return updateLines.useUpdateLineItemsInCartMutation<Cart>({
         mutators: { updateLineItemsInCart: mutators.updateLineItemsInCart },
-        cartLocalStorageKey,
+        cartCookieKey,
         options: {
           ...options,
           mutationOptions: options?.mutationOptions
@@ -162,7 +157,7 @@ export function createStorefrontHooks<
     ) => {
       return removeLines.useRemoveLineItemsFromCartMutation<Cart>({
         mutators: { removeLineItemsFromCart: mutators.removeLineItemsFromCart },
-        cartLocalStorageKey,
+        cartCookieKey,
         options: {
           ...options,
           mutationOptions: options?.mutationOptions
@@ -173,8 +168,6 @@ export function createStorefrontHooks<
     // CART OPEN STATE
     useCartOpenState: () => {
       return cartOpenState.useCartOpenState({ ...cartOpenStateOptions })
-    },
-    // EXTRA HOOKS
-    ...(extraHooks as OmitIndexSignature<ExtraHooks>)
+    }
   }
 }

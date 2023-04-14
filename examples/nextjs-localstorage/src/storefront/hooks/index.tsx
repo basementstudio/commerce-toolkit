@@ -18,7 +18,7 @@ export const {
   useRemoveLineItemsFromCartMutation,
   useUpdateLineItemsInCartMutation
 } = createStorefrontHooks<Cart>({
-  cartLocalStorageKey: 'example-nextjs-localstorage',
+  cartCookieKey: 'example-nextjs-localstorage',
   fetchers: {
     fetchCart: (cartId: string) => {
       const cartFromLocalStorage = localStorage.getItem(cartId)
