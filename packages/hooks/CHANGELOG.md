@@ -1,5 +1,11 @@
 # @bsmnt/storefront-hooks
 
+## 2.0.0
+
+### Major Changes
+
+- 5893f57: use cookie instead of local storage for storing cart id, and remove `extraHooks` option
+
 ## 1.3.0
 
 ### Minor Changes
