@@ -1,5 +1,11 @@
 # @bsmnt/sdk-gen
 
+## 2.0.1
+
+### Patch Changes
+
+- 6facc1f: disable linters on generated files
+
 ## 2.0.0
 
 ### Major Changes
