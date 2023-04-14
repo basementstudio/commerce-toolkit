@@ -1,5 +1,17 @@
 # @bsmnt/shopify-helpers
 
+## 2.0.1
+
+### Patch Changes
+
+- 7be03f0: Migrate from graphql-codegen to Genql, an amazing graphql client generator
+
+## 2.0.1-next.0
+
+### Patch Changes
+
+- 7be03f0: Migrate from graphql-codegen to Genql, an amazing graphql client generator
+
 ## 2.0.0
 
 ### Major Changes

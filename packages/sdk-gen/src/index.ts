@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-import arg from "arg";
+import arg from 'arg'
 
-import { main } from "./generate";
-import { formatError } from "./util/format-error";
+import { main } from './generate'
+import { formatError } from './util/format-error'
 
 // Show usage and exit with code
 function help(code: number) {
@@ -17,31 +17,32 @@ function help(code: number) {
 
     --dir, -d  The directory where your graphql files are located. Defaults to "sdk-gen".
   
-  `);
-  process.exit(code);
+  `)
+  process.exit(code)
 }
 
 // Get CLI arguments
-const [, , cmd] = process.argv;
+const [, , cmd] = process.argv
 if (!cmd) {
-  help(0);
-  throw new Error("Unreachable");
+  help(0)
+  throw new Error('Unreachable')
 }
 
 const args = arg(
   {
     // types
-    "--dir": String,
+    '--dir': String,
+    '--verbose': Boolean,
     // aliases
-    "-d": "--dir",
+    '-d': '--dir'
   },
   { permissive: true }
-);
+)
 
 // CLI commands
 const cmds: { [key: string]: (args: Args) => Promise<void> } = {
-  generate: main,
-};
+  generate: main
+}
 
 // Run CLI
 try {
@@ -49,16 +50,16 @@ try {
   cmds[cmd]
     ? cmds[cmd]?.(args)
         .then(() => {
-          process.exit(0);
+          process.exit(0)
         })
         .catch((error) => {
-          console.error(formatError(error));
-          process.exit(1);
+          console.error(formatError(error))
+          process.exit(1)
         })
-    : help(0);
+    : help(0)
 } catch (e) {
-  console.error(formatError(e).message);
-  process.exit(1);
+  console.error(formatError(e).message)
+  process.exit(1)
 }
 
-export type Args = typeof args;
+export type Args = typeof args

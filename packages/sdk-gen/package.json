@@ -1,7 +1,7 @@
 {
   "name": "@bsmnt/sdk-gen",
   "author": "basement.studio <dev@basement.studio>",
-  "version": "1.2.5",
+  "version": "2.0.0",
   "main": "./dist/index.js",
   "types": "./dist/types.d.ts",
   "bin": {
@@ -17,16 +17,10 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@graphql-codegen/cli": "^2.3.0",
-    "@graphql-codegen/introspection": "^2.1.0",
-    "@graphql-codegen/typescript": "^2.4.1",
-    "@graphql-codegen/typescript-generic-sdk": "^3.0.2",
-    "@graphql-codegen/typescript-operations": "^2.2.1",
+    "@genql/cli": "^3.0.5",
     "arg": "^5.0.1",
-    "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.0",
     "graphql": "^16.3.0",
-    "isomorphic-unfetch": "^3.1.0",
     "zod": "^3.14.4"
   },
   "devDependencies": {

@@ -5,7 +5,10 @@ import styles from '../styles/Home.module.css'
 import { useCartQuery } from '../storefront/hooks'
 import { GetStaticProps } from 'next'
 import { storefront } from '../storefront/sdk-gen/sdk'
-import { CollectionFragment } from '../storefront/sdk-gen/generated'
+import {
+  CollectionFragment,
+  collectionFragment
+} from '../storefront/sdk-gen/fragments'
 
 type PageProps = {
   collections: Array<CollectionFragment>
@@ -75,7 +78,13 @@ export default function Home({ collections }: PageProps) {
 }
 
 export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
-  const { collections } = await storefront.FetchCollections()
+  const { collections } = await storefront.query({
+    collections: {
+      __args: { first: 250 },
+      nodes: collectionFragment
+    }
+  })
+
   return {
     props: {
       collections: collections.nodes
