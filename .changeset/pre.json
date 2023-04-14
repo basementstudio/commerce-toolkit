@@ -1,0 +1,18 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "nextjs-localstorage": "0.1.0",
+    "nextjs-shopify": "0.1.0",
+    "eslint-config-custom": "1.0.0",
+    "examples-ui": "1.2.1",
+    "tsconfig": "1.0.0",
+    "@bsmnt/drop": "1.2.0",
+    "@bsmnt/storefront-hooks": "1.3.0",
+    "@bsmnt/sdk-gen": "1.2.5",
+    "@bsmnt/shopify-helpers": "2.0.0"
+  },
+  "changesets": [
+    "quick-pumpkins-chew"
+  ]
+}

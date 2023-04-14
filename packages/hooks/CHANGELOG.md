@@ -1,5 +1,11 @@
 # @bsmnt/storefront-hooks
 
+## 1.3.1-next.0
+
+### Patch Changes
+
+- 7be03f0: Migrate from graphql-codegen to Genql, an amazing graphql client generator
+
 ## 1.3.0
 
 ### Minor Changes

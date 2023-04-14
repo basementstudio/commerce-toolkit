@@ -1,5 +1,11 @@
 # @bsmnt/sdk-gen
 
+## 2.0.0-next.0
+
+### Major Changes
+
+- 7be03f0: Migrate from graphql-codegen to Genql, an amazing graphql client generator
+
 ## 1.2.5
 
 ### Patch Changes

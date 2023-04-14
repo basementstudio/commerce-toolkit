@@ -1,7 +1,7 @@
 {
   "name": "@bsmnt/shopify-helpers",
   "author": "basement.studio <dev@basement.studio>",
-  "version": "2.0.0",
+  "version": "2.0.1-next.0",
   "files": [
     "dist/**/*"
   ],
@@ -21,7 +21,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@bsmnt/sdk-gen": "*",
+    "@bsmnt/sdk-gen": "2.0.0-next.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "react": "^18.2.0",
