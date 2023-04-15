@@ -163,8 +163,7 @@ This package installs a CLI with a single command: `generate`. Running it will h
 # By default, you can have a file tree like the following:
 .
 └── sdk-gen/
-    ├── config.js
-    └── documents.gql
+    └── config.js
 ```
 
 ```js
