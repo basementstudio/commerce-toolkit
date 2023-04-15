@@ -179,22 +179,6 @@ module.exports = {
 }
 ```
 
-```gql
-# ./sdk-gen/document.gql
-
-query FetchCart($id: ID!) {
-  cart(id: $id) {
-    id
-    lines {
-      # ...
-    }
-    checkoutURL
-    # ... any other key you want to fetch
-  }
-}
-
-```
-
 And then you can run `generate`:
 
 ```zsh
