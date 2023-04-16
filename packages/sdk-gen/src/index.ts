@@ -22,10 +22,10 @@ function help(code: number) {
 }
 
 // Get CLI arguments
-const [, , cmd] = process.argv
-if (!cmd) {
-  help(0)
-  throw new Error('Unreachable')
+let [, , cmd] = process.argv
+
+if (!cmd || cmd.startsWith('-')) {
+  cmd = 'generate'
 }
 
 const args = arg(

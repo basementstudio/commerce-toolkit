@@ -8,7 +8,7 @@
     "build:analyze": "cross-env ANALYZE=true yarn build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "yarn sdk-gen generate --dir src/storefront/sdk-gen"
+    "generate": "yarn sdk-gen --dir src/storefront/sdk-gen"
   },
   "dependencies": {
     "@bsmnt/drop": "*",
