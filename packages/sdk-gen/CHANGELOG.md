@@ -1,5 +1,11 @@
 # @bsmnt/sdk-gen
 
+## 2.0.2
+
+### Patch Changes
+
+- c904dbc: Make it work without passing args
+
 ## 2.0.1
 
 ### Patch Changes
