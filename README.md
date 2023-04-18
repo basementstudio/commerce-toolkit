@@ -178,10 +178,10 @@ module.exports = {
 }
 ```
 
-And then you can run `generate`:
+And then you can run the generator:
 
 ```zsh
-yarn sdk-gen generate
+yarn sdk-gen
 ```
 
 This will look inside `./sdk-gen/` for a `config.js` file, and for all your `.{graphql,gql}` files under that directory.
@@ -189,7 +189,7 @@ This will look inside `./sdk-gen/` for a `config.js` file, and for all your `.{g
 If you want to use a custom directory (and not the default, which is `./sdk-gen/`), you can use the `--dir` argument.
 
 ```zsh
-yarn sdk-gen generate --dir ./my-custom/directory
+yarn sdk-gen --dir ./my-custom/directory
 ```
 
 After running the generator, you should get the following result:
