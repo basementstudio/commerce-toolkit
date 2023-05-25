@@ -1,7 +1,7 @@
 fragment _Image on Image {
   id
   altText
-  originalSrc
+  url
   width
   height
 }

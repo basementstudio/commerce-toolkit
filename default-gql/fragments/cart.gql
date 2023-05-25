@@ -16,7 +16,7 @@ fragment _Cart on Cart {
             title
             availableForSale
             quantityAvailable
-            priceV2 {
+            price {
               amount
               currencyCode
             }
@@ -31,7 +31,7 @@ fragment _Cart on Cart {
             }
           }
         }
-        estimatedCost {
+        cost {
           subtotalAmount {
             amount
             currencyCode
@@ -54,7 +54,7 @@ fragment _Cart on Cart {
       }
     }
   }
-  estimatedCost {
+  cost {
     subtotalAmount {
       amount
       currencyCode

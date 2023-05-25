@@ -11,7 +11,7 @@ export const createStandardStorefrontClient = ({
   domain,
   accessToken
 }: StandardStorefrontClientProps) => {
-  const endpoint = `https://${domain}/api/2022-07/graphql`
+  const endpoint = `https://${domain}/api/2023-04/graphql`
   const graphqlClient = new GraphQLClient(endpoint, {
     headers: {
       accept: 'application/json',

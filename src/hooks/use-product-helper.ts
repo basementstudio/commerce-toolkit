@@ -5,7 +5,7 @@ import { useStorefront } from '../lib/shopify/storefront/provider'
 
 type BareBonesVariant = Pick<
   _ProductFragment['variants']['edges'][0]['node'],
-  'availableForSale' | 'compareAtPriceV2' | 'priceV2' | 'selectedOptions' | 'id'
+  'availableForSale' | 'compareAtPrice' | 'price' | 'selectedOptions' | 'id'
 >
 
 type BareBonesProduct = Pick<
@@ -129,12 +129,11 @@ export const useProductHelper = (product: BareBonesProduct) => {
     }, [selectedOptions])
 
   const discount = useMemo(() => {
-    if (!selectedVariant || !selectedVariant.node.compareAtPriceV2) return null
+    if (!selectedVariant || !selectedVariant.node.compareAtPrice) return null
     const raw =
-      selectedVariant.node.priceV2.amount -
-      selectedVariant.node.compareAtPriceV2.amount
-    const percentage =
-      (raw / selectedVariant.node.compareAtPriceV2.amount) * 100
+      selectedVariant.node.price.amount -
+      selectedVariant.node.compareAtPrice.amount
+    const percentage = (raw / selectedVariant.node.compareAtPrice.amount) * 100
     return { percentage, raw }
   }, [selectedVariant])
 

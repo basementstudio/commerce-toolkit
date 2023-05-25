@@ -14,6 +14,13 @@ export type Scalars = {
   Int: number;
   Float: number;
   /**
+   * A string containing a hexadecimal representation of a color.
+   *
+   * For example, "#6A8D48".
+   *
+   */
+  Color: any;
+  /**
    * Represents an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)-encoded date and time string.
    * For example, 3:50 pm on September 7, 2019 in the time zone of UTC (Coordinated Universal Time) is
    * represented as `"2019-09-07T15:50:00Z`".
@@ -31,7 +38,7 @@ export type Scalars = {
    * A string containing HTML code. Refer to the [HTML spec](https://html.spec.whatwg.org/#elements-3) for a
    * complete list of HTML elements.
    *
-   * Example value: `"<p>Grey cotton knit sweater.</p>"`.
+   * Example value: `"<p>Grey cotton knit sweater.</p>"`
    *
    */
   HTML: any;
@@ -52,8 +59,6 @@ export type Scalars = {
    *
    */
   JSON: any;
-  /** A monetary value string without a currency symbol or code. Example value: `"100.57"`. */
-  Money: any;
   /**
    * Represents an [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) and
    * [RFC 3987](https://datatracker.ietf.org/doc/html/rfc3987)-compliant URI string.
@@ -63,6 +68,13 @@ export type Scalars = {
    *
    */
   URL: any;
+  /**
+   * An unsigned 64-bit integer. Represents whole numeric values between 0 and 2^64 - 1 encoded as a string of base-10 digits.
+   *
+   * Example value: `"50"`.
+   *
+   */
+  UnsignedInt64: any;
 };
 
 /**
@@ -80,24 +92,58 @@ export type ApiVersion = {
   supported: Scalars['Boolean'];
 };
 
+/**
+ * The input fields for submitting Apple Pay payment method information for checkout.
+ *
+ */
+export type ApplePayWalletContentInput = {
+  /** The customer's billing address. */
+  billingAddress: MailingAddressInput;
+  /** The data for the Apple Pay wallet. */
+  data: Scalars['String'];
+  /** The header data for the Apple Pay wallet. */
+  header: ApplePayWalletHeaderInput;
+  /** The last digits of the card used to create the payment. */
+  lastDigits?: InputMaybe<Scalars['String']>;
+  /** The signature for the Apple Pay wallet. */
+  signature: Scalars['String'];
+  /** The version for the Apple Pay wallet. */
+  version: Scalars['String'];
+};
+
+/**
+ * The input fields for submitting wallet payment method information for checkout.
+ *
+ */
+export type ApplePayWalletHeaderInput = {
+  /** The application data for the Apple Pay wallet. */
+  applicationData?: InputMaybe<Scalars['String']>;
+  /** The ephemeral public key for the Apple Pay wallet. */
+  ephemeralPublicKey: Scalars['String'];
+  /** The public key hash for the Apple Pay wallet. */
+  publicKeyHash: Scalars['String'];
+  /** The transaction ID for the Apple Pay wallet. */
+  transactionId: Scalars['String'];
+};
+
 /** Details about the gift card used on the checkout. */
 export type AppliedGiftCard = Node & {
   __typename?: 'AppliedGiftCard';
+  /** The amount that was taken from the gift card by applying it. */
+  amountUsed: MoneyV2;
   /**
    * The amount that was taken from the gift card by applying it.
-   * @deprecated Use `amountUsedV2` instead
+   * @deprecated Use `amountUsed` instead.
    */
-  amountUsed: Scalars['Money'];
-  /** The amount that was taken from the gift card by applying it. */
   amountUsedV2: MoneyV2;
+  /** The amount left on the gift card. */
+  balance: MoneyV2;
   /**
    * The amount left on the gift card.
-   * @deprecated Use `balanceV2` instead
+   * @deprecated Use `balance` instead.
    */
-  balance: Scalars['Money'];
-  /** The amount left on the gift card. */
   balanceV2: MoneyV2;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The last characters of the gift card. */
   lastCharacters: Scalars['String'];
@@ -110,7 +156,7 @@ export type Article = HasMetafields & Node & OnlineStorePublishable & {
   __typename?: 'Article';
   /**
    * The article's author.
-   * @deprecated Use `authorV2` instead
+   * @deprecated Use `authorV2` instead.
    */
   author: ArticleAuthor;
   /** The article's author. */
@@ -132,7 +178,7 @@ export type Article = HasMetafields & Node & OnlineStorePublishable & {
    *
    */
   handle: Scalars['String'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The image associated with the article. */
   image?: Maybe<Image>;
@@ -262,7 +308,7 @@ export type Attribute = {
   value?: Maybe<Scalars['String']>;
 };
 
-/** Specifies the input fields required for an attribute. */
+/** The input fields for an attribute. */
 export type AttributeInput = {
   /** Key or name of the attribute. */
   key: Scalars['String'];
@@ -302,6 +348,63 @@ export type AvailableShippingRates = {
   shippingRates?: Maybe<Array<ShippingRate>>;
 };
 
+/** Represents a cart line common fields. */
+export type BaseCartLine = {
+  /** An attribute associated with the cart line. */
+  attribute?: Maybe<Attribute>;
+  /** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
+  attributes: Array<Attribute>;
+  /** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
+  cost: CartLineCost;
+  /** The discounts that have been applied to the cart line. */
+  discountAllocations: Array<CartDiscountAllocation>;
+  /**
+   * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
+   * @deprecated Use `cost` instead.
+   */
+  estimatedCost: CartLineEstimatedCost;
+  /** A globally-unique ID. */
+  id: Scalars['ID'];
+  /** The merchandise that the buyer intends to purchase. */
+  merchandise: Merchandise;
+  /** The quantity of the merchandise that the customer intends to purchase. */
+  quantity: Scalars['Int'];
+  /** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
+  sellingPlanAllocation?: Maybe<SellingPlanAllocation>;
+};
+
+
+/** Represents a cart line common fields. */
+export type BaseCartLineAttributeArgs = {
+  key: Scalars['String'];
+};
+
+/**
+ * An auto-generated type for paginating through multiple BaseCartLines.
+ *
+ */
+export type BaseCartLineConnection = {
+  __typename?: 'BaseCartLineConnection';
+  /** A list of edges. */
+  edges: Array<BaseCartLineEdge>;
+  /** A list of the nodes contained in BaseCartLineEdge. */
+  nodes: Array<BaseCartLine>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one BaseCartLine and a cursor during pagination.
+ *
+ */
+export type BaseCartLineEdge = {
+  __typename?: 'BaseCartLineEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of BaseCartLineEdge. */
+  node: BaseCartLine;
+};
+
 /** An online store blog. */
 export type Blog = HasMetafields & Node & OnlineStorePublishable & {
   __typename?: 'Blog';
@@ -316,7 +419,7 @@ export type Blog = HasMetafields & Node & OnlineStorePublishable & {
    *
    */
   handle: Scalars['String'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<Metafield>;
@@ -406,6 +509,50 @@ export enum BlogSortKeys {
   Title = 'TITLE'
 }
 
+/**
+ * The store's [branding configuration](https://help.shopify.com/en/manual/promoting-marketing/managing-brand-assets).
+ *
+ */
+export type Brand = {
+  __typename?: 'Brand';
+  /** The colors of the store's brand. */
+  colors: BrandColors;
+  /** The store's cover image. */
+  coverImage?: Maybe<MediaImage>;
+  /** The store's default logo. */
+  logo?: Maybe<MediaImage>;
+  /** The store's short description. */
+  shortDescription?: Maybe<Scalars['String']>;
+  /** The store's slogan. */
+  slogan?: Maybe<Scalars['String']>;
+  /** The store's preferred logo for square UI elements. */
+  squareLogo?: Maybe<MediaImage>;
+};
+
+/**
+ * A group of related colors for the shop's brand.
+ *
+ */
+export type BrandColorGroup = {
+  __typename?: 'BrandColorGroup';
+  /** The background color. */
+  background?: Maybe<Scalars['Color']>;
+  /** The foreground color. */
+  foreground?: Maybe<Scalars['Color']>;
+};
+
+/**
+ * The colors of the shop's brand.
+ *
+ */
+export type BrandColors = {
+  __typename?: 'BrandColors';
+  /** The shop's primary brand colors. */
+  primary: Array<BrandColorGroup>;
+  /** The shop's secondary brand colors. */
+  secondary: Array<BrandColorGroup>;
+};
+
 /** Card brand, such as Visa or Mastercard, which can be used for payments. */
 export enum CardBrand {
   /** American Express. */
@@ -422,8 +569,14 @@ export enum CardBrand {
   Visa = 'VISA'
 }
 
-/** A cart represents the merchandise that a buyer intends to purchase, and the estimated cost associated with the cart. To learn how to interact with a cart during a customer's session, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
-export type Cart = Node & {
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
+export type Cart = HasMetafields & Node & {
   __typename?: 'Cart';
   /** An attribute associated with the cart. */
   attribute?: Maybe<Attribute>;
@@ -433,11 +586,15 @@ export type Cart = Node & {
   buyerIdentity: CartBuyerIdentity;
   /** The URL of the checkout for the cart. */
   checkoutUrl: Scalars['URL'];
-  /** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart). */
+  /** The estimated costs that the buyer will pay at checkout. The costs are subject to change and changes will be reflected at checkout. The `cost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
   cost: CartCost;
   /** The date and time when the cart was created. */
   createdAt: Scalars['DateTime'];
-  /** The delivery groups available for the cart, based on the default address of the logged-in customer. */
+  /**
+   * The delivery groups available for the cart, based on the buyer identity default
+   * delivery address preference or the default address of the logged-in customer.
+   *
+   */
   deliveryGroups: CartDeliveryGroupConnection;
   /** The discounts that have been applied to the entire cart. */
   discountAllocations: Array<CartDiscountAllocation>;
@@ -447,14 +604,25 @@ export type Cart = Node & {
    */
   discountCodes: Array<CartDiscountCode>;
   /**
-   * The estimated costs that the buyer will pay at checkout. The estimated costs are subject to change and changes will be reflected at checkout. The `estimatedCost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart).
-   * @deprecated Use `cost` instead
+   * The estimated costs that the buyer will pay at checkout.
+   * The estimated costs are subject to change and changes will be reflected at checkout.
+   * The `estimatedCost` field uses the `buyerIdentity` field to determine
+   * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
+   *
+   * @deprecated Use `cost` instead.
    */
   estimatedCost: CartEstimatedCost;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** A list of lines containing information about the items the customer intends to purchase. */
-  lines: CartLineConnection;
+  lines: BaseCartLineConnection;
+  /** Returns a metafield found by namespace and key. */
+  metafield?: Maybe<Metafield>;
+  /**
+   * The metafields associated with the resource matching the supplied list of namespaces and keys.
+   *
+   */
+  metafields: Array<Maybe<Metafield>>;
   /** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
   note?: Maybe<Scalars['String']>;
   /** The total number of items in the cart. */
@@ -464,13 +632,25 @@ export type Cart = Node & {
 };
 
 
-/** A cart represents the merchandise that a buyer intends to purchase, and the estimated cost associated with the cart. To learn how to interact with a cart during a customer's session, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
 export type CartAttributeArgs = {
   key: Scalars['String'];
 };
 
 
-/** A cart represents the merchandise that a buyer intends to purchase, and the estimated cost associated with the cart. To learn how to interact with a cart during a customer's session, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
 export type CartDeliveryGroupsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -480,13 +660,44 @@ export type CartDeliveryGroupsArgs = {
 };
 
 
-/** A cart represents the merchandise that a buyer intends to purchase, and the estimated cost associated with the cart. To learn how to interact with a cart during a customer's session, refer to [Manage a cart with the Storefront API](https://shopify.dev/api/examples/cart). */
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
 export type CartLinesArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   reverse?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
+export type CartMetafieldArgs = {
+  key: Scalars['String'];
+  namespace: Scalars['String'];
+};
+
+
+/**
+ * A cart represents the merchandise that a buyer intends to purchase,
+ * and the estimated cost associated with the cart. Learn how to
+ * [interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
+ * during a customer's session.
+ *
+ */
+export type CartMetafieldsArgs = {
+  identifiers: Array<HasMetafieldsIdentifier>;
 };
 
 /** Return type for `cartAttributesUpdate` mutation. */
@@ -514,16 +725,29 @@ export type CartBuyerIdentity = {
   countryCode?: Maybe<CountryCode>;
   /** The customer account associated with the cart. */
   customer?: Maybe<Customer>;
+  /**
+   * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+   * The rank of the preferences is determined by the order of the addresses in the array. Preferences
+   * can be used to populate relevant fields in the checkout flow.
+   *
+   */
+  deliveryAddressPreferences: Array<DeliveryAddress>;
   /** The email address of the buyer that is interacting with the cart. */
   email?: Maybe<Scalars['String']>;
   /** The phone number of the buyer that is interacting with the cart. */
   phone?: Maybe<Scalars['String']>;
+  /**
+   * A set of wallet preferences tied to the buyer that is interacting with the cart.
+   * Preferences can be used to populate relevant payment fields in the checkout flow.
+   *
+   */
+  walletPreferences: Array<Scalars['String']>;
 };
 
 /**
  * Specifies the input fields to update the buyer information associated with a cart.
  * Buyer identity is used to determine
- * [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-checkout)
+ * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
  * and should match the customer's shipping address.
  *
  */
@@ -532,10 +756,23 @@ export type CartBuyerIdentityInput = {
   countryCode?: InputMaybe<CountryCode>;
   /** The access token used to identify the customer associated with the cart. */
   customerAccessToken?: InputMaybe<Scalars['String']>;
+  /**
+   * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+   * The rank of the preferences is determined by the order of the addresses in the array. Preferences
+   * can be used to populate relevant fields in the checkout flow.
+   *
+   */
+  deliveryAddressPreferences?: InputMaybe<Array<DeliveryAddressInput>>;
   /** The email address of the buyer that is interacting with the cart. */
   email?: InputMaybe<Scalars['String']>;
   /** The phone number of the buyer that is interacting with the cart. */
   phone?: InputMaybe<Scalars['String']>;
+  /**
+   * A set of wallet preferences tied to the buyer that is interacting with the cart.
+   * Preferences can be used to populate relevant payment fields in the checkout flow.
+   *
+   */
+  walletPreferences?: InputMaybe<Array<Scalars['String']>>;
 };
 
 /** Return type for `cartBuyerIdentityUpdate` mutation. */
@@ -547,6 +784,19 @@ export type CartBuyerIdentityUpdatePayload = {
   userErrors: Array<CartUserError>;
 };
 
+/**
+ * Represents how credit card details are provided for a direct payment.
+ *
+ */
+export enum CartCardSource {
+  /**
+   * The credit card was provided by a third party and vaulted on their system.
+   * Using this value requires a separate permission from Shopify.
+   *
+   */
+  SavedCreditCard = 'SAVED_CREDIT_CARD'
+}
+
 /** The discount that has been applied to the cart line using a discount code. */
 export type CartCodeDiscountAllocation = CartDiscountAllocation & {
   __typename?: 'CartCodeDiscountAllocation';
@@ -556,31 +806,77 @@ export type CartCodeDiscountAllocation = CartDiscountAllocation & {
   discountedAmount: MoneyV2;
 };
 
+/** The completion action to checkout a cart. */
+export type CartCompletionAction = CompletePaymentChallenge;
+
+/** The required completion action to checkout a cart. */
+export type CartCompletionActionRequired = {
+  __typename?: 'CartCompletionActionRequired';
+  /** The action required to complete the cart completion attempt. */
+  action?: Maybe<CartCompletionAction>;
+  /** The ID of the cart completion attempt. */
+  id: Scalars['String'];
+};
+
+/** The result of a cart completion attempt. */
+export type CartCompletionAttemptResult = CartCompletionActionRequired | CartCompletionFailed | CartCompletionProcessing | CartCompletionSuccess;
+
+/** A failed completion to checkout a cart. */
+export type CartCompletionFailed = {
+  __typename?: 'CartCompletionFailed';
+  /** The errors that caused the checkout to fail. */
+  errors: Array<CompletionError>;
+  /** The ID of the cart completion attempt. */
+  id: Scalars['String'];
+};
+
+/** A cart checkout completion that's still processing. */
+export type CartCompletionProcessing = {
+  __typename?: 'CartCompletionProcessing';
+  /** The ID of the cart completion attempt. */
+  id: Scalars['String'];
+  /** The number of milliseconds to wait before polling again. */
+  pollDelay: Scalars['Int'];
+};
+
+/** A successful completion to checkout a cart and a created order. */
+export type CartCompletionSuccess = {
+  __typename?: 'CartCompletionSuccess';
+  /** The date and time when the job completed. */
+  completedAt?: Maybe<Scalars['DateTime']>;
+  /** The ID of the cart completion attempt. */
+  id: Scalars['String'];
+  /** The ID of the order that's created in Shopify. */
+  orderId: Scalars['ID'];
+  /** The URL of the order confirmation in Shopify. */
+  orderUrl: Scalars['URL'];
+};
+
 /**
  * The costs that the buyer will pay at checkout.
- * It uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine
- * [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart).
+ * The cart cost uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine
+ * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
  *
  */
 export type CartCost = {
   __typename?: 'CartCost';
-  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, the checkout charge amount is equivalent to subtotalAmount. */
+  /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`. */
   checkoutChargeAmount: MoneyV2;
   /** The amount, before taxes and cart-level discounts, for the customer to pay. */
   subtotalAmount: MoneyV2;
-  /** Whether or not the subtotal amount is estimated. */
+  /** Whether the subtotal amount is estimated. */
   subtotalAmountEstimated: Scalars['Boolean'];
   /** The total amount for the customer to pay. */
   totalAmount: MoneyV2;
-  /** Whether or not the total amount is estimated. */
+  /** Whether the total amount is estimated. */
   totalAmountEstimated: Scalars['Boolean'];
   /** The duty amount for the customer to pay at checkout. */
   totalDutyAmount?: Maybe<MoneyV2>;
-  /** Whether or not the total duty amount is estimated. */
+  /** Whether the total duty amount is estimated. */
   totalDutyAmountEstimated: Scalars['Boolean'];
   /** The tax amount for the customer to pay at checkout. */
   totalTaxAmount?: Maybe<MoneyV2>;
-  /** Whether or not the total tax amount is estimated. */
+  /** Whether the total tax amount is estimated. */
   totalTaxAmountEstimated: Scalars['Boolean'];
 };
 
@@ -606,13 +902,15 @@ export type CartCustomDiscountAllocation = CartDiscountAllocation & {
 export type CartDeliveryGroup = {
   __typename?: 'CartDeliveryGroup';
   /** A list of cart lines for the delivery group. */
-  cartLines: CartLineConnection;
+  cartLines: BaseCartLineConnection;
   /** The destination address for the delivery group. */
   deliveryAddress: MailingAddress;
   /** The delivery options available for the delivery group. */
   deliveryOptions: Array<CartDeliveryOption>;
   /** The ID for the delivery group. */
   id: Scalars['ID'];
+  /** The selected delivery option for the delivery group. */
+  selectedDeliveryOption?: Maybe<CartDeliveryOption>;
 };
 
 
@@ -662,8 +960,23 @@ export type CartDeliveryOption = {
   description?: Maybe<Scalars['String']>;
   /** The estimated cost for the delivery option. */
   estimatedCost: MoneyV2;
+  /** The unique identifier of the delivery option. */
+  handle: Scalars['String'];
   /** The title of the delivery option. */
   title?: Maybe<Scalars['String']>;
+};
+
+/**
+ * The input fields for submitting direct payment method information for checkout.
+ *
+ */
+export type CartDirectPaymentMethodInput = {
+  /** The customer's billing address. */
+  billingAddress: MailingAddressInput;
+  /** The source of the credit card payment. */
+  cardSource?: InputMaybe<CartCardSource>;
+  /** The session ID for the direct payment method used to create the payment. */
+  sessionId: Scalars['String'];
 };
 
 /** The discounts that have been applied to the cart line. */
@@ -694,20 +1007,34 @@ export type CartDiscountCodesUpdatePayload = {
 export enum CartErrorCode {
   /** The input value is invalid. */
   Invalid = 'INVALID',
+  /** Delivery group was not found in cart. */
+  InvalidDeliveryGroup = 'INVALID_DELIVERY_GROUP',
+  /** Delivery option was not valid. */
+  InvalidDeliveryOption = 'INVALID_DELIVERY_OPTION',
   /** Merchandise line was not found in cart. */
   InvalidMerchandiseLine = 'INVALID_MERCHANDISE_LINE',
+  /** The metafields were not valid. */
+  InvalidMetafields = 'INVALID_METAFIELDS',
+  /** The payment wasn't valid. */
+  InvalidPayment = 'INVALID_PAYMENT',
+  /** Cannot update payment on an empty cart */
+  InvalidPaymentEmptyCart = 'INVALID_PAYMENT_EMPTY_CART',
   /** The input value should be less than the maximum value allowed. */
   LessThan = 'LESS_THAN',
   /** Missing discount code. */
   MissingDiscountCode = 'MISSING_DISCOUNT_CODE',
   /** Missing note. */
-  MissingNote = 'MISSING_NOTE'
+  MissingNote = 'MISSING_NOTE',
+  /** The payment method is not supported. */
+  PaymentMethodNotSupported = 'PAYMENT_METHOD_NOT_SUPPORTED'
 }
 
 /**
  * The estimated costs that the buyer will pay at checkout.
- * It uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine
- * [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-cart).
+ * The estimated cost uses
+ * [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity)
+ * to determine
+ * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
  *
  */
 export type CartEstimatedCost = {
@@ -724,11 +1051,25 @@ export type CartEstimatedCost = {
   totalTaxAmount?: Maybe<MoneyV2>;
 };
 
-/** Specifies the input fields to create a cart. */
+/**
+ * The input fields for submitting a billing address without a selected payment method.
+ *
+ */
+export type CartFreePaymentMethodInput = {
+  /** The customer's billing address. */
+  billingAddress: MailingAddressInput;
+};
+
+/** The input fields to create a cart. */
 export type CartInput = {
   /** An array of key-value pairs that contains additional information about the cart. */
   attributes?: InputMaybe<Array<AttributeInput>>;
-  /** The customer associated with the cart. Used to determine [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-checkout). Buyer identity should match the customer's shipping address. */
+  /**
+   * The customer associated with the cart. Used to determine [international pricing]
+   * (https://shopify.dev/custom-storefronts/internationalization/international-pricing).
+   * Buyer identity should match the customer's shipping address.
+   *
+   */
   buyerIdentity?: InputMaybe<CartBuyerIdentityInput>;
   /**
    * The case-insensitive discount codes that the customer added at checkout.
@@ -737,12 +1078,31 @@ export type CartInput = {
   discountCodes?: InputMaybe<Array<Scalars['String']>>;
   /** A list of merchandise lines to add to the cart. */
   lines?: InputMaybe<Array<CartLineInput>>;
+  /** The metafields to associate with this cart. */
+  metafields?: InputMaybe<Array<CartInputMetafieldInput>>;
   /** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
   note?: InputMaybe<Scalars['String']>;
 };
 
+/** The input fields for a cart metafield value to set. */
+export type CartInputMetafieldInput = {
+  /** The key name of the metafield. */
+  key: Scalars['String'];
+  /**
+   * The type of data that the cart metafield stores.
+   * The type of data must be a [supported type](https://shopify.dev/apps/metafields/types).
+   *
+   */
+  type: Scalars['String'];
+  /**
+   * The data to store in the cart metafield. The data is always stored as a string, regardless of the metafield's type.
+   *
+   */
+  value: Scalars['String'];
+};
+
 /** Represents information about the merchandise in the cart. */
-export type CartLine = Node & {
+export type CartLine = BaseCartLine & Node & {
   __typename?: 'CartLine';
   /** An attribute associated with the cart line. */
   attribute?: Maybe<Attribute>;
@@ -754,10 +1114,10 @@ export type CartLine = Node & {
   discountAllocations: Array<CartDiscountAllocation>;
   /**
    * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
-   * @deprecated Use `cost` instead
+   * @deprecated Use `cost` instead.
    */
   estimatedCost: CartLineEstimatedCost;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The merchandise that the buyer intends to purchase. */
   merchandise: Merchandise;
@@ -773,20 +1133,6 @@ export type CartLineAttributeArgs = {
   key: Scalars['String'];
 };
 
-/**
- * An auto-generated type for paginating through multiple CartLines.
- *
- */
-export type CartLineConnection = {
-  __typename?: 'CartLineConnection';
-  /** A list of edges. */
-  edges: Array<CartLineEdge>;
-  /** A list of the nodes contained in CartLineEdge. */
-  nodes: Array<CartLine>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
 /** The cost of the merchandise line that the buyer will pay at checkout. */
 export type CartLineCost = {
   __typename?: 'CartLineCost';
@@ -798,18 +1144,6 @@ export type CartLineCost = {
   subtotalAmount: MoneyV2;
   /** The total cost of the merchandise line. */
   totalAmount: MoneyV2;
-};
-
-/**
- * An auto-generated type which holds one CartLine and a cursor during pagination.
- *
- */
-export type CartLineEdge = {
-  __typename?: 'CartLineEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String'];
-  /** The item at the end of CartLineEdge. */
-  node: CartLine;
 };
 
 /** The estimated cost of the merchandise line that the buyer will pay at checkout. */
@@ -825,29 +1159,29 @@ export type CartLineEstimatedCost = {
   totalAmount: MoneyV2;
 };
 
-/** Specifies the input fields to create a merchandise line on a cart. */
+/** The input fields to create a merchandise line on a cart. */
 export type CartLineInput = {
   /** An array of key-value pairs that contains additional information about the merchandise line. */
   attributes?: InputMaybe<Array<AttributeInput>>;
-  /** The identifier of the merchandise that the buyer intends to purchase. */
+  /** The ID of the merchandise that the buyer intends to purchase. */
   merchandiseId: Scalars['ID'];
   /** The quantity of the merchandise. */
   quantity?: InputMaybe<Scalars['Int']>;
-  /** The identifier of the selling plan that the merchandise is being purchased with. */
+  /** The ID of the selling plan that the merchandise is being purchased with. */
   sellingPlanId?: InputMaybe<Scalars['ID']>;
 };
 
-/** Specifies the input fields to update a line item on a cart. */
+/** The input fields to update a line item on a cart. */
 export type CartLineUpdateInput = {
   /** An array of key-value pairs that contains additional information about the merchandise line. */
   attributes?: InputMaybe<Array<AttributeInput>>;
-  /** The identifier of the merchandise line. */
+  /** The ID of the merchandise line. */
   id: Scalars['ID'];
-  /** The identifier of the merchandise for the line item. */
+  /** The ID of the merchandise for the line item. */
   merchandiseId?: InputMaybe<Scalars['ID']>;
   /** The quantity of the line item. */
   quantity?: InputMaybe<Scalars['Int']>;
-  /** The identifier of the selling plan that the merchandise is being purchased with. */
+  /** The ID of the selling plan that the merchandise is being purchased with. */
   sellingPlanId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -878,6 +1212,51 @@ export type CartLinesUpdatePayload = {
   userErrors: Array<CartUserError>;
 };
 
+/** The input fields to delete a cart metafield. */
+export type CartMetafieldDeleteInput = {
+  /** The key name of the cart metafield. */
+  key: Scalars['String'];
+  /** The ID of the cart resource. */
+  ownerId: Scalars['ID'];
+};
+
+/** Return type for `cartMetafieldDelete` mutation. */
+export type CartMetafieldDeletePayload = {
+  __typename?: 'CartMetafieldDeletePayload';
+  /** The ID of the deleted cart metafield. */
+  deletedId?: Maybe<Scalars['ID']>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<MetafieldDeleteUserError>;
+};
+
+/** The input fields for a cart metafield value to set. */
+export type CartMetafieldsSetInput = {
+  /** The key name of the cart metafield. */
+  key: Scalars['String'];
+  /** The ID of the cart resource. */
+  ownerId: Scalars['ID'];
+  /**
+   * The type of data that the cart metafield stores.
+   * The type of data must be a [supported type](https://shopify.dev/apps/metafields/types).
+   *
+   */
+  type: Scalars['String'];
+  /**
+   * The data to store in the cart metafield. The data is always stored as a string, regardless of the metafield's type.
+   *
+   */
+  value: Scalars['String'];
+};
+
+/** Return type for `cartMetafieldsSet` mutation. */
+export type CartMetafieldsSetPayload = {
+  __typename?: 'CartMetafieldsSetPayload';
+  /** The list of cart metafields that were set. */
+  metafields?: Maybe<Array<Metafield>>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<MetafieldsSetUserError>;
+};
+
 /** Return type for `cartNoteUpdate` mutation. */
 export type CartNoteUpdatePayload = {
   __typename?: 'CartNoteUpdatePayload';
@@ -886,6 +1265,78 @@ export type CartNoteUpdatePayload = {
   /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<CartUserError>;
 };
+
+/**
+ * The input fields for updating the payment method that will be used to checkout.
+ *
+ */
+export type CartPaymentInput = {
+  /** The amount that the customer will be charged at checkout. */
+  amount: MoneyInput;
+  /**
+   * The input fields to use when checking out a cart with a direct payment method (like a credit card).
+   *
+   */
+  directPaymentMethod?: InputMaybe<CartDirectPaymentMethodInput>;
+  /**
+   * The input fields to use to checkout a cart without providing a payment method.
+   * Use this payment method input if the total cost of the cart is 0.
+   *
+   */
+  freePaymentMethod?: InputMaybe<CartFreePaymentMethodInput>;
+  /**
+   * An ID of the order placed on the originating platform.
+   * Note that this value doesn't correspond to the Shopify Order ID.
+   *
+   */
+  sourceIdentifier?: InputMaybe<Scalars['String']>;
+  /**
+   * The input fields to use when checking out a cart with a wallet payment method (like Shop Pay or Apple Pay).
+   *
+   */
+  walletPaymentMethod?: InputMaybe<CartWalletPaymentMethodInput>;
+};
+
+/** Return type for `cartPaymentUpdate` mutation. */
+export type CartPaymentUpdatePayload = {
+  __typename?: 'CartPaymentUpdatePayload';
+  /** The updated cart. */
+  cart?: Maybe<Cart>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<CartUserError>;
+};
+
+/**
+ * The input fields for updating the selected delivery options for a delivery group.
+ *
+ */
+export type CartSelectedDeliveryOptionInput = {
+  /** The ID of the cart delivery group. */
+  deliveryGroupId: Scalars['ID'];
+  /** The handle of the selected delivery option. */
+  deliveryOptionHandle: Scalars['String'];
+};
+
+/** Return type for `cartSelectedDeliveryOptionsUpdate` mutation. */
+export type CartSelectedDeliveryOptionsUpdatePayload = {
+  __typename?: 'CartSelectedDeliveryOptionsUpdatePayload';
+  /** The updated cart. */
+  cart?: Maybe<Cart>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<CartUserError>;
+};
+
+/** Return type for `cartSubmitForCompletion` mutation. */
+export type CartSubmitForCompletionPayload = {
+  __typename?: 'CartSubmitForCompletionPayload';
+  /** The result of cart submission for completion. */
+  result?: Maybe<CartSubmitForCompletionResult>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<CartUserError>;
+};
+
+/** The result of cart submit completion. */
+export type CartSubmitForCompletionResult = SubmitAlreadyAccepted | SubmitFailed | SubmitSuccess | SubmitThrottled;
 
 /** Represents an error that happens during execution of a cart mutation. */
 export type CartUserError = DisplayableError & {
@@ -896,6 +1347,17 @@ export type CartUserError = DisplayableError & {
   field?: Maybe<Array<Scalars['String']>>;
   /** The error message. */
   message: Scalars['String'];
+};
+
+/**
+ * The input fields for submitting wallet payment method information for checkout.
+ *
+ */
+export type CartWalletPaymentMethodInput = {
+  /** The payment method information for the Apple Pay wallet. */
+  applePayWalletContent?: InputMaybe<ApplePayWalletContentInput>;
+  /** The payment method information for the Shop Pay wallet. */
+  shopPayWalletContent?: InputMaybe<ShopPayWalletContentInput>;
 };
 
 /** A container for all the information required to checkout items and pay. */
@@ -924,7 +1386,7 @@ export type Checkout = Node & {
   discountApplications: DiscountApplicationConnection;
   /** The email attached to this checkout. */
   email?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** A list of line item objects, each one containing information about an item in the checkout. */
   lineItems: CheckoutLineItemConnection;
@@ -936,12 +1398,12 @@ export type Checkout = Node & {
   order?: Maybe<Order>;
   /** The Order Status Page for this Checkout, null when checkout is not completed. */
   orderStatusUrl?: Maybe<Scalars['URL']>;
+  /** The amount left to be paid. This is equal to the cost of the line items, taxes, and shipping, minus discounts and gift cards. */
+  paymentDue: MoneyV2;
   /**
-   * The amount left to be paid. This is equal to the cost of the line items, taxes and shipping minus discounts and gift cards.
-   * @deprecated Use `paymentDueV2` instead
+   * The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards.
+   * @deprecated Use `paymentDue` instead.
    */
-  paymentDue: Scalars['Money'];
-  /** The amount left to be paid. This is equal to the cost of the line items, duties, taxes and shipping minus discounts and gift cards. */
   paymentDueV2: MoneyV2;
   /**
    * Whether or not the Checkout is ready and can be completed. Checkouts may
@@ -962,12 +1424,12 @@ export type Checkout = Node & {
   shippingDiscountAllocations: Array<DiscountAllocation>;
   /** Once a shipping rate is selected by the customer it is transitioned to a `shipping_line` object. */
   shippingLine?: Maybe<ShippingRate>;
+  /** The price at checkout before shipping and taxes. */
+  subtotalPrice: MoneyV2;
   /**
-   * Price of the checkout before shipping and taxes.
-   * @deprecated Use `subtotalPriceV2` instead
+   * The price at checkout before duties, shipping, and taxes.
+   * @deprecated Use `subtotalPrice` instead.
    */
-  subtotalPrice: Scalars['Money'];
-  /** Price of the checkout before duties, shipping and taxes. */
   subtotalPriceV2: MoneyV2;
   /** Whether the checkout is tax exempt. */
   taxExempt: Scalars['Boolean'];
@@ -975,19 +1437,19 @@ export type Checkout = Node & {
   taxesIncluded: Scalars['Boolean'];
   /** The sum of all the duties applied to the line items in the checkout. */
   totalDuties?: Maybe<MoneyV2>;
+  /** The sum of all the prices of all the items in the checkout, including taxes and duties. */
+  totalPrice: MoneyV2;
   /**
-   * The sum of all the prices of all the items in the checkout, taxes and discounts included.
-   * @deprecated Use `totalPriceV2` instead
+   * The sum of all the prices of all the items in the checkout, including taxes and duties.
+   * @deprecated Use `totalPrice` instead.
    */
-  totalPrice: Scalars['Money'];
-  /** The sum of all the prices of all the items in the checkout, duties, taxes and discounts included. */
   totalPriceV2: MoneyV2;
+  /** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
+  totalTax: MoneyV2;
   /**
    * The sum of all the taxes applied to the line items and shipping lines in the checkout.
-   * @deprecated Use `totalTaxV2` instead
+   * @deprecated Use `totalTax` instead.
    */
-  totalTax: Scalars['Money'];
-  /** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
   totalTaxV2: MoneyV2;
   /** The date and time when the checkout was last updated. */
   updatedAt: Scalars['DateTime'];
@@ -1015,7 +1477,7 @@ export type CheckoutLineItemsArgs = {
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** Specifies the fields required to update a checkout's attributes. */
+/** The input fields required to update a checkout's attributes. */
 export type CheckoutAttributesUpdateV2Input = {
   /**
    * Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
@@ -1040,7 +1502,7 @@ export type CheckoutAttributesUpdateV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1052,7 +1514,7 @@ export type CheckoutBuyerIdentity = {
   countryCode?: Maybe<CountryCode>;
 };
 
-/** Specifies the identity of the customer associated with the checkout. */
+/** The input fields for the identity of the customer associated with the checkout. */
 export type CheckoutBuyerIdentityInput = {
   /**
    * The country code of one of the shop's
@@ -1072,7 +1534,7 @@ export type CheckoutCompleteFreePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1088,7 +1550,7 @@ export type CheckoutCompleteWithCreditCardV2Payload = {
   payment?: Maybe<Payment>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1104,12 +1566,12 @@ export type CheckoutCompleteWithTokenizedPaymentV3Payload = {
   payment?: Maybe<Payment>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
 
-/** Specifies the fields required to create a checkout. */
+/** The input fields required to create a checkout. */
 export type CheckoutCreateInput = {
   /**
    * Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
@@ -1143,7 +1605,7 @@ export type CheckoutCreatePayload = {
   queueToken?: Maybe<Scalars['String']>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1159,7 +1621,7 @@ export type CheckoutCustomerAssociateV2Payload = {
   customer?: Maybe<Customer>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1173,7 +1635,7 @@ export type CheckoutCustomerDisassociateV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1187,7 +1649,7 @@ export type CheckoutDiscountCodeApplyV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1201,7 +1663,7 @@ export type CheckoutDiscountCodeRemovePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1215,7 +1677,7 @@ export type CheckoutEmailUpdateV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1234,6 +1696,8 @@ export enum CheckoutErrorCode {
   CustomerAlreadyUsedOncePerCustomerDiscountNotice = 'CUSTOMER_ALREADY_USED_ONCE_PER_CUSTOMER_DISCOUNT_NOTICE',
   /** Discount already applied. */
   DiscountAlreadyApplied = 'DISCOUNT_ALREADY_APPLIED',
+  /** Discount code isn't working right now. Please contact us for help. */
+  DiscountCodeApplicationFailed = 'DISCOUNT_CODE_APPLICATION_FAILED',
   /** Discount disabled. */
   DiscountDisabled = 'DISCOUNT_DISABLED',
   /** Discount expired. */
@@ -1290,6 +1754,8 @@ export enum CheckoutErrorCode {
   LineItemNotFound = 'LINE_ITEM_NOT_FOUND',
   /** Checkout is locked. */
   Locked = 'LOCKED',
+  /** Maximum number of discount codes limit reached. */
+  MaximumDiscountCodeLimitReached = 'MAXIMUM_DISCOUNT_CODE_LIMIT_REACHED',
   /** Missing payment input. */
   MissingPaymentInput = 'MISSING_PAYMENT_INPUT',
   /** Not enough in stock. */
@@ -1298,6 +1764,8 @@ export enum CheckoutErrorCode {
   NotSupported = 'NOT_SUPPORTED',
   /** The input value needs to be blank. */
   Present = 'PRESENT',
+  /** Product is not published for this customer. */
+  ProductNotAvailable = 'PRODUCT_NOT_AVAILABLE',
   /** Shipping rate expired. */
   ShippingRateExpired = 'SHIPPING_RATE_EXPIRED',
   /** Throttled during checkout. */
@@ -1319,7 +1787,7 @@ export type CheckoutGiftCardRemoveV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1333,7 +1801,7 @@ export type CheckoutGiftCardsAppendPayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1345,7 +1813,7 @@ export type CheckoutLineItem = Node & {
   customAttributes: Array<Attribute>;
   /** The discounts that have been allocated onto the checkout line item by discount applications. */
   discountAllocations: Array<DiscountAllocation>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The quantity of the line item. */
   quantity: Scalars['Int'];
@@ -1383,25 +1851,25 @@ export type CheckoutLineItemEdge = {
   node: CheckoutLineItem;
 };
 
-/** Specifies the input fields to create a line item on a checkout. */
+/** The input fields to create a line item on a checkout. */
 export type CheckoutLineItemInput = {
   /** Extra information in the form of an array of Key-Value pairs about the line item. */
   customAttributes?: InputMaybe<Array<AttributeInput>>;
   /** The quantity of the line item. */
   quantity: Scalars['Int'];
-  /** The identifier of the product variant for the line item. */
+  /** The ID of the product variant for the line item. */
   variantId: Scalars['ID'];
 };
 
-/** Specifies the input fields to update a line item on the checkout. */
+/** The input fields to update a line item on the checkout. */
 export type CheckoutLineItemUpdateInput = {
   /** Extra information in the form of an array of Key-Value pairs about the line item. */
   customAttributes?: InputMaybe<Array<AttributeInput>>;
-  /** The identifier of the line item. */
+  /** The ID of the line item. */
   id?: InputMaybe<Scalars['ID']>;
   /** The quantity of the line item. */
   quantity?: InputMaybe<Scalars['Int']>;
-  /** The variant identifier of the line item. */
+  /** The variant ID of the line item. */
   variantId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -1414,7 +1882,7 @@ export type CheckoutLineItemsAddPayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1428,7 +1896,7 @@ export type CheckoutLineItemsRemovePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1451,7 +1919,7 @@ export type CheckoutLineItemsUpdatePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1465,7 +1933,7 @@ export type CheckoutShippingAddressUpdateV2Payload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1479,7 +1947,7 @@ export type CheckoutShippingLineUpdatePayload = {
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `checkoutUserErrors` instead
+   * @deprecated Use `checkoutUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -1508,7 +1976,7 @@ export type Collection = HasMetafields & Node & OnlineStorePublishable & {
    *
    */
   handle: Scalars['String'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** Image associated with the collection. */
   image?: Maybe<Image>;
@@ -1613,7 +2081,7 @@ export type Comment = Node & {
   content: Scalars['String'];
   /** The content of the comment, complete with HTML formatting. */
   contentHtml: Scalars['HTML'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
 };
 
@@ -1658,6 +2126,39 @@ export type CommentEdge = {
   node: Comment;
 };
 
+/** The action for the 3DS payment redirect. */
+export type CompletePaymentChallenge = {
+  __typename?: 'CompletePaymentChallenge';
+  /** The URL for the 3DS payment redirect. */
+  redirectUrl?: Maybe<Scalars['URL']>;
+};
+
+/** An error that occurred during a cart completion attempt. */
+export type CompletionError = {
+  __typename?: 'CompletionError';
+  /** The error code. */
+  code: CompletionErrorCode;
+  /** The error message. */
+  message?: Maybe<Scalars['String']>;
+};
+
+/** The code of the error that occurred during a cart completion attempt. */
+export enum CompletionErrorCode {
+  Error = 'ERROR',
+  InventoryReservationError = 'INVENTORY_RESERVATION_ERROR',
+  PaymentAmountTooSmall = 'PAYMENT_AMOUNT_TOO_SMALL',
+  PaymentCallIssuer = 'PAYMENT_CALL_ISSUER',
+  PaymentCardDeclined = 'PAYMENT_CARD_DECLINED',
+  PaymentError = 'PAYMENT_ERROR',
+  PaymentGatewayNotEnabledError = 'PAYMENT_GATEWAY_NOT_ENABLED_ERROR',
+  PaymentInsufficientFunds = 'PAYMENT_INSUFFICIENT_FUNDS',
+  PaymentInvalidBillingAddress = 'PAYMENT_INVALID_BILLING_ADDRESS',
+  PaymentInvalidCreditCard = 'PAYMENT_INVALID_CREDIT_CARD',
+  PaymentInvalidCurrency = 'PAYMENT_INVALID_CURRENCY',
+  PaymentInvalidPaymentMethod = 'PAYMENT_INVALID_PAYMENT_METHOD',
+  PaymentTransientError = 'PAYMENT_TRANSIENT_ERROR'
+}
+
 /** A country. */
 export type Country = {
   __typename?: 'Country';
@@ -1667,6 +2168,8 @@ export type Country = {
   currency: Currency;
   /** The ISO code of the country. */
   isoCode: CountryCode;
+  /** The market that includes this country. */
+  market?: Maybe<Market>;
   /** The name of the country. */
   name: Scalars['String'];
   /** The unit system used in the country. */
@@ -2584,7 +3087,7 @@ export type Customer = HasMetafields & {
   email?: Maybe<Scalars['String']>;
   /** The customer’s first name. */
   firstName?: Maybe<Scalars['String']>;
-  /** A unique identifier for the customer. */
+  /** A unique ID for the customer. */
   id: Scalars['ID'];
   /** The customer's most recently updated, incomplete checkout. */
   lastIncompleteCheckout?: Maybe<Checkout>;
@@ -2597,6 +3100,8 @@ export type Customer = HasMetafields & {
    *
    */
   metafields: Array<Maybe<Metafield>>;
+  /** The number of orders that the customer has made at the store in their lifetime. */
+  numberOfOrders: Scalars['UnsignedInt64'];
   /** The orders associated with the customer. */
   orders: OrderConnection;
   /** The customer’s phone number. */
@@ -2655,7 +3160,7 @@ export type CustomerAccessToken = {
   expiresAt: Scalars['DateTime'];
 };
 
-/** Specifies the input fields required to create a customer access token. */
+/** The input fields required to create a customer access token. */
 export type CustomerAccessTokenCreateInput = {
   /** The email associated to the customer. */
   email: Scalars['String'];
@@ -2672,7 +3177,7 @@ export type CustomerAccessTokenCreatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2717,7 +3222,7 @@ export type CustomerActivateByUrlPayload = {
   customerUserErrors: Array<CustomerUserError>;
 };
 
-/** Specifies the input fields required to activate a customer. */
+/** The input fields to activate a customer. */
 export type CustomerActivateInput = {
   /** The activation token required to activate the customer. */
   activationToken: Scalars['String'];
@@ -2736,7 +3241,7 @@ export type CustomerActivatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2750,7 +3255,7 @@ export type CustomerAddressCreatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2764,7 +3269,7 @@ export type CustomerAddressDeletePayload = {
   deletedCustomerAddressId?: Maybe<Scalars['String']>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2778,12 +3283,12 @@ export type CustomerAddressUpdatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
 
-/** The fields required to create a new customer. */
+/** The input fields to create a new customer. */
 export type CustomerCreateInput = {
   /** Indicates whether the customer has consented to be sent marketing material via email. */
   acceptsMarketing?: InputMaybe<Scalars['Boolean']>;
@@ -2813,7 +3318,7 @@ export type CustomerCreatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2827,7 +3332,7 @@ export type CustomerDefaultAddressUpdatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2873,7 +3378,7 @@ export type CustomerRecoverPayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2889,12 +3394,12 @@ export type CustomerResetByUrlPayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
 
-/** Specifies the fields required to reset a customer’s password. */
+/** The input fields to reset a customer's password. */
 export type CustomerResetInput = {
   /** New password that will be set as part of the reset password process. */
   password: Scalars['String'];
@@ -2913,12 +3418,12 @@ export type CustomerResetPayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
 
-/** Specifies the fields required to update the Customer information. */
+/** The input fields to update the Customer information. */
 export type CustomerUpdateInput = {
   /** Indicates whether the customer has consented to be sent marketing material via email. */
   acceptsMarketing?: InputMaybe<Scalars['Boolean']>;
@@ -2954,7 +3459,7 @@ export type CustomerUpdatePayload = {
   customerUserErrors: Array<CustomerUserError>;
   /**
    * The list of errors that occurred from executing the mutation.
-   * @deprecated Use `customerUserErrors` instead
+   * @deprecated Use `customerUserErrors` instead.
    */
   userErrors: Array<UserError>;
 };
@@ -2968,6 +3473,23 @@ export type CustomerUserError = DisplayableError & {
   field?: Maybe<Array<Scalars['String']>>;
   /** The error message. */
   message: Scalars['String'];
+};
+
+/** A delivery address of the buyer that is interacting with the cart. */
+export type DeliveryAddress = MailingAddress;
+
+/**
+ * The input fields for delivery address preferences.
+ *
+ */
+export type DeliveryAddressInput = {
+  /**
+   * The ID of a customer address that is associated with the buyer that is interacting with the cart.
+   *
+   */
+  customerAddressId?: InputMaybe<Scalars['ID']>;
+  /** A delivery address preference of a buyer that is interacting with the cart. */
+  deliveryAddress?: InputMaybe<MailingAddressInput>;
 };
 
 /** List of different delivery method types. */
@@ -3138,17 +3660,19 @@ export type ExternalVideo = Media & Node & {
   embedUrl: Scalars['URL'];
   /**
    * The URL.
-   * @deprecated Use `originUrl` instead
+   * @deprecated Use `originUrl` instead.
    */
   embeddedUrl: Scalars['URL'];
   /** The host of the external video. */
   host: MediaHost;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The media content type. */
   mediaContentType: MediaContentType;
   /** The origin URL of the video on the respective host. */
   originUrl: Scalars['URL'];
+  /** The presentation for a media. */
+  presentation?: Maybe<MediaPresentation>;
   /** The preview image for the media. */
   previewImage?: Maybe<Image>;
 };
@@ -3170,7 +3694,7 @@ export type Filter = {
  * The type of data that the filter group represents.
  *
  * For more information, refer to [Filter products in a collection with the Storefront API]
- * (https://shopify.dev/api/examples/filter-products).
+ * (https://shopify.dev/custom-storefronts/products-collections/filter-products).
  *
  */
 export enum FilterType {
@@ -3280,7 +3804,7 @@ export type GenericFile = Node & {
   __typename?: 'GenericFile';
   /** A word or phrase to indicate the contents of a file. */
   alt?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The MIME type of the file. */
   mimeType?: Maybe<Scalars['String']>;
@@ -3292,7 +3816,7 @@ export type GenericFile = Node & {
   url?: Maybe<Scalars['URL']>;
 };
 
-/** Used to specify a geographical location. */
+/** The input fields used to specify a geographical location. */
 export type GeoCoordinateInput = {
   /** The coordinate's latitude value. */
   latitude: Scalars['Float'];
@@ -3324,7 +3848,7 @@ export type HasMetafieldsMetafieldsArgs = {
   identifiers: Array<HasMetafieldsIdentifier>;
 };
 
-/** Identifies a metafield on an owner resource by namespace and key. */
+/** The input fields to identify a metafield on an owner resource by namespace and key. */
 export type HasMetafieldsIdentifier = {
   /** The identifier for the metafield. */
   key: Scalars['String'];
@@ -3339,19 +3863,19 @@ export type Image = {
   altText?: Maybe<Scalars['String']>;
   /** The original height of the image in pixels. Returns `null` if the image is not hosted by Shopify. */
   height?: Maybe<Scalars['Int']>;
-  /** A unique identifier for the image. */
+  /** A unique ID for the image. */
   id?: Maybe<Scalars['ID']>;
   /**
    * The location of the original image as a URL.
    *
    * If there are any existing transformations in the original source URL, they will remain and not be stripped.
    *
-   * @deprecated Use `url` instead
+   * @deprecated Use `url` instead.
    */
   originalSrc: Scalars['URL'];
   /**
    * The location of the image as a URL.
-   * @deprecated Use `url` instead
+   * @deprecated Use `url` instead.
    */
   src: Scalars['URL'];
   /**
@@ -3433,16 +3957,16 @@ export type ImageEdge = {
 /**
  * The available options for transforming an image.
  *
- * All transformation options are considered "best-effort". Any transformation that the original image type doesn't support will be ignored.
+ * All transformation options are considered best effort. Any transformation that the original image type doesn't support will be ignored.
  *
  */
 export type ImageTransformInput = {
   /**
-   * Region of the image to remain after cropping.
-   * Must be used in conjunction with maxWidth and/or maxHeight fields where the maxWidth / maxHeight are not equal.
-   * The crop parameter should coincide with the smaller value (i.e. smaller maxWidth indicates a LEFT / RIGHT crop, while
-   * smaller maxHeight indicates a TOP / BOTTOM crop). For example, { maxWidth: 5, maxHeight: 10, crop: LEFT } will result
-   * in an image with width 5 and height 10, where the right side of the image is removed.
+   * The region of the image to remain after cropping.
+   * Must be used in conjunction with the `maxWidth` and/or `maxHeight` fields, where the `maxWidth` and `maxHeight` aren't equal.
+   * The `crop` argument should coincide with the smaller value. A smaller `maxWidth` indicates a `LEFT` or `RIGHT` crop, while
+   * a smaller `maxHeight` indicates a `TOP` or `BOTTOM` crop. For example, `{ maxWidth: 5, maxHeight: 10, crop: LEFT }` will result
+   * in an image with a width of 5 and height of 10, where the right side of the image is removed.
    *
    */
   crop?: InputMaybe<CropRegion>;
@@ -3626,7 +4150,7 @@ export enum LanguageCode {
   Lv = 'LV',
   /** Malagasy. */
   Mg = 'MG',
-  /** Maori. */
+  /** Māori. */
   Mi = 'MI',
   /** Macedonian. */
   Mk = 'MK',
@@ -3769,17 +4293,39 @@ export type Localization = {
   country: Country;
   /** The language of the active localized experience. Use the `@inContext` directive to change this value. */
   language: Language;
+  /** The market including the country of the active localized experience. Use the `@inContext` directive to change this value. */
+  market: Market;
 };
 
 /** Represents a location where product inventory is held. */
-export type Location = Node & {
+export type Location = HasMetafields & Node & {
   __typename?: 'Location';
   /** The address of the location. */
   address: LocationAddress;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
+  /** Returns a metafield found by namespace and key. */
+  metafield?: Maybe<Metafield>;
+  /**
+   * The metafields associated with the resource matching the supplied list of namespaces and keys.
+   *
+   */
+  metafields: Array<Maybe<Metafield>>;
   /** The name of the location. */
   name: Scalars['String'];
+};
+
+
+/** Represents a location where product inventory is held. */
+export type LocationMetafieldArgs = {
+  key: Scalars['String'];
+  namespace: Scalars['String'];
+};
+
+
+/** Represents a location where product inventory is held. */
+export type LocationMetafieldsArgs = {
+  identifiers: Array<HasMetafieldsIdentifier>;
 };
 
 /**
@@ -3885,7 +4431,7 @@ export type MailingAddress = Node & {
    *
    * For example, US.
    *
-   * @deprecated Use `countryCodeV2` instead
+   * @deprecated Use `countryCodeV2` instead.
    */
   countryCode?: Maybe<Scalars['String']>;
   /**
@@ -3901,7 +4447,7 @@ export type MailingAddress = Node & {
   formatted: Array<Scalars['String']>;
   /** A comma-separated list of the values for city, province, and country. */
   formattedArea?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The last name of the customer. */
   lastName?: Maybe<Scalars['String']>;
@@ -3967,7 +4513,7 @@ export type MailingAddressEdge = {
   node: MailingAddress;
 };
 
-/** Specifies the fields accepted to create or update a mailing address. */
+/** The input fields to create or update a mailing address. */
 export type MailingAddressInput = {
   /**
    * The first line of the address. Typically the street address or PO Box number.
@@ -4028,12 +4574,46 @@ export type ManualDiscountApplication = DiscountApplication & {
   value: PricingValue;
 };
 
+/** A group of one or more regions of the world that a merchant is targeting for sales. To learn more about markets, refer to [the Shopify Markets conceptual overview](/docs/apps/markets). */
+export type Market = HasMetafields & Node & {
+  __typename?: 'Market';
+  /**
+   * A human-readable unique string for the market automatically generated from its title.
+   *
+   */
+  handle: Scalars['String'];
+  /** A globally-unique ID. */
+  id: Scalars['ID'];
+  /** Returns a metafield found by namespace and key. */
+  metafield?: Maybe<Metafield>;
+  /**
+   * The metafields associated with the resource matching the supplied list of namespaces and keys.
+   *
+   */
+  metafields: Array<Maybe<Metafield>>;
+};
+
+
+/** A group of one or more regions of the world that a merchant is targeting for sales. To learn more about markets, refer to [the Shopify Markets conceptual overview](/docs/apps/markets). */
+export type MarketMetafieldArgs = {
+  key: Scalars['String'];
+  namespace: Scalars['String'];
+};
+
+
+/** A group of one or more regions of the world that a merchant is targeting for sales. To learn more about markets, refer to [the Shopify Markets conceptual overview](/docs/apps/markets). */
+export type MarketMetafieldsArgs = {
+  identifiers: Array<HasMetafieldsIdentifier>;
+};
+
 /** Represents a media interface. */
 export type Media = {
   /** A word or phrase to share the nature or contents of a media. */
   alt?: Maybe<Scalars['String']>;
   /** The media content type. */
   mediaContentType: MediaContentType;
+  /** The presentation for a media. */
+  presentation?: Maybe<MediaPresentation>;
   /** The preview image for the media. */
   previewImage?: Maybe<Image>;
 };
@@ -4089,25 +4669,51 @@ export type MediaImage = Media & Node & {
   __typename?: 'MediaImage';
   /** A word or phrase to share the nature or contents of a media. */
   alt?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The image for the media. */
   image?: Maybe<Image>;
   /** The media content type. */
   mediaContentType: MediaContentType;
+  /** The presentation for a media. */
+  presentation?: Maybe<MediaPresentation>;
   /** The preview image for the media. */
   previewImage?: Maybe<Image>;
 };
 
+/** A media presentation. */
+export type MediaPresentation = Node & {
+  __typename?: 'MediaPresentation';
+  /** A JSON object representing a presentation view. */
+  asJson?: Maybe<Scalars['JSON']>;
+  /** A globally-unique ID. */
+  id: Scalars['ID'];
+};
+
+
+/** A media presentation. */
+export type MediaPresentationAsJsonArgs = {
+  format: MediaPresentationFormat;
+};
+
+/** The possible formats for a media presentation. */
+export enum MediaPresentationFormat {
+  /** A media image presentation. */
+  Image = 'IMAGE',
+  /** A model viewer presentation. */
+  ModelViewer = 'MODEL_VIEWER'
+}
+
 /**
- * A menu used for navigation within a storefront.
+ * A [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) representing a hierarchy
+ * of hyperlinks (items).
  *
  */
 export type Menu = Node & {
   __typename?: 'Menu';
   /** The menu's handle. */
   handle: Scalars['String'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The menu's child items. */
   items: Array<MenuItem>;
@@ -4123,7 +4729,7 @@ export type Menu = Node & {
  */
 export type MenuItem = Node & {
   __typename?: 'MenuItem';
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The menu item's child items. */
   items: Array<MenuItem>;
@@ -4179,26 +4785,60 @@ export type Metafield = Node & {
   createdAt: Scalars['DateTime'];
   /** The description of a metafield. */
   description?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
-  /** The key name for a metafield. */
+  /** The unique identifier for the metafield within its namespace. */
   key: Scalars['String'];
-  /** The namespace for a metafield. */
+  /** The container for a group of metafields that the metafield is associated with. */
   namespace: Scalars['String'];
-  /** The parent object that the metafield belongs to. */
+  /** The type of resource that the metafield is attached to. */
   parentResource: MetafieldParentResource;
-  /** Returns a reference object if the metafield definition's type is a resource reference. */
+  /** Returns a reference object if the metafield's type is a resource reference. */
   reference?: Maybe<MetafieldReference>;
+  /** A list of reference objects if the metafield's type is a resource reference list. */
+  references?: Maybe<MetafieldReferenceConnection>;
   /**
    * The type name of the metafield.
-   * See the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
+   * Refer to the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
    *
    */
   type: Scalars['String'];
-  /** The date and time when the storefront metafield was updated. */
+  /** The date and time when the metafield was last updated. */
   updatedAt: Scalars['DateTime'];
-  /** The value of a metafield. */
+  /** The data stored in the metafield. Always stored as a string, regardless of the metafield's type. */
   value: Scalars['String'];
+};
+
+
+/**
+ * Metafields represent custom metadata attached to a resource. Metafields can be sorted into namespaces and are
+ * comprised of keys, values, and value types.
+ *
+ */
+export type MetafieldReferencesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+/** Possible error codes that can be returned by `MetafieldDeleteUserError`. */
+export enum MetafieldDeleteErrorCode {
+  /** The owner ID is invalid. */
+  InvalidOwner = 'INVALID_OWNER',
+  /** Metafield not found. */
+  MetafieldDoesNotExist = 'METAFIELD_DOES_NOT_EXIST'
+}
+
+/** An error that occurs during the execution of cart metafield deletion. */
+export type MetafieldDeleteUserError = DisplayableError & {
+  __typename?: 'MetafieldDeleteUserError';
+  /** The error code. */
+  code?: Maybe<MetafieldDeleteErrorCode>;
+  /** The path to the input field that caused the error. */
+  field?: Maybe<Array<Scalars['String']>>;
+  /** The error message. */
+  message: Scalars['String'];
 };
 
 /**
@@ -4221,23 +4861,175 @@ export type MetafieldFilter = {
 };
 
 /** A resource that the metafield belongs to. */
-export type MetafieldParentResource = Article | Blog | Collection | Customer | Order | Page | Product | ProductVariant | Shop;
+export type MetafieldParentResource = Article | Blog | Cart | Collection | Customer | Location | Market | Order | Page | Product | ProductVariant | Shop;
 
 /**
  * Returns the resource which is being referred to by a metafield.
  *
  */
-export type MetafieldReference = GenericFile | MediaImage | Page | Product | ProductVariant | Video;
+export type MetafieldReference = Collection | GenericFile | MediaImage | Metaobject | Page | Product | ProductVariant | Video;
+
+/**
+ * An auto-generated type for paginating through multiple MetafieldReferences.
+ *
+ */
+export type MetafieldReferenceConnection = {
+  __typename?: 'MetafieldReferenceConnection';
+  /** A list of edges. */
+  edges: Array<MetafieldReferenceEdge>;
+  /** A list of the nodes contained in MetafieldReferenceEdge. */
+  nodes: Array<MetafieldReference>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one MetafieldReference and a cursor during pagination.
+ *
+ */
+export type MetafieldReferenceEdge = {
+  __typename?: 'MetafieldReferenceEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of MetafieldReferenceEdge. */
+  node: MetafieldReference;
+};
+
+/** An error that occurs during the execution of `MetafieldsSet`. */
+export type MetafieldsSetUserError = DisplayableError & {
+  __typename?: 'MetafieldsSetUserError';
+  /** The error code. */
+  code?: Maybe<MetafieldsSetUserErrorCode>;
+  /** The index of the array element that's causing the error. */
+  elementIndex?: Maybe<Scalars['Int']>;
+  /** The path to the input field that caused the error. */
+  field?: Maybe<Array<Scalars['String']>>;
+  /** The error message. */
+  message: Scalars['String'];
+};
+
+/** Possible error codes that can be returned by `MetafieldsSetUserError`. */
+export enum MetafieldsSetUserErrorCode {
+  /** The input value is blank. */
+  Blank = 'BLANK',
+  /** The input value isn't included in the list. */
+  Inclusion = 'INCLUSION',
+  /** The owner ID is invalid. */
+  InvalidOwner = 'INVALID_OWNER',
+  /** The type is invalid. */
+  InvalidType = 'INVALID_TYPE',
+  /** The value is invalid for metafield type or for definition options. */
+  InvalidValue = 'INVALID_VALUE',
+  /** The input value should be less than or equal to the maximum value allowed. */
+  LessThanOrEqualTo = 'LESS_THAN_OR_EQUAL_TO',
+  /** The input value needs to be blank. */
+  Present = 'PRESENT',
+  /** The input value is too long. */
+  TooLong = 'TOO_LONG',
+  /** The input value is too short. */
+  TooShort = 'TOO_SHORT'
+}
+
+/** An instance of a user-defined model based on a MetaobjectDefinition. */
+export type Metaobject = Node & {
+  __typename?: 'Metaobject';
+  /** Accesses a field of the object by key. */
+  field?: Maybe<MetaobjectField>;
+  /**
+   * All object fields with defined values.
+   * Omitted object keys can be assumed null, and no guarantees are made about field order.
+   *
+   */
+  fields: Array<MetaobjectField>;
+  /** The unique handle of the metaobject. Useful as a custom ID. */
+  handle: Scalars['String'];
+  /** A globally-unique ID. */
+  id: Scalars['ID'];
+  /** The type of the metaobject. Defines the namespace of its associated metafields. */
+  type: Scalars['String'];
+  /** The date and time when the metaobject was last updated. */
+  updatedAt: Scalars['DateTime'];
+};
+
+
+/** An instance of a user-defined model based on a MetaobjectDefinition. */
+export type MetaobjectFieldArgs = {
+  key: Scalars['String'];
+};
+
+/**
+ * An auto-generated type for paginating through multiple Metaobjects.
+ *
+ */
+export type MetaobjectConnection = {
+  __typename?: 'MetaobjectConnection';
+  /** A list of edges. */
+  edges: Array<MetaobjectEdge>;
+  /** A list of the nodes contained in MetaobjectEdge. */
+  nodes: Array<Metaobject>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/**
+ * An auto-generated type which holds one Metaobject and a cursor during pagination.
+ *
+ */
+export type MetaobjectEdge = {
+  __typename?: 'MetaobjectEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of MetaobjectEdge. */
+  node: Metaobject;
+};
+
+/** Provides the value of a Metaobject field. */
+export type MetaobjectField = {
+  __typename?: 'MetaobjectField';
+  /** The field key. */
+  key: Scalars['String'];
+  /** A referenced object if the field type is a resource reference. */
+  reference?: Maybe<MetafieldReference>;
+  /** A list of referenced objects if the field type is a resource reference list. */
+  references?: Maybe<MetafieldReferenceConnection>;
+  /**
+   * The type name of the field.
+   * See the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
+   *
+   */
+  type: Scalars['String'];
+  /** The field value. */
+  value?: Maybe<Scalars['String']>;
+};
+
+
+/** Provides the value of a Metaobject field. */
+export type MetaobjectFieldReferencesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+/** The input fields used to retrieve a metaobject by handle. */
+export type MetaobjectHandleInput = {
+  /** The handle of the metaobject. */
+  handle: Scalars['String'];
+  /** The type of the metaobject. */
+  type: Scalars['String'];
+};
 
 /** Represents a Shopify hosted 3D model. */
 export type Model3d = Media & Node & {
   __typename?: 'Model3d';
   /** A word or phrase to share the nature or contents of a media. */
   alt?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The media content type. */
   mediaContentType: MediaContentType;
+  /** The presentation for a media. */
+  presentation?: Maybe<MediaPresentation>;
   /** The preview image for the media. */
   previewImage?: Maybe<Image>;
   /** The sources for a 3d model. */
@@ -4257,7 +5049,7 @@ export type Model3dSource = {
   url: Scalars['String'];
 };
 
-/** Specifies the fields for a monetary value with currency. */
+/** The input fields for a monetary value with currency. */
 export type MoneyInput = {
   /** Decimal money amount. */
   amount: Scalars['Decimal'];
@@ -4285,7 +5077,7 @@ export type Mutation = {
   /**
    * Updates customer information associated with a cart.
    * Buyer identity is used to determine
-   * [international pricing](https://shopify.dev/api/examples/international-pricing#create-a-checkout)
+   * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
    * and should match the customer's shipping address.
    *
    */
@@ -4300,8 +5092,23 @@ export type Mutation = {
   cartLinesRemove?: Maybe<CartLinesRemovePayload>;
   /** Updates one or more merchandise lines on a cart. */
   cartLinesUpdate?: Maybe<CartLinesUpdatePayload>;
+  /** Deletes a cart metafield. */
+  cartMetafieldDelete?: Maybe<CartMetafieldDeletePayload>;
+  /**
+   * Sets cart metafield values. Cart metafield values will be set regardless if they were previously created or not.
+   *
+   * Allows a maximum of 25 cart metafields to be set at a time.
+   *
+   */
+  cartMetafieldsSet?: Maybe<CartMetafieldsSetPayload>;
   /** Updates the note on the cart. */
   cartNoteUpdate?: Maybe<CartNoteUpdatePayload>;
+  /** Update the customer's payment method that will be used to checkout. */
+  cartPaymentUpdate?: Maybe<CartPaymentUpdatePayload>;
+  /** Update the selected delivery options for a delivery group. */
+  cartSelectedDeliveryOptionsUpdate?: Maybe<CartSelectedDeliveryOptionsUpdatePayload>;
+  /** Submit the cart for checkout completion. */
+  cartSubmitForCompletion?: Maybe<CartSubmitForCompletionPayload>;
   /** Updates the attributes of a checkout if `allowPartialAddresses` is `true`. */
   checkoutAttributesUpdateV2?: Maybe<CheckoutAttributesUpdateV2Payload>;
   /** Completes a checkout without providing payment information. You can use this mutation for free items or items whose purchase price is covered by a gift card. */
@@ -4376,11 +5183,30 @@ export type Mutation = {
   customerCreate?: Maybe<CustomerCreatePayload>;
   /** Updates the default address of an existing customer. */
   customerDefaultAddressUpdate?: Maybe<CustomerDefaultAddressUpdatePayload>;
-  /** Sends a reset password email to the customer, as the first step in the reset password process. */
+  /**
+   * Sends a reset password email to the customer. The reset password
+   * email contains a reset password URL and token that you can pass to
+   * the [`customerResetByUrl`](https://shopify.dev/api/storefront/latest/mutations/customerResetByUrl) or
+   * [`customerReset`](https://shopify.dev/api/storefront/latest/mutations/customerReset) mutation to reset the
+   * customer password.
+   *
+   * This mutation is throttled by IP. With authenticated access,
+   * you can provide a [`Shopify-Storefront-Buyer-IP`](https://shopify.dev/api/usage/authentication#optional-ip-header) instead of the request IP.
+   *
+   * Make sure that the value provided to `Shopify-Storefront-Buyer-IP` is trusted. Unthrottled access to this
+   * mutation presents a security risk.
+   *
+   */
   customerRecover?: Maybe<CustomerRecoverPayload>;
-  /** Resets a customer’s password with a token received from `CustomerRecover`. */
+  /**
+   * "Resets a customer’s password with the token received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation."
+   *
+   */
   customerReset?: Maybe<CustomerResetPayload>;
-  /** Resets a customer’s password with the reset password url received from `CustomerRecover`. */
+  /**
+   * "Resets a customer’s password with the reset password URL received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation."
+   *
+   */
   customerResetByUrl?: Maybe<CustomerResetByUrlPayload>;
   /** Updates an existing customer. */
   customerUpdate?: Maybe<CustomerUpdatePayload>;
@@ -4436,9 +5262,42 @@ export type MutationCartLinesUpdateArgs = {
 
 
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
+export type MutationCartMetafieldDeleteArgs = {
+  input: CartMetafieldDeleteInput;
+};
+
+
+/** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
+export type MutationCartMetafieldsSetArgs = {
+  metafields: Array<CartMetafieldsSetInput>;
+};
+
+
+/** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export type MutationCartNoteUpdateArgs = {
   cartId: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
+};
+
+
+/** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
+export type MutationCartPaymentUpdateArgs = {
+  cartId: Scalars['ID'];
+  payment: CartPaymentInput;
+};
+
+
+/** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
+export type MutationCartSelectedDeliveryOptionsUpdateArgs = {
+  cartId: Scalars['ID'];
+  selectedDeliveryOptions: Array<CartSelectedDeliveryOptionInput>;
+};
+
+
+/** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
+export type MutationCartSubmitForCompletionArgs = {
+  attemptToken: Scalars['String'];
+  cartId: Scalars['ID'];
 };
 
 
@@ -4672,7 +5531,7 @@ export type MutationCustomerUpdateArgs = {
  *
  */
 export type Node = {
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
 };
 
@@ -4685,6 +5544,8 @@ export type OnlineStorePublishable = {
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
 export type Order = HasMetafields & Node & {
   __typename?: 'Order';
+  /** The address associated with the payment method. */
+  billingAddress?: Maybe<MailingAddress>;
   /** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
   cancelReason?: Maybe<OrderCancelReason>;
   /** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
@@ -4699,6 +5560,8 @@ export type Order = HasMetafields & Node & {
   currentTotalPrice: MoneyV2;
   /** The total of all taxes applied to the order, excluding taxes for returned line items. */
   currentTotalTax: MoneyV2;
+  /** A list of the custom attributes added to the order. */
+  customAttributes: Array<Attribute>;
   /** The locale code in which this specific order happened. */
   customerLocale?: Maybe<Scalars['String']>;
   /** The unique URL that the customer can use to access the order. */
@@ -4713,7 +5576,7 @@ export type Order = HasMetafields & Node & {
   financialStatus?: Maybe<OrderFinancialStatus>;
   /** The fulfillment status for the order. */
   fulfillmentStatus: OrderFulfillmentStatus;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** List of the order’s line items. */
   lineItems: OrderLineItemConnection;
@@ -4754,42 +5617,42 @@ export type Order = HasMetafields & Node & {
   shippingDiscountAllocations: Array<DiscountAllocation>;
   /** The unique URL for the order's status page. */
   statusUrl: Scalars['URL'];
+  /** Price of the order before shipping and taxes. */
+  subtotalPrice?: Maybe<MoneyV2>;
   /**
-   * Price of the order before shipping and taxes.
-   * @deprecated Use `subtotalPriceV2` instead
+   * Price of the order before duties, shipping and taxes.
+   * @deprecated Use `subtotalPrice` instead.
    */
-  subtotalPrice?: Maybe<Scalars['Money']>;
-  /** Price of the order before duties, shipping and taxes. */
   subtotalPriceV2?: Maybe<MoneyV2>;
   /** List of the order’s successful fulfillments. */
   successfulFulfillments?: Maybe<Array<Fulfillment>>;
-  /**
-   * The sum of all the prices of all the items in the order, taxes and discounts included (must be positive).
-   * @deprecated Use `totalPriceV2` instead
-   */
-  totalPrice: Scalars['Money'];
   /** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
+  totalPrice: MoneyV2;
+  /**
+   * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
+   * @deprecated Use `totalPrice` instead.
+   */
   totalPriceV2: MoneyV2;
+  /** The total amount that has been refunded. */
+  totalRefunded: MoneyV2;
   /**
    * The total amount that has been refunded.
-   * @deprecated Use `totalRefundedV2` instead
+   * @deprecated Use `totalRefunded` instead.
    */
-  totalRefunded: Scalars['Money'];
-  /** The total amount that has been refunded. */
   totalRefundedV2: MoneyV2;
+  /** The total cost of shipping. */
+  totalShippingPrice: MoneyV2;
   /**
    * The total cost of shipping.
-   * @deprecated Use `totalShippingPriceV2` instead
+   * @deprecated Use `totalShippingPrice` instead.
    */
-  totalShippingPrice: Scalars['Money'];
-  /** The total cost of shipping. */
   totalShippingPriceV2: MoneyV2;
+  /** The total cost of taxes. */
+  totalTax?: Maybe<MoneyV2>;
   /**
    * The total cost of taxes.
-   * @deprecated Use `totalTaxV2` instead
+   * @deprecated Use `totalTax` instead.
    */
-  totalTax?: Maybe<Scalars['Money']>;
-  /** The total cost of taxes. */
   totalTaxV2?: Maybe<MoneyV2>;
 };
 
@@ -4858,6 +5721,8 @@ export type OrderConnection = {
   nodes: Array<Order>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
+  /** The total count of Orders. */
+  totalCount: Scalars['UnsignedInt64'];
 };
 
 /**
@@ -4986,7 +5851,7 @@ export type Page = HasMetafields & Node & OnlineStorePublishable & {
   createdAt: Scalars['DateTime'];
   /** A human-friendly unique string for the page automatically generated from its title. */
   handle: Scalars['String'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<Metafield>;
@@ -5047,6 +5912,7 @@ export type PageEdge = {
 /**
  * Returns information about pagination in a connection, in accordance with the
  * [Relay specification](https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo).
+ * For more information, please read our [GraphQL Pagination Usage Guide](https://shopify.dev/api/usage/pagination-graphql).
  *
  */
 export type PageInfo = {
@@ -5080,12 +5946,12 @@ export enum PageSortKeys {
 /** A payment applied to a checkout. */
 export type Payment = Node & {
   __typename?: 'Payment';
+  /** The amount of the payment. */
+  amount: MoneyV2;
   /**
    * The amount of the payment.
-   * @deprecated Use `amountV2` instead
+   * @deprecated Use `amount` instead.
    */
-  amount: Scalars['Money'];
-  /** The amount of the payment. */
   amountV2: MoneyV2;
   /** The billing address for the payment. */
   billingAddress?: Maybe<MailingAddress>;
@@ -5095,7 +5961,7 @@ export type Payment = Node & {
   creditCard?: Maybe<CreditCard>;
   /** A message describing a processing error during asynchronous processing. */
   errorMessage?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /**
    * A client-side generated token to identify a payment and perform idempotent operations.
@@ -5127,7 +5993,7 @@ export type PaymentSettings = {
   currencyCode: CurrencyCode;
   /** A list of enabled currencies (ISO 4217 format) that the shop accepts. Merchants can enable currencies from their Shopify Payments settings in the Shopify admin. */
   enabledPresentmentCurrencies: Array<CurrencyCode>;
-  /** The shop’s Shopify Payments account id. */
+  /** The shop’s Shopify Payments account ID. */
   shopifyPaymentsAccountId?: Maybe<Scalars['String']>;
   /** List of the digital wallets which the shop supports. */
   supportedDigitalWallets: Array<DigitalWallet>;
@@ -5147,7 +6013,10 @@ export enum PaymentTokenType {
   Vault = 'VAULT'
 }
 
-/** A filter used to view a subset of products in a collection matching a specific price range. */
+/**
+ * The input fields for a filter used to view a subset of products in a collection matching a specific price range.
+ *
+ */
 export type PriceRangeFilter = {
   /** The maximum price in the range. Empty indicates no max price. */
   max?: InputMaybe<Scalars['Float']>;
@@ -5196,10 +6065,12 @@ export type Product = HasMetafields & Node & OnlineStorePublishable & {
    *
    */
   handle: Scalars['String'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** List of images associated with the product. */
   images: ImageConnection;
+  /** Whether the product is a gift card. */
+  isGiftCard: Scalars['Boolean'];
   /** The media associated with the product. */
   media: MediaConnection;
   /** Returns a metafield found by namespace and key. */
@@ -5422,7 +6293,12 @@ export type ProductEdge = {
   node: Product;
 };
 
-/** A filter used to view a subset of products in a collection. */
+/**
+ * The input fields for a filter used to view a subset of products in a collection.
+ * By default, the `available` and `price` filters are enabled. Filters are customized with the Shopify Search & Discovery app.
+ * Learn more about [customizing storefront filtering](https://help.shopify.com/manual/online-store/themes/customizing-themes/storefront-filters).
+ *
+ */
 export type ProductFilter = {
   /** Filter on if the product is available for sale. */
   available?: InputMaybe<Scalars['Boolean']>;
@@ -5434,6 +6310,8 @@ export type ProductFilter = {
   productType?: InputMaybe<Scalars['String']>;
   /** The product vendor to filter on. */
   productVendor?: InputMaybe<Scalars['String']>;
+  /** A product tag to filter on. */
+  tag?: InputMaybe<Scalars['String']>;
   /** A variant metafield to filter on. */
   variantMetafield?: InputMaybe<MetafieldFilter>;
   /** A variant option to filter on. */
@@ -5478,7 +6356,7 @@ export enum ProductMediaSortKeys {
  */
 export type ProductOption = Node & {
   __typename?: 'ProductOption';
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The product option’s name. */
   name: Scalars['String'];
@@ -5494,6 +6372,18 @@ export type ProductPriceRange = {
   /** The lowest variant's price. */
   minVariantPrice: MoneyV2;
 };
+
+/**
+ * The recommendation intent that is used to generate product recommendations.
+ * You can use intent to generate product recommendations according to different strategies.
+ *
+ */
+export enum ProductRecommendationIntent {
+  /** Offer customers products that are complementary to a product for which recommendations are to be fetched. An example is add-on products that display in a Pair it with section. */
+  Complementary = 'COMPLEMENTARY',
+  /** Offer customers a mix of products that are similar or complementary to a product for which recommendations are to be fetched. An example is substitutable products that display in a You may also like section. */
+  Related = 'RELATED'
+}
 
 /** The set of valid sort keys for the Product query. */
 export enum ProductSortKeys {
@@ -5528,16 +6418,16 @@ export type ProductVariant = HasMetafields & Node & {
   availableForSale: Scalars['Boolean'];
   /** The barcode (for example, ISBN, UPC, or GTIN) associated with the variant. */
   barcode?: Maybe<Scalars['String']>;
+  /** The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPrice` is higher than `price`. */
+  compareAtPrice?: Maybe<MoneyV2>;
   /**
-   * The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPrice` is higher than `price`.
-   * @deprecated Use `compareAtPriceV2` instead
+   * The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPriceV2` is higher than `priceV2`.
+   * @deprecated Use `compareAtPrice` instead.
    */
-  compareAtPrice?: Maybe<Scalars['Money']>;
-  /** The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPriceV2` is higher than `priceV2`. */
   compareAtPriceV2?: Maybe<MoneyV2>;
   /** Whether a product is out of stock but still available for purchase (used for backorders). */
   currentlyNotInStock: Scalars['Boolean'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /**
    * Image associated with the product variant. This field falls back to the product image if no image is available.
@@ -5551,12 +6441,12 @@ export type ProductVariant = HasMetafields & Node & {
    *
    */
   metafields: Array<Maybe<Metafield>>;
+  /** The product variant’s price. */
+  price: MoneyV2;
   /**
    * The product variant’s price.
-   * @deprecated Use `priceV2` instead
+   * @deprecated Use `price` instead.
    */
-  price: Scalars['Money'];
-  /** The product variant’s price. */
   priceV2: MoneyV2;
   /** The product object that the product variant belongs to. */
   product: Product;
@@ -5614,6 +6504,7 @@ export type ProductVariantStoreAvailabilityArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  near?: InputMaybe<GeoCoordinateInput>;
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -5664,29 +6555,41 @@ export enum ProductVariantSortKeys {
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRoot = {
   __typename?: 'QueryRoot';
+  /** Fetch a specific Article by its ID. */
+  article?: Maybe<Article>;
   /** List of the shop's articles. */
   articles: ArticleConnection;
   /** Fetch a specific `Blog` by one of its unique attributes. */
   blog?: Maybe<Blog>;
   /**
    * Find a blog by its handle.
-   * @deprecated Use `blog` instead
+   * @deprecated Use `blog` instead.
    */
   blogByHandle?: Maybe<Blog>;
   /** List of the shop's blogs. */
   blogs: BlogConnection;
-  /** Find a cart by its ID. */
+  /**
+   * Retrieve a cart by its ID. For more information, refer to
+   * [Manage a cart with the Storefront API](https://shopify.dev/custom-storefronts/cart/manage).
+   *
+   */
   cart?: Maybe<Cart>;
+  /** A poll for the status of the cart checkout completion and order creation. */
+  cartCompletionAttempt?: Maybe<CartCompletionAttemptResult>;
   /** Fetch a specific `Collection` by one of its unique attributes. */
   collection?: Maybe<Collection>;
   /**
    * Find a collection by its handle.
-   * @deprecated Use `collection` instead
+   * @deprecated Use `collection` instead.
    */
   collectionByHandle?: Maybe<Collection>;
   /** List of the shop’s collections. */
   collections: CollectionConnection;
-  /** Find a customer by its access token. */
+  /**
+   * The customer associated with the given access token. Tokens are obtained by using the
+   * [`customerAccessTokenCreate` mutation](https://shopify.dev/docs/api/storefront/latest/mutations/customerAccessTokenCreate).
+   *
+   */
   customer?: Maybe<Customer>;
   /** Returns the localized experiences configured for the shop. */
   localization: Localization;
@@ -5697,8 +6600,15 @@ export type QueryRoot = {
    *
    */
   locations: LocationConnection;
-  /** A storefront menu. */
+  /**
+   * Retrieve a [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) by its handle.
+   *
+   */
   menu?: Maybe<Menu>;
+  /** Fetch a specific Metaobject by one of its unique identifiers. */
+  metaobject?: Maybe<Metaobject>;
+  /** All active metaobjects for the shop. */
+  metaobjects: MetaobjectConnection;
   /** Returns a specific node by ID. */
   node?: Maybe<Node>;
   /** Returns the list of nodes with the given IDs. */
@@ -5707,7 +6617,7 @@ export type QueryRoot = {
   page?: Maybe<Page>;
   /**
    * Find a page by its handle.
-   * @deprecated Use `page` instead
+   * @deprecated Use `page` instead.
    */
   pageByHandle?: Maybe<Page>;
   /** List of the shop's pages. */
@@ -5716,7 +6626,7 @@ export type QueryRoot = {
   product?: Maybe<Product>;
   /**
    * Find a product by its handle.
-   * @deprecated Use `product` instead
+   * @deprecated Use `product` instead.
    */
   productByHandle?: Maybe<Product>;
   /**
@@ -5742,6 +6652,12 @@ export type QueryRoot = {
   shop: Shop;
   /** A list of redirects for a shop. */
   urlRedirects: UrlRedirectConnection;
+};
+
+
+/** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
+export type QueryRootArticleArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -5785,6 +6701,12 @@ export type QueryRootBlogsArgs = {
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootCartArgs = {
   id: Scalars['ID'];
+};
+
+
+/** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
+export type QueryRootCartCompletionAttemptArgs = {
+  attemptId: Scalars['String'];
 };
 
 
@@ -5834,6 +6756,25 @@ export type QueryRootLocationsArgs = {
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootMenuArgs = {
   handle: Scalars['String'];
+};
+
+
+/** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
+export type QueryRootMetaobjectArgs = {
+  handle?: InputMaybe<MetaobjectHandleInput>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+/** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
+export type QueryRootMetaobjectsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  reverse?: InputMaybe<Scalars['Boolean']>;
+  sortKey?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
 };
 
 
@@ -5889,6 +6830,7 @@ export type QueryRootProductByHandleArgs = {
 
 /** The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start. */
 export type QueryRootProductRecommendationsArgs = {
+  intent?: InputMaybe<ProductRecommendationIntent>;
   productId: Scalars['ID'];
 };
 
@@ -5923,6 +6865,7 @@ export type QueryRootUrlRedirectsArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  query?: InputMaybe<Scalars['String']>;
   reverse?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -5967,7 +6910,7 @@ export type SelectedOption = {
   value: Scalars['String'];
 };
 
-/** Specifies the input fields required for a selected option. */
+/** The input fields required for a selected option. */
 export type SelectedOptionInput = {
   /** The product option’s name. */
   name: Scalars['String'];
@@ -5982,7 +6925,7 @@ export type SellingPlan = {
   checkoutCharge: SellingPlanCheckoutCharge;
   /** The description of the selling plan. */
   description?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
   name: Scalars['String'];
@@ -6162,7 +7105,11 @@ export type SellingPlanGroupEdge = {
   node: SellingPlanGroup;
 };
 
-/** Represents an option on a selling plan group that's available in the drop-down list in the storefront. */
+/**
+ * Represents an option on a selling plan group that's available in the drop-down list in the storefront.
+ *
+ * Individual selling plans contribute their options to the associated selling plan group. For example, a selling plan group might have an option called `option1: Delivery every`. One selling plan in that group could contribute `option1: 2 weeks` with the pricing for that option, and another selling plan could contribute `option1: 4 weeks`, with different pricing.
+ */
 export type SellingPlanGroupOption = {
   __typename?: 'SellingPlanGroupOption';
   /** The name of the option. For example, 'Delivery every'. */
@@ -6204,12 +7151,12 @@ export type ShippingRate = {
   __typename?: 'ShippingRate';
   /** Human-readable unique identifier for this shipping rate. */
   handle: Scalars['String'];
+  /** Price of this shipping rate. */
+  price: MoneyV2;
   /**
    * Price of this shipping rate.
-   * @deprecated Use `priceV2` instead
+   * @deprecated Use `price` instead.
    */
-  price: Scalars['Money'];
-  /** Price of this shipping rate. */
   priceV2: MoneyV2;
   /** Title of this shipping rate. */
   title: Scalars['String'];
@@ -6218,9 +7165,11 @@ export type ShippingRate = {
 /** Shop represents a collection of the general settings and information about the shop. */
 export type Shop = HasMetafields & Node & {
   __typename?: 'Shop';
+  /** The shop's branding configuration. */
+  brand?: Maybe<Brand>;
   /** A description of the shop. */
   description?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<Metafield>;
@@ -6235,7 +7184,7 @@ export type Shop = HasMetafields & Node & {
   name: Scalars['String'];
   /** Settings related to payments. */
   paymentSettings: PaymentSettings;
-  /** The shop’s primary domain. */
+  /** The primary domain of the shop’s Online Store. */
   primaryDomain: Domain;
   /** The shop’s privacy policy. */
   privacyPolicy?: Maybe<ShopPolicy>;
@@ -6264,6 +7213,17 @@ export type ShopMetafieldsArgs = {
   identifiers: Array<HasMetafieldsIdentifier>;
 };
 
+/**
+ * The input fields for submitting Shop Pay payment method information for checkout.
+ *
+ */
+export type ShopPayWalletContentInput = {
+  /** The customer's billing address. */
+  billingAddress: MailingAddressInput;
+  /** Session token for transaction. */
+  sessionToken: Scalars['String'];
+};
+
 /** Policy that a merchant has configured for their store, such as their refund or privacy policy. */
 export type ShopPolicy = Node & {
   __typename?: 'ShopPolicy';
@@ -6271,7 +7231,7 @@ export type ShopPolicy = Node & {
   body: Scalars['String'];
   /** Policy’s handle. */
   handle: Scalars['String'];
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** Policy’s title. */
   title: Scalars['String'];
@@ -6291,7 +7251,7 @@ export type ShopPolicyWithDefault = {
   body: Scalars['String'];
   /** The handle of the policy. */
   handle: Scalars['String'];
-  /** The unique identifier of the policy. A default policy doesn't have an ID. */
+  /** The unique ID of the policy. A default policy doesn't have an ID. */
   id?: Maybe<Scalars['ID']>;
   /** The title of the policy. */
   title: Scalars['String'];
@@ -6364,6 +7324,147 @@ export type StringEdge = {
   node: Scalars['String'];
 };
 
+/** An error that occurred during cart submit for completion. */
+export type SubmissionError = {
+  __typename?: 'SubmissionError';
+  /** The error code. */
+  code: SubmissionErrorCode;
+  /** The error message. */
+  message?: Maybe<Scalars['String']>;
+};
+
+/** The code of the error that occurred during cart submit for completion. */
+export enum SubmissionErrorCode {
+  BuyerIdentityEmailIsInvalid = 'BUYER_IDENTITY_EMAIL_IS_INVALID',
+  BuyerIdentityEmailRequired = 'BUYER_IDENTITY_EMAIL_REQUIRED',
+  BuyerIdentityPhoneIsInvalid = 'BUYER_IDENTITY_PHONE_IS_INVALID',
+  DeliveryAddress1Invalid = 'DELIVERY_ADDRESS1_INVALID',
+  DeliveryAddress1Required = 'DELIVERY_ADDRESS1_REQUIRED',
+  DeliveryAddress1TooLong = 'DELIVERY_ADDRESS1_TOO_LONG',
+  DeliveryAddress2Invalid = 'DELIVERY_ADDRESS2_INVALID',
+  DeliveryAddress2Required = 'DELIVERY_ADDRESS2_REQUIRED',
+  DeliveryAddress2TooLong = 'DELIVERY_ADDRESS2_TOO_LONG',
+  DeliveryAddressRequired = 'DELIVERY_ADDRESS_REQUIRED',
+  DeliveryCityInvalid = 'DELIVERY_CITY_INVALID',
+  DeliveryCityRequired = 'DELIVERY_CITY_REQUIRED',
+  DeliveryCityTooLong = 'DELIVERY_CITY_TOO_LONG',
+  DeliveryCompanyInvalid = 'DELIVERY_COMPANY_INVALID',
+  DeliveryCompanyRequired = 'DELIVERY_COMPANY_REQUIRED',
+  DeliveryCompanyTooLong = 'DELIVERY_COMPANY_TOO_LONG',
+  DeliveryCountryRequired = 'DELIVERY_COUNTRY_REQUIRED',
+  DeliveryFirstNameInvalid = 'DELIVERY_FIRST_NAME_INVALID',
+  DeliveryFirstNameRequired = 'DELIVERY_FIRST_NAME_REQUIRED',
+  DeliveryFirstNameTooLong = 'DELIVERY_FIRST_NAME_TOO_LONG',
+  DeliveryInvalidPostalCodeForCountry = 'DELIVERY_INVALID_POSTAL_CODE_FOR_COUNTRY',
+  DeliveryInvalidPostalCodeForZone = 'DELIVERY_INVALID_POSTAL_CODE_FOR_ZONE',
+  DeliveryLastNameInvalid = 'DELIVERY_LAST_NAME_INVALID',
+  DeliveryLastNameRequired = 'DELIVERY_LAST_NAME_REQUIRED',
+  DeliveryLastNameTooLong = 'DELIVERY_LAST_NAME_TOO_LONG',
+  DeliveryNoDeliveryAvailable = 'DELIVERY_NO_DELIVERY_AVAILABLE',
+  DeliveryNoDeliveryAvailableForMerchandiseLine = 'DELIVERY_NO_DELIVERY_AVAILABLE_FOR_MERCHANDISE_LINE',
+  DeliveryOptionsPhoneNumberInvalid = 'DELIVERY_OPTIONS_PHONE_NUMBER_INVALID',
+  DeliveryOptionsPhoneNumberRequired = 'DELIVERY_OPTIONS_PHONE_NUMBER_REQUIRED',
+  DeliveryPhoneNumberInvalid = 'DELIVERY_PHONE_NUMBER_INVALID',
+  DeliveryPhoneNumberRequired = 'DELIVERY_PHONE_NUMBER_REQUIRED',
+  DeliveryPostalCodeInvalid = 'DELIVERY_POSTAL_CODE_INVALID',
+  DeliveryPostalCodeRequired = 'DELIVERY_POSTAL_CODE_REQUIRED',
+  DeliveryZoneNotFound = 'DELIVERY_ZONE_NOT_FOUND',
+  DeliveryZoneRequiredForCountry = 'DELIVERY_ZONE_REQUIRED_FOR_COUNTRY',
+  Error = 'ERROR',
+  MerchandiseLineLimitReached = 'MERCHANDISE_LINE_LIMIT_REACHED',
+  MerchandiseNotApplicable = 'MERCHANDISE_NOT_APPLICABLE',
+  MerchandiseNotEnoughStockAvailable = 'MERCHANDISE_NOT_ENOUGH_STOCK_AVAILABLE',
+  MerchandiseOutOfStock = 'MERCHANDISE_OUT_OF_STOCK',
+  MerchandiseProductNotPublished = 'MERCHANDISE_PRODUCT_NOT_PUBLISHED',
+  NoDeliveryGroupSelected = 'NO_DELIVERY_GROUP_SELECTED',
+  PaymentsAddress1Invalid = 'PAYMENTS_ADDRESS1_INVALID',
+  PaymentsAddress1Required = 'PAYMENTS_ADDRESS1_REQUIRED',
+  PaymentsAddress1TooLong = 'PAYMENTS_ADDRESS1_TOO_LONG',
+  PaymentsAddress2Invalid = 'PAYMENTS_ADDRESS2_INVALID',
+  PaymentsAddress2Required = 'PAYMENTS_ADDRESS2_REQUIRED',
+  PaymentsAddress2TooLong = 'PAYMENTS_ADDRESS2_TOO_LONG',
+  PaymentsBillingAddressZoneNotFound = 'PAYMENTS_BILLING_ADDRESS_ZONE_NOT_FOUND',
+  PaymentsBillingAddressZoneRequiredForCountry = 'PAYMENTS_BILLING_ADDRESS_ZONE_REQUIRED_FOR_COUNTRY',
+  PaymentsCityInvalid = 'PAYMENTS_CITY_INVALID',
+  PaymentsCityRequired = 'PAYMENTS_CITY_REQUIRED',
+  PaymentsCityTooLong = 'PAYMENTS_CITY_TOO_LONG',
+  PaymentsCompanyInvalid = 'PAYMENTS_COMPANY_INVALID',
+  PaymentsCompanyRequired = 'PAYMENTS_COMPANY_REQUIRED',
+  PaymentsCompanyTooLong = 'PAYMENTS_COMPANY_TOO_LONG',
+  PaymentsCountryRequired = 'PAYMENTS_COUNTRY_REQUIRED',
+  PaymentsCreditCardBaseExpired = 'PAYMENTS_CREDIT_CARD_BASE_EXPIRED',
+  PaymentsCreditCardBaseGatewayNotSupported = 'PAYMENTS_CREDIT_CARD_BASE_GATEWAY_NOT_SUPPORTED',
+  PaymentsCreditCardBaseInvalidStartDateOrIssueNumberForDebit = 'PAYMENTS_CREDIT_CARD_BASE_INVALID_START_DATE_OR_ISSUE_NUMBER_FOR_DEBIT',
+  PaymentsCreditCardBrandNotSupported = 'PAYMENTS_CREDIT_CARD_BRAND_NOT_SUPPORTED',
+  PaymentsCreditCardFirstNameBlank = 'PAYMENTS_CREDIT_CARD_FIRST_NAME_BLANK',
+  PaymentsCreditCardGeneric = 'PAYMENTS_CREDIT_CARD_GENERIC',
+  PaymentsCreditCardLastNameBlank = 'PAYMENTS_CREDIT_CARD_LAST_NAME_BLANK',
+  PaymentsCreditCardMonthInclusion = 'PAYMENTS_CREDIT_CARD_MONTH_INCLUSION',
+  PaymentsCreditCardNameInvalid = 'PAYMENTS_CREDIT_CARD_NAME_INVALID',
+  PaymentsCreditCardNumberInvalid = 'PAYMENTS_CREDIT_CARD_NUMBER_INVALID',
+  PaymentsCreditCardNumberInvalidFormat = 'PAYMENTS_CREDIT_CARD_NUMBER_INVALID_FORMAT',
+  PaymentsCreditCardSessionId = 'PAYMENTS_CREDIT_CARD_SESSION_ID',
+  PaymentsCreditCardVerificationValueBlank = 'PAYMENTS_CREDIT_CARD_VERIFICATION_VALUE_BLANK',
+  PaymentsCreditCardVerificationValueInvalidForCardType = 'PAYMENTS_CREDIT_CARD_VERIFICATION_VALUE_INVALID_FOR_CARD_TYPE',
+  PaymentsCreditCardYearExpired = 'PAYMENTS_CREDIT_CARD_YEAR_EXPIRED',
+  PaymentsCreditCardYearInvalidExpiryYear = 'PAYMENTS_CREDIT_CARD_YEAR_INVALID_EXPIRY_YEAR',
+  PaymentsFirstNameInvalid = 'PAYMENTS_FIRST_NAME_INVALID',
+  PaymentsFirstNameRequired = 'PAYMENTS_FIRST_NAME_REQUIRED',
+  PaymentsFirstNameTooLong = 'PAYMENTS_FIRST_NAME_TOO_LONG',
+  PaymentsInvalidPostalCodeForCountry = 'PAYMENTS_INVALID_POSTAL_CODE_FOR_COUNTRY',
+  PaymentsInvalidPostalCodeForZone = 'PAYMENTS_INVALID_POSTAL_CODE_FOR_ZONE',
+  PaymentsLastNameInvalid = 'PAYMENTS_LAST_NAME_INVALID',
+  PaymentsLastNameRequired = 'PAYMENTS_LAST_NAME_REQUIRED',
+  PaymentsLastNameTooLong = 'PAYMENTS_LAST_NAME_TOO_LONG',
+  PaymentsMethodRequired = 'PAYMENTS_METHOD_REQUIRED',
+  PaymentsMethodUnavailable = 'PAYMENTS_METHOD_UNAVAILABLE',
+  PaymentsPhoneNumberInvalid = 'PAYMENTS_PHONE_NUMBER_INVALID',
+  PaymentsPhoneNumberRequired = 'PAYMENTS_PHONE_NUMBER_REQUIRED',
+  PaymentsPostalCodeInvalid = 'PAYMENTS_POSTAL_CODE_INVALID',
+  PaymentsPostalCodeRequired = 'PAYMENTS_POSTAL_CODE_REQUIRED',
+  PaymentsShopifyPaymentsRequired = 'PAYMENTS_SHOPIFY_PAYMENTS_REQUIRED',
+  PaymentsUnacceptablePaymentAmount = 'PAYMENTS_UNACCEPTABLE_PAYMENT_AMOUNT',
+  PaymentsWalletContentMissing = 'PAYMENTS_WALLET_CONTENT_MISSING',
+  TaxesDeliveryGroupIdNotFound = 'TAXES_DELIVERY_GROUP_ID_NOT_FOUND',
+  TaxesLineIdNotFound = 'TAXES_LINE_ID_NOT_FOUND',
+  TaxesMustBeDefined = 'TAXES_MUST_BE_DEFINED'
+}
+
+/** Cart submit for checkout completion is successful. */
+export type SubmitAlreadyAccepted = {
+  __typename?: 'SubmitAlreadyAccepted';
+  /** The ID of the cart completion attempt that will be used for polling for the result. */
+  attemptId: Scalars['String'];
+};
+
+/** Cart submit for checkout completion failed. */
+export type SubmitFailed = {
+  __typename?: 'SubmitFailed';
+  /** The URL of the checkout for the cart. */
+  checkoutUrl?: Maybe<Scalars['URL']>;
+  /** The list of errors that occurred from executing the mutation. */
+  errors: Array<SubmissionError>;
+};
+
+/** Cart submit for checkout completion is already accepted. */
+export type SubmitSuccess = {
+  __typename?: 'SubmitSuccess';
+  /** The ID of the cart completion attempt that will be used for polling for the result. */
+  attemptId: Scalars['String'];
+};
+
+/** Cart submit for checkout completion is throttled. */
+export type SubmitThrottled = {
+  __typename?: 'SubmitThrottled';
+  /**
+   * UTC date time string that indicates the time after which clients should make their next
+   * poll request. Any poll requests sent before this time will be ignored. Use this value to schedule the
+   * next poll request.
+   *
+   */
+  pollAfter: Scalars['DateTime'];
+};
+
 /**
  * Specifies the fields required to complete a checkout with
  * a tokenized payment.
@@ -6389,18 +7490,18 @@ export type TokenizedPaymentInputV3 = {
 /** An object representing exchange of money for a product or service. */
 export type Transaction = {
   __typename?: 'Transaction';
+  /** The amount of money that the transaction was for. */
+  amount: MoneyV2;
   /**
    * The amount of money that the transaction was for.
-   * @deprecated Use `amountV2` instead
+   * @deprecated Use `amount` instead.
    */
-  amount: Scalars['Money'];
-  /** The amount of money that the transaction was for. */
   amountV2: MoneyV2;
   /** The kind of the transaction. */
   kind: TransactionKind;
   /**
    * The status of the transaction.
-   * @deprecated Use `statusV2` instead
+   * @deprecated Use `statusV2` instead.
    */
   status: TransactionStatus;
   /** The status of the transaction. */
@@ -6549,7 +7650,10 @@ export type UserError = DisplayableError & {
   message: Scalars['String'];
 };
 
-/** A filter used to view a subset of products in a collection matching a specific variant option. */
+/**
+ * The input fields for a filter used to view a subset of products in a collection matching a specific variant option.
+ *
+ */
 export type VariantOptionFilter = {
   /** The name of the variant option to filter on. */
   name: Scalars['String'];
@@ -6562,10 +7666,12 @@ export type Video = Media & Node & {
   __typename?: 'Video';
   /** A word or phrase to share the nature or contents of a media. */
   alt?: Maybe<Scalars['String']>;
-  /** A globally-unique identifier. */
+  /** A globally-unique ID. */
   id: Scalars['ID'];
   /** The media content type. */
   mediaContentType: MediaContentType;
+  /** The presentation for a media. */
+  presentation?: Maybe<MediaPresentation>;
   /** The preview image for the media. */
   previewImage?: Maybe<Image>;
   /** The sources for a video. */
@@ -6599,23 +7705,23 @@ export enum WeightUnit {
   Pounds = 'POUNDS'
 }
 
-export type _CartFragment = { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> };
+export type _CartFragment = { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'BaseCartLineConnection', edges: Array<{ __typename?: 'BaseCartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, cost: { __typename?: 'CartLineCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> };
 
-export type _ImageFragment = { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null };
+export type _ImageFragment = { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null };
 
-export type _CartCreatePayloadFragment = { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> };
+export type _CartCreatePayloadFragment = { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'BaseCartLineConnection', edges: Array<{ __typename?: 'BaseCartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, cost: { __typename?: 'CartLineCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> };
 
 export type _CreateCartMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type _CreateCartMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _CreateCartMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'BaseCartLineConnection', edges: Array<{ __typename?: 'BaseCartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, cost: { __typename?: 'CartLineCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type _CreateCartWithLinesMutationVariables = Exact<{
   lines: Array<CartLineInput> | CartLineInput;
 }>;
 
 
-export type _CreateCartWithLinesMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _CreateCartWithLinesMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'BaseCartLineConnection', edges: Array<{ __typename?: 'BaseCartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, cost: { __typename?: 'CartLineCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type _AddLineItemMutationVariables = Exact<{
   cartId: Scalars['ID'];
@@ -6623,7 +7729,7 @@ export type _AddLineItemMutationVariables = Exact<{
 }>;
 
 
-export type _AddLineItemMutation = { __typename?: 'Mutation', cartLinesAdd?: { __typename?: 'CartLinesAddPayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _AddLineItemMutation = { __typename?: 'Mutation', cartLinesAdd?: { __typename?: 'CartLinesAddPayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'BaseCartLineConnection', edges: Array<{ __typename?: 'BaseCartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, cost: { __typename?: 'CartLineCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type _UpdateLineItemMutationVariables = Exact<{
   cartId: Scalars['ID'];
@@ -6631,7 +7737,7 @@ export type _UpdateLineItemMutationVariables = Exact<{
 }>;
 
 
-export type _UpdateLineItemMutation = { __typename?: 'Mutation', cartLinesUpdate?: { __typename?: 'CartLinesUpdatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _UpdateLineItemMutation = { __typename?: 'Mutation', cartLinesUpdate?: { __typename?: 'CartLinesUpdatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'BaseCartLineConnection', edges: Array<{ __typename?: 'BaseCartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, cost: { __typename?: 'CartLineCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type _RemoveLineItemMutationVariables = Exact<{
   cartId: Scalars['ID'];
@@ -6639,7 +7745,7 @@ export type _RemoveLineItemMutationVariables = Exact<{
 }>;
 
 
-export type _RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+export type _RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'BaseCartLineConnection', edges: Array<{ __typename?: 'BaseCartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, cost: { __typename?: 'CartLineCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null, userErrors: Array<{ __typename?: 'CartUserError', code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type _CreateCustomerMutationVariables = Exact<{
   input: CustomerCreateInput;
@@ -6653,16 +7759,16 @@ export type _FetchCartQueryVariables = Exact<{
 }>;
 
 
-export type _FetchCartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'CartLineConnection', edges: Array<{ __typename?: 'CartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, estimatedCost: { __typename?: 'CartLineEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, estimatedCost: { __typename?: 'CartEstimatedCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null };
+export type _FetchCartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, lines: { __typename?: 'BaseCartLineConnection', edges: Array<{ __typename?: 'BaseCartLineEdge', node: { __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, product: { __typename?: 'Product', id: string, title: string, handle: string, description: string } }, cost: { __typename?: 'CartLineCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }> } }> }, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, attributes: Array<{ __typename?: 'Attribute', key: string, value?: string | null }>, discountAllocations: Array<{ __typename?: 'CartAutomaticDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCodeDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } | { __typename?: 'CartCustomDiscountAllocation', discountedAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }>, discountCodes: Array<{ __typename?: 'CartDiscountCode', applicable: boolean, code: string }> } | null };
 
-export type _ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } };
+export type _ProductFragment = { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPrice?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } }> } };
 
 export type _GetProductByHandleQueryVariables = Exact<{
   handle: Scalars['String'];
 }>;
 
 
-export type _GetProductByHandleQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } | null };
+export type _GetProductByHandleQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPrice?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } }> } } | null };
 
 export type _GetAllProductsQueryVariables = Exact<{
   startAfter?: InputMaybe<Scalars['String']>;
@@ -6670,7 +7776,7 @@ export type _GetAllProductsQueryVariables = Exact<{
 }>;
 
 
-export type _GetAllProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } };
+export type _GetAllProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPrice?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } }> } } }> } };
 
 export type _GetProductsOnCollectionQueryVariables = Exact<{
   startAfter?: InputMaybe<Scalars['String']>;
@@ -6679,18 +7785,18 @@ export type _GetProductsOnCollectionQueryVariables = Exact<{
 }>;
 
 
-export type _GetProductsOnCollectionQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } } | null };
+export type _GetProductsOnCollectionQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPrice?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } }> } } }> } } | null };
 
 export type _GetCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type _GetCollectionsQuery = { __typename?: 'QueryRoot', collections: { __typename?: 'CollectionConnection', edges: Array<{ __typename?: 'CollectionEdge', node: { __typename?: 'Collection', id: string, handle: string, title: string, products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPriceV2?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, priceV2: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, originalSrc: any, width?: number | null, height?: number | null } }> } } }> } } }> } };
+export type _GetCollectionsQuery = { __typename?: 'QueryRoot', collections: { __typename?: 'CollectionConnection', edges: Array<{ __typename?: 'CollectionEdge', node: { __typename?: 'Collection', id: string, handle: string, title: string, products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, title: string, description: string, handle: string, productType: string, tags: Array<string>, onlineStoreUrl?: any | null, availableForSale: boolean, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename?: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, compareAtPrice?: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } | null, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> } }> }, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, maxVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } }, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, altText?: string | null, url: any, width?: number | null, height?: number | null } }> } } }> } } }> } };
 
 export const _ImageFragmentDoc = gql`
     fragment _Image on Image {
   id
   altText
-  originalSrc
+  url
   width
   height
 }
@@ -6714,7 +7820,7 @@ export const _CartFragmentDoc = gql`
             title
             availableForSale
             quantityAvailable
-            priceV2 {
+            price {
               amount
               currencyCode
             }
@@ -6729,7 +7835,7 @@ export const _CartFragmentDoc = gql`
             }
           }
         }
-        estimatedCost {
+        cost {
           subtotalAmount {
             amount
             currencyCode
@@ -6752,7 +7858,7 @@ export const _CartFragmentDoc = gql`
       }
     }
   }
-  estimatedCost {
+  cost {
     subtotalAmount {
       amount
       currencyCode
@@ -6809,11 +7915,11 @@ export const _ProductFragmentDoc = gql`
         title
         availableForSale
         quantityAvailable
-        compareAtPriceV2 {
+        compareAtPrice {
           amount
           currencyCode
         }
-        priceV2 {
+        price {
           amount
           currencyCode
         }

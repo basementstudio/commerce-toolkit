@@ -7,7 +7,7 @@ import { Args } from '.'
 import { getBGsdkConfig } from './util/get-b-gsdk-config'
 import { getBGsdkDirectoryPath } from './util/get-b-gsdk-directory-path'
 
-const API_VERSION = '2022-07'
+const API_VERSION = '2023-04'
 
 export async function main(args: Args) {
   const bgsdkDirectoryPath = getBGsdkDirectoryPath(process.cwd(), args['--dir'])
