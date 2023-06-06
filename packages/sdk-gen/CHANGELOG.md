@@ -1,5 +1,11 @@
 # @bsmnt/sdk-gen
 
+## 2.0.5
+
+### Patch Changes
+
+- 6e5669b: patch genql to fix a rollup edge case
+
 ## 2.0.2
 
 ### Patch Changes
