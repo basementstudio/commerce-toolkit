@@ -16,6 +16,7 @@ import {
   type ClientOptions,
   GenqlError,
 } from './runtime/index'
+export type { FieldsSelection }
 export { GenqlError }
 
 import types from './types'

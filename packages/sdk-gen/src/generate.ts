@@ -62,12 +62,11 @@ export async function main(args: Args) {
   }
 
   // some misc fixes
-  // replace line 18 with `} from './runtime/index'`
   const schemaFileContents = fs.readFileSync(generatedMainExportPath, 'utf-8')
   const lines = schemaFileContents.split('\n')
+  // patch some lines to fix a weird rollup error.
   lines[17] = "} from './runtime/index'"
-  // remove line 19
-  lines.splice(18, 1)
+  lines[18] = 'export type { FieldsSelection }'
   fs.writeFileSync(generatedMainExportPath, lines.join('\n'))
 
   console.log('Generated ✨')
