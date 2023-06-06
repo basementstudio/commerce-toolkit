@@ -29,11 +29,14 @@ export async function main(args: Args) {
     verbose: args['--verbose'] ?? false
   })
 
-  // extra generated
-  fs.appendFileSync(
-    path.join(bgsdkDirectoryPath, 'generated', 'index.ts'),
-    extraGenerated
+  const generatedMainExportPath = path.join(
+    bgsdkDirectoryPath,
+    'generated',
+    'index.ts'
   )
+
+  // extra generated
+  fs.appendFileSync(generatedMainExportPath, extraGenerated)
 
   try {
     // add eslint disable and ts nocheck at the beginning of each generated file
@@ -57,6 +60,15 @@ export async function main(args: Args) {
   if (!fs.existsSync(skdFilePath)) {
     fs.writeFileSync(skdFilePath, sdkFileContents)
   }
+
+  // some misc fixes
+  // replace line 18 with `} from './runtime/index'`
+  const schemaFileContents = fs.readFileSync(generatedMainExportPath, 'utf-8')
+  const lines = schemaFileContents.split('\n')
+  lines[17] = "} from './runtime/index'"
+  // remove line 19
+  lines.splice(18, 1)
+  fs.writeFileSync(generatedMainExportPath, lines.join('\n'))
 
   console.log('Generated ✨')
 }

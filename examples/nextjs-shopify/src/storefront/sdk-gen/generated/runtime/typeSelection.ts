@@ -29,8 +29,6 @@ export type FieldsSelection<SRC extends Anify<DST> | undefined, DST> = {
     never: never
 }[DST extends Nil
     ? 'never'
-    : SRC extends Nil
-    ? 'never'
     : DST extends false | 0
     ? 'never'
     : SRC extends Scalar
@@ -52,7 +50,7 @@ type HandleObject<SRC extends Anify<DST>, DST> = SRC extends Nil
               // using keyof SRC to maintain ?: relations of SRC type
               [Key in keyof SRC]: Key extends keyof DST
                   ? FieldsSelection<
-                        NonNullable<SRC[Key]>,
+                        SRC[Key],
                         NonNullable<DST[Key]>
                     >
                   : SRC[Key]

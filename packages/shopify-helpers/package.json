@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "yarn build --watch",
     "build": "tsup ./src/index.ts --format esm,cjs --dts",
-    "generate": "yarn sdk-gen generate --dir src/sdk-gen"
+    "generate": "yarn sdk-gen --dir src/sdk-gen"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -21,7 +21,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@bsmnt/sdk-gen": "2.0.2",
+    "@bsmnt/sdk-gen": "*",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "react": "^18.2.0",

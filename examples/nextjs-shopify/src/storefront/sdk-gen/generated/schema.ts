@@ -1,6 +1,10 @@
 /* eslint-disable */
 
 // @ts-nocheck
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+
 export type Scalars = {
     Boolean: boolean,
     Color: any,
@@ -49,7 +53,7 @@ export interface AppliedGiftCard {
      * The amount left on the gift card.
      */
     balanceV2: MoneyV2
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The last characters of the gift card. */
     lastCharacters: Scalars['String']
@@ -67,7 +71,7 @@ export interface Article {
      */
     author: ArticleAuthor
     /** The article's author. */
-    authorV2?: ArticleAuthor
+    authorV2: (ArticleAuthor | null)
     /** The blog that the article belongs to. */
     blog: Blog
     /** List of comments posted on the article. */
@@ -77,31 +81,31 @@ export interface Article {
     /** The content of the article, complete with HTML formatting. */
     contentHtml: Scalars['HTML']
     /** Stripped excerpt of the article, single line with HTML tags removed. */
-    excerpt?: Scalars['String']
+    excerpt: (Scalars['String'] | null)
     /** The excerpt of the article, complete with HTML formatting. */
-    excerptHtml?: Scalars['HTML']
+    excerptHtml: (Scalars['HTML'] | null)
     /**
      * A human-friendly unique string for the Article automatically generated from its title.
      * 
      */
     handle: Scalars['String']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The image associated with the article. */
-    image?: Image
+    image: (Image | null)
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-    onlineStoreUrl?: Scalars['URL']
+    onlineStoreUrl: (Scalars['URL'] | null)
     /** The date and time when the article was published. */
     publishedAt: Scalars['DateTime']
     /** The article’s SEO information. */
-    seo?: SEO
+    seo: (SEO | null)
     /** A categorization that a article can be tagged with. */
     tags: Scalars['String'][]
     /** The article’s name. */
@@ -113,7 +117,7 @@ export interface Article {
 /** The author of an article. */
 export interface ArticleAuthor {
     /** The author's bio. */
-    bio?: Scalars['String']
+    bio: (Scalars['String'] | null)
     /** The author’s email. */
     email: Scalars['String']
     /** The author's first name. */
@@ -163,7 +167,7 @@ export interface Attribute {
     /** Key or name of the attribute. */
     key: Scalars['String']
     /** Value of the attribute. */
-    value?: Scalars['String']
+    value: (Scalars['String'] | null)
     __typename: 'Attribute'
 }
 
@@ -197,7 +201,7 @@ export interface AvailableShippingRates {
      */
     ready: Scalars['Boolean']
     /** The fetched shipping rates. `null` until the `ready` field is `true`. */
-    shippingRates?: ShippingRate[]
+    shippingRates: (ShippingRate[] | null)
     __typename: 'AvailableShippingRates'
 }
 
@@ -205,7 +209,7 @@ export interface AvailableShippingRates {
 /** An online store blog. */
 export interface Blog {
     /** Find an article by its handle. */
-    articleByHandle?: Article
+    articleByHandle: (Article | null)
     /** List of the blog's articles. */
     articles: ArticleConnection
     /** The authors who have contributed to the blog. */
@@ -215,19 +219,19 @@ export interface Blog {
      * 
      */
     handle: Scalars['String']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-    onlineStoreUrl?: Scalars['URL']
+    onlineStoreUrl: (Scalars['URL'] | null)
     /** The blog's SEO information. */
-    seo?: SEO
+    seo: (SEO | null)
     /** The blogs’s title. */
     title: Scalars['String']
     __typename: 'Blog'
@@ -267,22 +271,22 @@ export type BlogSortKeys = 'HANDLE' | 'TITLE' | 'ID' | 'RELEVANCE'
 
 
 /**
- * The store's branding configuration.
+ * The store's [branding configuration](https://help.shopify.com/en/manual/promoting-marketing/managing-brand-assets).
  * 
  */
 export interface Brand {
     /** The colors of the store's brand. */
     colors: BrandColors
     /** The store's cover image. */
-    coverImage?: MediaImage
+    coverImage: (MediaImage | null)
     /** The store's default logo. */
-    logo?: MediaImage
+    logo: (MediaImage | null)
     /** The store's short description. */
-    shortDescription?: Scalars['String']
+    shortDescription: (Scalars['String'] | null)
     /** The store's slogan. */
-    slogan?: Scalars['String']
+    slogan: (Scalars['String'] | null)
     /** The store's preferred logo for square UI elements. */
-    squareLogo?: MediaImage
+    squareLogo: (MediaImage | null)
     __typename: 'Brand'
 }
 
@@ -293,9 +297,9 @@ export interface Brand {
  */
 export interface BrandColorGroup {
     /** The background color. */
-    background?: Scalars['Color']
+    background: (Scalars['Color'] | null)
     /** The foreground color. */
-    foreground?: Scalars['Color']
+    foreground: (Scalars['Color'] | null)
     __typename: 'BrandColorGroup'
 }
 
@@ -326,7 +330,7 @@ export type CardBrand = 'VISA' | 'MASTERCARD' | 'DISCOVER' | 'AMERICAN_EXPRESS' 
  */
 export interface Cart {
     /** An attribute associated with the cart. */
-    attribute?: Attribute
+    attribute: (Attribute | null)
     /** The attributes associated with the cart. Attributes are represented as key-value pairs. */
     attributes: Attribute[]
     /** Information about the buyer that is interacting with the cart. */
@@ -359,12 +363,12 @@ export interface Cart {
      * 
      */
     estimatedCost: CartEstimatedCost
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** A list of lines containing information about the items the customer intends to purchase. */
     lines: CartLineConnection
     /** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
-    note?: Scalars['String']
+    note: (Scalars['String'] | null)
     /** The total number of items in the cart. */
     totalQuantity: Scalars['Int']
     /** The date and time when the cart was updated. */
@@ -376,7 +380,7 @@ export interface Cart {
 /** Return type for `cartAttributesUpdate` mutation. */
 export interface CartAttributesUpdatePayload {
     /** The updated cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartAttributesUpdatePayload'
@@ -396,9 +400,9 @@ export interface CartAutomaticDiscountAllocation {
 /** Represents information about the buyer that is interacting with the cart. */
 export interface CartBuyerIdentity {
     /** The country where the buyer is located. */
-    countryCode?: CountryCode
+    countryCode: (CountryCode | null)
     /** The customer account associated with the cart. */
-    customer?: Customer
+    customer: (Customer | null)
     /**
      * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
      * The rank of the preferences is determined by the order of the addresses in the array. Preferences
@@ -407,9 +411,9 @@ export interface CartBuyerIdentity {
      */
     deliveryAddressPreferences: DeliveryAddress[]
     /** The email address of the buyer that is interacting with the cart. */
-    email?: Scalars['String']
+    email: (Scalars['String'] | null)
     /** The phone number of the buyer that is interacting with the cart. */
-    phone?: Scalars['String']
+    phone: (Scalars['String'] | null)
     __typename: 'CartBuyerIdentity'
 }
 
@@ -417,7 +421,7 @@ export interface CartBuyerIdentity {
 /** Return type for `cartBuyerIdentityUpdate` mutation. */
 export interface CartBuyerIdentityUpdatePayload {
     /** The updated cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartBuyerIdentityUpdatePayload'
@@ -452,11 +456,11 @@ export interface CartCost {
     /** Whether the total amount is estimated. */
     totalAmountEstimated: Scalars['Boolean']
     /** The duty amount for the customer to pay at checkout. */
-    totalDutyAmount?: MoneyV2
+    totalDutyAmount: (MoneyV2 | null)
     /** Whether the total duty amount is estimated. */
     totalDutyAmountEstimated: Scalars['Boolean']
     /** The tax amount for the customer to pay at checkout. */
-    totalTaxAmount?: MoneyV2
+    totalTaxAmount: (MoneyV2 | null)
     /** Whether the total tax amount is estimated. */
     totalTaxAmountEstimated: Scalars['Boolean']
     __typename: 'CartCost'
@@ -466,7 +470,7 @@ export interface CartCost {
 /** Return type for `cartCreate` mutation. */
 export interface CartCreatePayload {
     /** The new cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartCreatePayload'
@@ -494,7 +498,7 @@ export interface CartDeliveryGroup {
     /** The ID for the delivery group. */
     id: Scalars['ID']
     /** The selected delivery option for the delivery group. */
-    selectedDeliveryOption?: CartDeliveryOption
+    selectedDeliveryOption: (CartDeliveryOption | null)
     __typename: 'CartDeliveryGroup'
 }
 
@@ -530,17 +534,17 @@ export interface CartDeliveryGroupEdge {
 /** Information about a delivery option. */
 export interface CartDeliveryOption {
     /** The code of the delivery option. */
-    code?: Scalars['String']
+    code: (Scalars['String'] | null)
     /** The method for the delivery option. */
     deliveryMethodType: DeliveryMethodType
     /** The description of the delivery option. */
-    description?: Scalars['String']
+    description: (Scalars['String'] | null)
     /** The estimated cost for the delivery option. */
     estimatedCost: MoneyV2
     /** The unique identifier of the delivery option. */
     handle: Scalars['String']
     /** The title of the delivery option. */
-    title?: Scalars['String']
+    title: (Scalars['String'] | null)
     __typename: 'CartDeliveryOption'
 }
 
@@ -562,7 +566,7 @@ export interface CartDiscountCode {
 /** Return type for `cartDiscountCodesUpdate` mutation. */
 export interface CartDiscountCodesUpdatePayload {
     /** The updated cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartDiscountCodesUpdatePayload'
@@ -589,9 +593,9 @@ export interface CartEstimatedCost {
     /** The estimated total amount for the customer to pay. */
     totalAmount: MoneyV2
     /** The estimated duty amount for the customer to pay at checkout. */
-    totalDutyAmount?: MoneyV2
+    totalDutyAmount: (MoneyV2 | null)
     /** The estimated tax amount for the customer to pay at checkout. */
-    totalTaxAmount?: MoneyV2
+    totalTaxAmount: (MoneyV2 | null)
     __typename: 'CartEstimatedCost'
 }
 
@@ -599,7 +603,7 @@ export interface CartEstimatedCost {
 /** Represents information about the merchandise in the cart. */
 export interface CartLine {
     /** An attribute associated with the cart line. */
-    attribute?: Attribute
+    attribute: (Attribute | null)
     /** The attributes associated with the cart line. Attributes are represented as key-value pairs. */
     attributes: Attribute[]
     /** The cost of the merchandise that the buyer will pay for at checkout. The costs are subject to change and changes will be reflected at checkout. */
@@ -611,14 +615,14 @@ export interface CartLine {
      * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
      */
     estimatedCost: CartLineEstimatedCost
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The merchandise that the buyer intends to purchase. */
     merchandise: Merchandise
     /** The quantity of the merchandise that the customer intends to purchase. */
     quantity: Scalars['Int']
     /** The selling plan associated with the cart line and the effect that each selling plan has on variants when they're purchased. */
-    sellingPlanAllocation?: SellingPlanAllocation
+    sellingPlanAllocation: (SellingPlanAllocation | null)
     __typename: 'CartLine'
 }
 
@@ -643,7 +647,7 @@ export interface CartLineCost {
     /** The amount of the merchandise line. */
     amountPerQuantity: MoneyV2
     /** The compare at amount of the merchandise line. */
-    compareAtAmountPerQuantity?: MoneyV2
+    compareAtAmountPerQuantity: (MoneyV2 | null)
     /** The cost of the merchandise line before line-level discounts. */
     subtotalAmount: MoneyV2
     /** The total cost of the merchandise line. */
@@ -670,7 +674,7 @@ export interface CartLineEstimatedCost {
     /** The amount of the merchandise line. */
     amount: MoneyV2
     /** The compare at amount of the merchandise line. */
-    compareAtAmount?: MoneyV2
+    compareAtAmount: (MoneyV2 | null)
     /** The estimated cost of the merchandise line before discounts. */
     subtotalAmount: MoneyV2
     /** The estimated total cost of the merchandise line. */
@@ -682,7 +686,7 @@ export interface CartLineEstimatedCost {
 /** Return type for `cartLinesAdd` mutation. */
 export interface CartLinesAddPayload {
     /** The updated cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartLinesAddPayload'
@@ -692,7 +696,7 @@ export interface CartLinesAddPayload {
 /** Return type for `cartLinesRemove` mutation. */
 export interface CartLinesRemovePayload {
     /** The updated cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartLinesRemovePayload'
@@ -702,7 +706,7 @@ export interface CartLinesRemovePayload {
 /** Return type for `cartLinesUpdate` mutation. */
 export interface CartLinesUpdatePayload {
     /** The updated cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartLinesUpdatePayload'
@@ -712,7 +716,7 @@ export interface CartLinesUpdatePayload {
 /** Return type for `cartNoteUpdate` mutation. */
 export interface CartNoteUpdatePayload {
     /** The updated cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartNoteUpdatePayload'
@@ -722,7 +726,7 @@ export interface CartNoteUpdatePayload {
 /** Return type for `cartSelectedDeliveryOptionsUpdate` mutation. */
 export interface CartSelectedDeliveryOptionsUpdatePayload {
     /** The updated cart. */
-    cart?: Cart
+    cart: (Cart | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CartUserError[]
     __typename: 'CartSelectedDeliveryOptionsUpdatePayload'
@@ -732,9 +736,9 @@ export interface CartSelectedDeliveryOptionsUpdatePayload {
 /** Represents an error that happens during execution of a cart mutation. */
 export interface CartUserError {
     /** The error code. */
-    code?: CartErrorCode
+    code: (CartErrorCode | null)
     /** The path to the input field that caused the error. */
-    field?: Scalars['String'][]
+    field: (Scalars['String'][] | null)
     /** The error message. */
     message: Scalars['String']
     __typename: 'CartUserError'
@@ -751,11 +755,11 @@ export interface Checkout {
      * the shipping address is valid.
      * 
      */
-    availableShippingRates?: AvailableShippingRates
+    availableShippingRates: (AvailableShippingRates | null)
     /** The identity of the customer associated with the checkout. */
     buyerIdentity: CheckoutBuyerIdentity
     /** The date and time when the checkout was completed. */
-    completedAt?: Scalars['DateTime']
+    completedAt: (Scalars['DateTime'] | null)
     /** The date and time when the checkout was created. */
     createdAt: Scalars['DateTime']
     /** The currency code for the checkout. */
@@ -765,19 +769,19 @@ export interface Checkout {
     /** Discounts that have been applied on the checkout. */
     discountApplications: DiscountApplicationConnection
     /** The email attached to this checkout. */
-    email?: Scalars['String']
-    /** A globally-unique identifier. */
+    email: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** A list of line item objects, each one containing information about an item in the checkout. */
     lineItems: CheckoutLineItemConnection
     /** The sum of all the prices of all the items in the checkout. Duties, taxes, shipping and discounts excluded. */
     lineItemsSubtotalPrice: MoneyV2
     /** The note associated with the checkout. */
-    note?: Scalars['String']
+    note: (Scalars['String'] | null)
     /** The resulting order from a paid checkout. */
-    order?: Order
+    order: (Order | null)
     /** The Order Status Page for this Checkout, null when checkout is not completed. */
-    orderStatusUrl?: Scalars['URL']
+    orderStatusUrl: (Scalars['URL'] | null)
     /** The amount left to be paid. This is equal to the cost of the line items, taxes, and shipping, minus discounts and gift cards. */
     paymentDue: MoneyV2
     /**
@@ -796,14 +800,14 @@ export interface Checkout {
     /** States whether or not the fulfillment requires shipping. */
     requiresShipping: Scalars['Boolean']
     /** The shipping address to where the line items will be shipped. */
-    shippingAddress?: MailingAddress
+    shippingAddress: (MailingAddress | null)
     /**
      * The discounts that have been allocated onto the shipping line by discount applications.
      * 
      */
     shippingDiscountAllocations: DiscountAllocation[]
     /** Once a shipping rate is selected by the customer it is transitioned to a `shipping_line` object. */
-    shippingLine?: ShippingRate
+    shippingLine: (ShippingRate | null)
     /** The price at checkout before shipping and taxes. */
     subtotalPrice: MoneyV2
     /**
@@ -816,7 +820,7 @@ export interface Checkout {
     /** Whether taxes are included in the line item and shipping line prices. */
     taxesIncluded: Scalars['Boolean']
     /** The sum of all the duties applied to the line items in the checkout. */
-    totalDuties?: MoneyV2
+    totalDuties: (MoneyV2 | null)
     /** The sum of all the prices of all the items in the checkout, including taxes and duties. */
     totalPrice: MoneyV2
     /**
@@ -842,7 +846,7 @@ export interface Checkout {
 /** Return type for `checkoutAttributesUpdateV2` mutation. */
 export interface CheckoutAttributesUpdateV2Payload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -857,7 +861,7 @@ export interface CheckoutAttributesUpdateV2Payload {
 /** The identity of the customer associated with the checkout. */
 export interface CheckoutBuyerIdentity {
     /** The country code for the checkout. For example, `CA`. */
-    countryCode?: CountryCode
+    countryCode: (CountryCode | null)
     __typename: 'CheckoutBuyerIdentity'
 }
 
@@ -865,7 +869,7 @@ export interface CheckoutBuyerIdentity {
 /** Return type for `checkoutCompleteFree` mutation. */
 export interface CheckoutCompleteFreePayload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -880,11 +884,11 @@ export interface CheckoutCompleteFreePayload {
 /** Return type for `checkoutCompleteWithCreditCardV2` mutation. */
 export interface CheckoutCompleteWithCreditCardV2Payload {
     /** The checkout on which the payment was applied. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /** A representation of the attempted payment. */
-    payment?: Payment
+    payment: (Payment | null)
     /**
      * @deprecated Use `checkoutUserErrors` instead.
      * The list of errors that occurred from executing the mutation.
@@ -897,11 +901,11 @@ export interface CheckoutCompleteWithCreditCardV2Payload {
 /** Return type for `checkoutCompleteWithTokenizedPaymentV3` mutation. */
 export interface CheckoutCompleteWithTokenizedPaymentV3Payload {
     /** The checkout on which the payment was applied. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /** A representation of the attempted payment. */
-    payment?: Payment
+    payment: (Payment | null)
     /**
      * @deprecated Use `checkoutUserErrors` instead.
      * The list of errors that occurred from executing the mutation.
@@ -914,11 +918,11 @@ export interface CheckoutCompleteWithTokenizedPaymentV3Payload {
 /** Return type for `checkoutCreate` mutation. */
 export interface CheckoutCreatePayload {
     /** The new checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /** The checkout queue token. Available only to selected stores. */
-    queueToken?: Scalars['String']
+    queueToken: (Scalars['String'] | null)
     /**
      * @deprecated Use `checkoutUserErrors` instead.
      * The list of errors that occurred from executing the mutation.
@@ -931,11 +935,11 @@ export interface CheckoutCreatePayload {
 /** Return type for `checkoutCustomerAssociateV2` mutation. */
 export interface CheckoutCustomerAssociateV2Payload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /** The associated customer object. */
-    customer?: Customer
+    customer: (Customer | null)
     /**
      * @deprecated Use `checkoutUserErrors` instead.
      * The list of errors that occurred from executing the mutation.
@@ -948,7 +952,7 @@ export interface CheckoutCustomerAssociateV2Payload {
 /** Return type for `checkoutCustomerDisassociateV2` mutation. */
 export interface CheckoutCustomerDisassociateV2Payload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -963,7 +967,7 @@ export interface CheckoutCustomerDisassociateV2Payload {
 /** Return type for `checkoutDiscountCodeApplyV2` mutation. */
 export interface CheckoutDiscountCodeApplyV2Payload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -978,7 +982,7 @@ export interface CheckoutDiscountCodeApplyV2Payload {
 /** Return type for `checkoutDiscountCodeRemove` mutation. */
 export interface CheckoutDiscountCodeRemovePayload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -993,7 +997,7 @@ export interface CheckoutDiscountCodeRemovePayload {
 /** Return type for `checkoutEmailUpdateV2` mutation. */
 export interface CheckoutEmailUpdateV2Payload {
     /** The checkout object with the updated email. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -1012,7 +1016,7 @@ export type CheckoutErrorCode = 'BLANK' | 'INVALID' | 'TOO_LONG' | 'PRESENT' | '
 /** Return type for `checkoutGiftCardRemoveV2` mutation. */
 export interface CheckoutGiftCardRemoveV2Payload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -1027,7 +1031,7 @@ export interface CheckoutGiftCardRemoveV2Payload {
 /** Return type for `checkoutGiftCardsAppend` mutation. */
 export interface CheckoutGiftCardsAppendPayload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -1045,16 +1049,16 @@ export interface CheckoutLineItem {
     customAttributes: Attribute[]
     /** The discounts that have been allocated onto the checkout line item by discount applications. */
     discountAllocations: DiscountAllocation[]
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The quantity of the line item. */
     quantity: Scalars['Int']
     /** Title of the line item. Defaults to the product's title. */
     title: Scalars['String']
     /** Unit price of the line item. */
-    unitPrice?: MoneyV2
+    unitPrice: (MoneyV2 | null)
     /** Product variant of the line item. */
-    variant?: ProductVariant
+    variant: (ProductVariant | null)
     __typename: 'CheckoutLineItem'
 }
 
@@ -1090,7 +1094,7 @@ export interface CheckoutLineItemEdge {
 /** Return type for `checkoutLineItemsAdd` mutation. */
 export interface CheckoutLineItemsAddPayload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -1105,7 +1109,7 @@ export interface CheckoutLineItemsAddPayload {
 /** Return type for `checkoutLineItemsRemove` mutation. */
 export interface CheckoutLineItemsRemovePayload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -1120,7 +1124,7 @@ export interface CheckoutLineItemsRemovePayload {
 /** Return type for `checkoutLineItemsReplace` mutation. */
 export interface CheckoutLineItemsReplacePayload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: CheckoutUserError[]
     __typename: 'CheckoutLineItemsReplacePayload'
@@ -1130,7 +1134,7 @@ export interface CheckoutLineItemsReplacePayload {
 /** Return type for `checkoutLineItemsUpdate` mutation. */
 export interface CheckoutLineItemsUpdatePayload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -1145,7 +1149,7 @@ export interface CheckoutLineItemsUpdatePayload {
 /** Return type for `checkoutShippingAddressUpdateV2` mutation. */
 export interface CheckoutShippingAddressUpdateV2Payload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -1160,7 +1164,7 @@ export interface CheckoutShippingAddressUpdateV2Payload {
 /** Return type for `checkoutShippingLineUpdate` mutation. */
 export interface CheckoutShippingLineUpdatePayload {
     /** The updated checkout object. */
-    checkout?: Checkout
+    checkout: (Checkout | null)
     /** The list of errors that occurred from executing the mutation. */
     checkoutUserErrors: CheckoutUserError[]
     /**
@@ -1175,9 +1179,9 @@ export interface CheckoutShippingLineUpdatePayload {
 /** Represents an error that happens during execution of a checkout mutation. */
 export interface CheckoutUserError {
     /** The error code. */
-    code?: CheckoutErrorCode
+    code: (CheckoutErrorCode | null)
     /** The path to the input field that caused the error. */
-    field?: Scalars['String'][]
+    field: (Scalars['String'][] | null)
     /** The error message. */
     message: Scalars['String']
     __typename: 'CheckoutUserError'
@@ -1196,19 +1200,19 @@ export interface Collection {
      * 
      */
     handle: Scalars['String']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** Image associated with the collection. */
-    image?: Image
+    image: (Image | null)
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-    onlineStoreUrl?: Scalars['URL']
+    onlineStoreUrl: (Scalars['URL'] | null)
     /** List of products in the collection. */
     products: ProductConnection
     /** The collection's SEO information. */
@@ -1261,7 +1265,7 @@ export interface Comment {
     content: Scalars['String']
     /** The content of the comment, complete with HTML formatting. */
     contentHtml: Scalars['HTML']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     __typename: 'Comment'
 }
@@ -1334,21 +1338,21 @@ export type CountryCode = 'AF' | 'AX' | 'AL' | 'DZ' | 'AD' | 'AO' | 'AI' | 'AG' 
 /** Credit card information used for a payment. */
 export interface CreditCard {
     /** The brand of the credit card. */
-    brand?: Scalars['String']
+    brand: (Scalars['String'] | null)
     /** The expiry month of the credit card. */
-    expiryMonth?: Scalars['Int']
+    expiryMonth: (Scalars['Int'] | null)
     /** The expiry year of the credit card. */
-    expiryYear?: Scalars['Int']
+    expiryYear: (Scalars['Int'] | null)
     /** The credit card's BIN number. */
-    firstDigits?: Scalars['String']
+    firstDigits: (Scalars['String'] | null)
     /** The first name of the card holder. */
-    firstName?: Scalars['String']
+    firstName: (Scalars['String'] | null)
     /** The last 4 digits of the credit card. */
-    lastDigits?: Scalars['String']
+    lastDigits: (Scalars['String'] | null)
     /** The last name of the card holder. */
-    lastName?: Scalars['String']
+    lastName: (Scalars['String'] | null)
     /** The masked credit card number with only the last 4 digits displayed. */
-    maskedNumber?: Scalars['String']
+    maskedNumber: (Scalars['String'] | null)
     __typename: 'CreditCard'
 }
 
@@ -1386,32 +1390,32 @@ export interface Customer {
     /** The date and time when the customer was created. */
     createdAt: Scalars['DateTime']
     /** The customer’s default address. */
-    defaultAddress?: MailingAddress
+    defaultAddress: (MailingAddress | null)
     /** The customer’s name, email or phone number. */
     displayName: Scalars['String']
     /** The customer’s email address. */
-    email?: Scalars['String']
+    email: (Scalars['String'] | null)
     /** The customer’s first name. */
-    firstName?: Scalars['String']
-    /** A unique identifier for the customer. */
+    firstName: (Scalars['String'] | null)
+    /** A unique ID for the customer. */
     id: Scalars['ID']
     /** The customer's most recently updated, incomplete checkout. */
-    lastIncompleteCheckout?: Checkout
+    lastIncompleteCheckout: (Checkout | null)
     /** The customer’s last name. */
-    lastName?: Scalars['String']
+    lastName: (Scalars['String'] | null)
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /** The number of orders that the customer has made at the store in their lifetime. */
     numberOfOrders: Scalars['UnsignedInt64']
     /** The orders associated with the customer. */
     orders: OrderConnection
     /** The customer’s phone number. */
-    phone?: Scalars['String']
+    phone: (Scalars['String'] | null)
     /**
      * A comma separated list of tags that have been added to the customer.
      * Additional access scope required: unauthenticated_read_customer_tags.
@@ -1437,7 +1441,7 @@ export interface CustomerAccessToken {
 /** Return type for `customerAccessTokenCreate` mutation. */
 export interface CustomerAccessTokenCreatePayload {
     /** The newly created customer access token object. */
-    customerAccessToken?: CustomerAccessToken
+    customerAccessToken: (CustomerAccessToken | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1452,7 +1456,7 @@ export interface CustomerAccessTokenCreatePayload {
 /** Return type for `customerAccessTokenCreateWithMultipass` mutation. */
 export interface CustomerAccessTokenCreateWithMultipassPayload {
     /** An access token object associated with the customer. */
-    customerAccessToken?: CustomerAccessToken
+    customerAccessToken: (CustomerAccessToken | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     __typename: 'CustomerAccessTokenCreateWithMultipassPayload'
@@ -1462,9 +1466,9 @@ export interface CustomerAccessTokenCreateWithMultipassPayload {
 /** Return type for `customerAccessTokenDelete` mutation. */
 export interface CustomerAccessTokenDeletePayload {
     /** The destroyed access token. */
-    deletedAccessToken?: Scalars['String']
+    deletedAccessToken: (Scalars['String'] | null)
     /** ID of the destroyed customer access token. */
-    deletedCustomerAccessTokenId?: Scalars['String']
+    deletedCustomerAccessTokenId: (Scalars['String'] | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: UserError[]
     __typename: 'CustomerAccessTokenDeletePayload'
@@ -1474,7 +1478,7 @@ export interface CustomerAccessTokenDeletePayload {
 /** Return type for `customerAccessTokenRenew` mutation. */
 export interface CustomerAccessTokenRenewPayload {
     /** The renewed customer access token object. */
-    customerAccessToken?: CustomerAccessToken
+    customerAccessToken: (CustomerAccessToken | null)
     /** The list of errors that occurred from executing the mutation. */
     userErrors: UserError[]
     __typename: 'CustomerAccessTokenRenewPayload'
@@ -1484,9 +1488,9 @@ export interface CustomerAccessTokenRenewPayload {
 /** Return type for `customerActivateByUrl` mutation. */
 export interface CustomerActivateByUrlPayload {
     /** The customer that was activated. */
-    customer?: Customer
+    customer: (Customer | null)
     /** A new customer access token for the customer. */
-    customerAccessToken?: CustomerAccessToken
+    customerAccessToken: (CustomerAccessToken | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     __typename: 'CustomerActivateByUrlPayload'
@@ -1496,9 +1500,9 @@ export interface CustomerActivateByUrlPayload {
 /** Return type for `customerActivate` mutation. */
 export interface CustomerActivatePayload {
     /** The customer object. */
-    customer?: Customer
+    customer: (Customer | null)
     /** A newly created customer access token object for the customer. */
-    customerAccessToken?: CustomerAccessToken
+    customerAccessToken: (CustomerAccessToken | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1513,7 +1517,7 @@ export interface CustomerActivatePayload {
 /** Return type for `customerAddressCreate` mutation. */
 export interface CustomerAddressCreatePayload {
     /** The new customer address object. */
-    customerAddress?: MailingAddress
+    customerAddress: (MailingAddress | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1530,7 +1534,7 @@ export interface CustomerAddressDeletePayload {
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /** ID of the deleted customer address. */
-    deletedCustomerAddressId?: Scalars['String']
+    deletedCustomerAddressId: (Scalars['String'] | null)
     /**
      * @deprecated Use `customerUserErrors` instead.
      * The list of errors that occurred from executing the mutation.
@@ -1543,7 +1547,7 @@ export interface CustomerAddressDeletePayload {
 /** Return type for `customerAddressUpdate` mutation. */
 export interface CustomerAddressUpdatePayload {
     /** The customer’s updated mailing address. */
-    customerAddress?: MailingAddress
+    customerAddress: (MailingAddress | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1558,7 +1562,7 @@ export interface CustomerAddressUpdatePayload {
 /** Return type for `customerCreate` mutation. */
 export interface CustomerCreatePayload {
     /** The created customer object. */
-    customer?: Customer
+    customer: (Customer | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1573,7 +1577,7 @@ export interface CustomerCreatePayload {
 /** Return type for `customerDefaultAddressUpdate` mutation. */
 export interface CustomerDefaultAddressUpdatePayload {
     /** The updated customer object. */
-    customer?: Customer
+    customer: (Customer | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1605,9 +1609,9 @@ export interface CustomerRecoverPayload {
 /** Return type for `customerResetByUrl` mutation. */
 export interface CustomerResetByUrlPayload {
     /** The customer object which was reset. */
-    customer?: Customer
+    customer: (Customer | null)
     /** A newly created customer access token object for the customer. */
-    customerAccessToken?: CustomerAccessToken
+    customerAccessToken: (CustomerAccessToken | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1622,9 +1626,9 @@ export interface CustomerResetByUrlPayload {
 /** Return type for `customerReset` mutation. */
 export interface CustomerResetPayload {
     /** The customer object which was reset. */
-    customer?: Customer
+    customer: (Customer | null)
     /** A newly created customer access token object for the customer. */
-    customerAccessToken?: CustomerAccessToken
+    customerAccessToken: (CustomerAccessToken | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1639,13 +1643,13 @@ export interface CustomerResetPayload {
 /** Return type for `customerUpdate` mutation. */
 export interface CustomerUpdatePayload {
     /** The updated customer object. */
-    customer?: Customer
+    customer: (Customer | null)
     /**
      * The newly created customer access token. If the customer's password is updated, all previous access tokens
      * (including the one used to perform this mutation) become invalid, and a new token is generated.
      * 
      */
-    customerAccessToken?: CustomerAccessToken
+    customerAccessToken: (CustomerAccessToken | null)
     /** The list of errors that occurred from executing the mutation. */
     customerUserErrors: CustomerUserError[]
     /**
@@ -1660,9 +1664,9 @@ export interface CustomerUpdatePayload {
 /** Represents an error that happens during execution of a customer mutation. */
 export interface CustomerUserError {
     /** The error code. */
-    code?: CustomerErrorCode
+    code: (CustomerErrorCode | null)
     /** The path to the input field that caused the error. */
-    field?: Scalars['String'][]
+    field: (Scalars['String'][] | null)
     /** The error message. */
     message: Scalars['String']
     __typename: 'CustomerUserError'
@@ -1792,7 +1796,7 @@ export interface Domain {
 /** Represents a video hosted outside of Shopify. */
 export interface ExternalVideo {
     /** A word or phrase to share the nature or contents of a media. */
-    alt?: Scalars['String']
+    alt: (Scalars['String'] | null)
     /** The embed URL of the video for the respective host. */
     embedUrl: Scalars['URL']
     /**
@@ -1802,14 +1806,14 @@ export interface ExternalVideo {
     embeddedUrl: Scalars['URL']
     /** The host of the external video. */
     host: MediaHost
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The media content type. */
     mediaContentType: MediaContentType
     /** The origin URL of the video on the respective host. */
     originUrl: Scalars['URL']
     /** The preview image for the media. */
-    previewImage?: Image
+    previewImage: (Image | null)
     __typename: 'ExternalVideo'
 }
 
@@ -1862,7 +1866,7 @@ export interface Fulfillment {
     /** List of the fulfillment's line items. */
     fulfillmentLineItems: FulfillmentLineItemConnection
     /** The name of the tracking company. */
-    trackingCompany?: Scalars['String']
+    trackingCompany: (Scalars['String'] | null)
     /**
      * Tracking information associated with the fulfillment,
      * such as the tracking number and tracking URL.
@@ -1914,9 +1918,9 @@ export interface FulfillmentLineItemEdge {
 /** Tracking information associated with the fulfillment. */
 export interface FulfillmentTrackingInfo {
     /** The tracking number of the fulfillment. */
-    number?: Scalars['String']
+    number: (Scalars['String'] | null)
     /** The URL to track the fulfillment. */
-    url?: Scalars['URL']
+    url: (Scalars['URL'] | null)
     __typename: 'FulfillmentTrackingInfo'
 }
 
@@ -1924,17 +1928,17 @@ export interface FulfillmentTrackingInfo {
 /** The generic file resource lets you manage files in a merchant’s store. Generic files include any file that doesn’t fit into a designated type such as image or video. Example: PDF, JSON. */
 export interface GenericFile {
     /** A word or phrase to indicate the contents of a file. */
-    alt?: Scalars['String']
-    /** A globally-unique identifier. */
+    alt: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The MIME type of the file. */
-    mimeType?: Scalars['String']
+    mimeType: (Scalars['String'] | null)
     /** The size of the original file in bytes. */
-    originalFileSize?: Scalars['Int']
+    originalFileSize: (Scalars['Int'] | null)
     /** The preview image for the file. */
-    previewImage?: Image
+    previewImage: (Image | null)
     /** The URL of the file. */
-    url?: Scalars['URL']
+    url: (Scalars['URL'] | null)
     __typename: 'GenericFile'
 }
 
@@ -1946,11 +1950,11 @@ export type HasMetafields = (Article | Blog | Collection | Customer | Order | Pa
 /** Represents an image resource. */
 export interface Image {
     /** A word or phrase to share the nature or contents of an image. */
-    altText?: Scalars['String']
+    altText: (Scalars['String'] | null)
     /** The original height of the image in pixels. Returns `null` if the image is not hosted by Shopify. */
-    height?: Scalars['Int']
-    /** A unique identifier for the image. */
-    id?: Scalars['ID']
+    height: (Scalars['Int'] | null)
+    /** A unique ID for the image. */
+    id: (Scalars['ID'] | null)
     /**
      * @deprecated Use `url` instead.
      * The location of the original image as a URL.
@@ -1985,7 +1989,7 @@ export interface Image {
      */
     url: Scalars['URL']
     /** The original width of the image in pixels. Returns `null` if the image is not hosted by Shopify. */
-    width?: Scalars['Int']
+    width: (Scalars['Int'] | null)
     __typename: 'Image'
 }
 
@@ -2056,7 +2060,7 @@ export interface Localization {
 export interface Location {
     /** The address of the location. */
     address: LocationAddress
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The name of the location. */
     name: Scalars['String']
@@ -2070,32 +2074,32 @@ export interface Location {
  */
 export interface LocationAddress {
     /** The first line of the address for the location. */
-    address1?: Scalars['String']
+    address1: (Scalars['String'] | null)
     /** The second line of the address for the location. */
-    address2?: Scalars['String']
+    address2: (Scalars['String'] | null)
     /** The city of the location. */
-    city?: Scalars['String']
+    city: (Scalars['String'] | null)
     /** The country of the location. */
-    country?: Scalars['String']
+    country: (Scalars['String'] | null)
     /** The country code of the location. */
-    countryCode?: Scalars['String']
+    countryCode: (Scalars['String'] | null)
     /** A formatted version of the address for the location. */
     formatted: Scalars['String'][]
     /** The latitude coordinates of the location. */
-    latitude?: Scalars['Float']
+    latitude: (Scalars['Float'] | null)
     /** The longitude coordinates of the location. */
-    longitude?: Scalars['Float']
+    longitude: (Scalars['Float'] | null)
     /** The phone number of the location. */
-    phone?: Scalars['String']
+    phone: (Scalars['String'] | null)
     /** The province of the location. */
-    province?: Scalars['String']
+    province: (Scalars['String'] | null)
     /**
      * The code for the province, state, or district of the address of the location.
      * 
      */
-    provinceCode?: Scalars['String']
+    provinceCode: (Scalars['String'] | null)
     /** The ZIP code of the location. */
-    zip?: Scalars['String']
+    zip: (Scalars['String'] | null)
     __typename: 'LocationAddress'
 }
 
@@ -2135,27 +2139,27 @@ export type LocationSortKeys = 'ID' | 'NAME' | 'CITY' | 'DISTANCE'
 /** Represents a mailing address for customers and shipping. */
 export interface MailingAddress {
     /** The first line of the address. Typically the street address or PO Box number. */
-    address1?: Scalars['String']
+    address1: (Scalars['String'] | null)
     /**
      * The second line of the address. Typically the number of the apartment, suite, or unit.
      * 
      */
-    address2?: Scalars['String']
+    address2: (Scalars['String'] | null)
     /**
      * The name of the city, district, village, or town.
      * 
      */
-    city?: Scalars['String']
+    city: (Scalars['String'] | null)
     /**
      * The name of the customer's company or organization.
      * 
      */
-    company?: Scalars['String']
+    company: (Scalars['String'] | null)
     /**
      * The name of the country.
      * 
      */
-    country?: Scalars['String']
+    country: (Scalars['String'] | null)
     /**
      * @deprecated Use `countryCodeV2` instead.
      * The two-letter code for the country of the address.
@@ -2163,51 +2167,51 @@ export interface MailingAddress {
      * For example, US.
      * 
      */
-    countryCode?: Scalars['String']
+    countryCode: (Scalars['String'] | null)
     /**
      * The two-letter code for the country of the address.
      * 
      * For example, US.
      * 
      */
-    countryCodeV2?: CountryCode
+    countryCodeV2: (CountryCode | null)
     /** The first name of the customer. */
-    firstName?: Scalars['String']
+    firstName: (Scalars['String'] | null)
     /** A formatted version of the address, customized by the provided arguments. */
     formatted: Scalars['String'][]
     /** A comma-separated list of the values for city, province, and country. */
-    formattedArea?: Scalars['String']
-    /** A globally-unique identifier. */
+    formattedArea: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The last name of the customer. */
-    lastName?: Scalars['String']
+    lastName: (Scalars['String'] | null)
     /** The latitude coordinate of the customer address. */
-    latitude?: Scalars['Float']
+    latitude: (Scalars['Float'] | null)
     /** The longitude coordinate of the customer address. */
-    longitude?: Scalars['Float']
+    longitude: (Scalars['Float'] | null)
     /**
      * The full name of the customer, based on firstName and lastName.
      * 
      */
-    name?: Scalars['String']
+    name: (Scalars['String'] | null)
     /**
      * A unique phone number for the customer.
      * 
      * Formatted using E.164 standard. For example, _+16135551111_.
      * 
      */
-    phone?: Scalars['String']
+    phone: (Scalars['String'] | null)
     /** The region of the address, such as the province, state, or district. */
-    province?: Scalars['String']
+    province: (Scalars['String'] | null)
     /**
      * The two-letter code for the region.
      * 
      * For example, ON.
      * 
      */
-    provinceCode?: Scalars['String']
+    provinceCode: (Scalars['String'] | null)
     /** The zip or postal code of the address. */
-    zip?: Scalars['String']
+    zip: (Scalars['String'] | null)
     __typename: 'MailingAddress'
 }
 
@@ -2248,7 +2252,7 @@ export interface ManualDiscountApplication {
     /** The method by which the discount's value is allocated to its entitled items. */
     allocationMethod: DiscountApplicationAllocationMethod
     /** The description of the application. */
-    description?: Scalars['String']
+    description: (Scalars['String'] | null)
     /** Which lines of targetType that the discount is allocated over. */
     targetSelection: DiscountApplicationTargetSelection
     /** The type of line that the discount is applicable towards. */
@@ -2304,27 +2308,28 @@ export type MediaHost = 'YOUTUBE' | 'VIMEO'
 /** Represents a Shopify hosted image. */
 export interface MediaImage {
     /** A word or phrase to share the nature or contents of a media. */
-    alt?: Scalars['String']
-    /** A globally-unique identifier. */
+    alt: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The image for the media. */
-    image?: Image
+    image: (Image | null)
     /** The media content type. */
     mediaContentType: MediaContentType
     /** The preview image for the media. */
-    previewImage?: Image
+    previewImage: (Image | null)
     __typename: 'MediaImage'
 }
 
 
 /**
- * A menu used for navigation within a storefront.
+ * A [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) representing a hierarchy
+ * of hyperlinks (items).
  * 
  */
 export interface Menu {
     /** The menu's handle. */
     handle: Scalars['String']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The menu's child items. */
     items: MenuItem[]
@@ -2341,12 +2346,12 @@ export interface Menu {
  * 
  */
 export interface MenuItem {
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The menu item's child items. */
     items: MenuItem[]
     /** The ID of the linked resource. */
-    resourceId?: Scalars['ID']
+    resourceId: (Scalars['ID'] | null)
     /** The menu item's tags to filter a collection. */
     tags: Scalars['String'][]
     /** The menu item's title. */
@@ -2354,7 +2359,7 @@ export interface MenuItem {
     /** The menu item's type. */
     type: MenuItemType
     /** The menu item's URL. */
-    url?: Scalars['URL']
+    url: (Scalars['URL'] | null)
     __typename: 'MenuItem'
 }
 
@@ -2376,28 +2381,28 @@ export interface Metafield {
     /** The date and time when the storefront metafield was created. */
     createdAt: Scalars['DateTime']
     /** The description of a metafield. */
-    description?: Scalars['String']
-    /** A globally-unique identifier. */
+    description: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
-    /** The key name for a metafield. */
+    /** The unique identifier for the metafield within its namespace. */
     key: Scalars['String']
-    /** The namespace for a metafield. */
+    /** The container for a group of metafields that the metafield is associated with. */
     namespace: Scalars['String']
-    /** The parent object that the metafield belongs to. */
+    /** The type of resource that the metafield is attached to. */
     parentResource: MetafieldParentResource
-    /** Returns a reference object if the metafield definition's type is a resource reference. */
-    reference?: MetafieldReference
+    /** Returns a reference object if the metafield's type is a resource reference. */
+    reference: (MetafieldReference | null)
     /** A list of reference objects if the metafield's type is a resource reference list. */
-    references?: MetafieldReferenceConnection
+    references: (MetafieldReferenceConnection | null)
     /**
      * The type name of the metafield.
-     * See the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
+     * Refer to the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
      * 
      */
     type: Scalars['String']
-    /** The date and time when the storefront metafield was updated. */
+    /** The date and time when the metafield was last updated. */
     updatedAt: Scalars['DateTime']
-    /** The value of a metafield. */
+    /** The data stored in the metafield. Always stored as a string, regardless of the metafield's type. */
     value: Scalars['String']
     __typename: 'Metafield'
 }
@@ -2445,7 +2450,7 @@ export interface MetafieldReferenceEdge {
 /** An instance of a user-defined model based on a MetaobjectDefinition. */
 export interface Metaobject {
     /** Accesses a field of the object by key. */
-    field?: MetaobjectField
+    field: (MetaobjectField | null)
     /**
      * All object fields with defined values.
      * Omitted object keys can be assumed null, and no guarantees are made about field order.
@@ -2454,7 +2459,7 @@ export interface Metaobject {
     fields: MetaobjectField[]
     /** The unique handle of the metaobject. Useful as a custom ID. */
     handle: Scalars['String']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The type of the metaobject. Defines the namespace of its associated metafields. */
     type: Scalars['String']
@@ -2497,9 +2502,9 @@ export interface MetaobjectField {
     /** The field key. */
     key: Scalars['String']
     /** A referenced object if the field type is a resource reference. */
-    reference?: MetafieldReference
+    reference: (MetafieldReference | null)
     /** A list of referenced objects if the field type is a resource reference list. */
-    references?: MetafieldReferenceConnection
+    references: (MetafieldReferenceConnection | null)
     /**
      * The type name of the field.
      * See the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
@@ -2507,7 +2512,7 @@ export interface MetaobjectField {
      */
     type: Scalars['String']
     /** The field value. */
-    value?: Scalars['String']
+    value: (Scalars['String'] | null)
     __typename: 'MetaobjectField'
 }
 
@@ -2515,13 +2520,13 @@ export interface MetaobjectField {
 /** Represents a Shopify hosted 3D model. */
 export interface Model3d {
     /** A word or phrase to share the nature or contents of a media. */
-    alt?: Scalars['String']
-    /** A globally-unique identifier. */
+    alt: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The media content type. */
     mediaContentType: MediaContentType
     /** The preview image for the media. */
-    previewImage?: Image
+    previewImage: (Image | null)
     /** The sources for a 3d model. */
     sources: Model3dSource[]
     __typename: 'Model3d'
@@ -2558,7 +2563,7 @@ export interface MoneyV2 {
 /** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
 export interface Mutation {
     /** Updates the attributes on a cart. */
-    cartAttributesUpdate?: CartAttributesUpdatePayload
+    cartAttributesUpdate: (CartAttributesUpdatePayload | null)
     /**
      * Updates customer information associated with a cart.
      * Buyer identity is used to determine
@@ -2566,63 +2571,63 @@ export interface Mutation {
      * and should match the customer's shipping address.
      * 
      */
-    cartBuyerIdentityUpdate?: CartBuyerIdentityUpdatePayload
+    cartBuyerIdentityUpdate: (CartBuyerIdentityUpdatePayload | null)
     /** Creates a new cart. */
-    cartCreate?: CartCreatePayload
+    cartCreate: (CartCreatePayload | null)
     /** Updates the discount codes applied to the cart. */
-    cartDiscountCodesUpdate?: CartDiscountCodesUpdatePayload
+    cartDiscountCodesUpdate: (CartDiscountCodesUpdatePayload | null)
     /** Adds a merchandise line to the cart. */
-    cartLinesAdd?: CartLinesAddPayload
+    cartLinesAdd: (CartLinesAddPayload | null)
     /** Removes one or more merchandise lines from the cart. */
-    cartLinesRemove?: CartLinesRemovePayload
+    cartLinesRemove: (CartLinesRemovePayload | null)
     /** Updates one or more merchandise lines on a cart. */
-    cartLinesUpdate?: CartLinesUpdatePayload
+    cartLinesUpdate: (CartLinesUpdatePayload | null)
     /** Updates the note on the cart. */
-    cartNoteUpdate?: CartNoteUpdatePayload
+    cartNoteUpdate: (CartNoteUpdatePayload | null)
     /** Update the selected delivery options for a delivery group. */
-    cartSelectedDeliveryOptionsUpdate?: CartSelectedDeliveryOptionsUpdatePayload
+    cartSelectedDeliveryOptionsUpdate: (CartSelectedDeliveryOptionsUpdatePayload | null)
     /** Updates the attributes of a checkout if `allowPartialAddresses` is `true`. */
-    checkoutAttributesUpdateV2?: CheckoutAttributesUpdateV2Payload
+    checkoutAttributesUpdateV2: (CheckoutAttributesUpdateV2Payload | null)
     /** Completes a checkout without providing payment information. You can use this mutation for free items or items whose purchase price is covered by a gift card. */
-    checkoutCompleteFree?: CheckoutCompleteFreePayload
+    checkoutCompleteFree: (CheckoutCompleteFreePayload | null)
     /** Completes a checkout using a credit card token from Shopify's card vault. Before you can complete checkouts using CheckoutCompleteWithCreditCardV2, you need to  [_request payment processing_](https://shopify.dev/apps/channels/getting-started#request-payment-processing). */
-    checkoutCompleteWithCreditCardV2?: CheckoutCompleteWithCreditCardV2Payload
+    checkoutCompleteWithCreditCardV2: (CheckoutCompleteWithCreditCardV2Payload | null)
     /** Completes a checkout with a tokenized payment. */
-    checkoutCompleteWithTokenizedPaymentV3?: CheckoutCompleteWithTokenizedPaymentV3Payload
+    checkoutCompleteWithTokenizedPaymentV3: (CheckoutCompleteWithTokenizedPaymentV3Payload | null)
     /** Creates a new checkout. */
-    checkoutCreate?: CheckoutCreatePayload
+    checkoutCreate: (CheckoutCreatePayload | null)
     /** Associates a customer to the checkout. */
-    checkoutCustomerAssociateV2?: CheckoutCustomerAssociateV2Payload
+    checkoutCustomerAssociateV2: (CheckoutCustomerAssociateV2Payload | null)
     /** Disassociates the current checkout customer from the checkout. */
-    checkoutCustomerDisassociateV2?: CheckoutCustomerDisassociateV2Payload
+    checkoutCustomerDisassociateV2: (CheckoutCustomerDisassociateV2Payload | null)
     /** Applies a discount to an existing checkout using a discount code. */
-    checkoutDiscountCodeApplyV2?: CheckoutDiscountCodeApplyV2Payload
+    checkoutDiscountCodeApplyV2: (CheckoutDiscountCodeApplyV2Payload | null)
     /** Removes the applied discounts from an existing checkout. */
-    checkoutDiscountCodeRemove?: CheckoutDiscountCodeRemovePayload
+    checkoutDiscountCodeRemove: (CheckoutDiscountCodeRemovePayload | null)
     /** Updates the email on an existing checkout. */
-    checkoutEmailUpdateV2?: CheckoutEmailUpdateV2Payload
+    checkoutEmailUpdateV2: (CheckoutEmailUpdateV2Payload | null)
     /** Removes an applied gift card from the checkout. */
-    checkoutGiftCardRemoveV2?: CheckoutGiftCardRemoveV2Payload
+    checkoutGiftCardRemoveV2: (CheckoutGiftCardRemoveV2Payload | null)
     /** Appends gift cards to an existing checkout. */
-    checkoutGiftCardsAppend?: CheckoutGiftCardsAppendPayload
+    checkoutGiftCardsAppend: (CheckoutGiftCardsAppendPayload | null)
     /** Adds a list of line items to a checkout. */
-    checkoutLineItemsAdd?: CheckoutLineItemsAddPayload
+    checkoutLineItemsAdd: (CheckoutLineItemsAddPayload | null)
     /** Removes line items from an existing checkout. */
-    checkoutLineItemsRemove?: CheckoutLineItemsRemovePayload
+    checkoutLineItemsRemove: (CheckoutLineItemsRemovePayload | null)
     /** Sets a list of line items to a checkout. */
-    checkoutLineItemsReplace?: CheckoutLineItemsReplacePayload
+    checkoutLineItemsReplace: (CheckoutLineItemsReplacePayload | null)
     /** Updates line items on a checkout. */
-    checkoutLineItemsUpdate?: CheckoutLineItemsUpdatePayload
+    checkoutLineItemsUpdate: (CheckoutLineItemsUpdatePayload | null)
     /** Updates the shipping address of an existing checkout. */
-    checkoutShippingAddressUpdateV2?: CheckoutShippingAddressUpdateV2Payload
+    checkoutShippingAddressUpdateV2: (CheckoutShippingAddressUpdateV2Payload | null)
     /** Updates the shipping lines on an existing checkout. */
-    checkoutShippingLineUpdate?: CheckoutShippingLineUpdatePayload
+    checkoutShippingLineUpdate: (CheckoutShippingLineUpdatePayload | null)
     /**
      * Creates a customer access token.
      * The customer access token is required to modify the customer object in any way.
      * 
      */
-    customerAccessTokenCreate?: CustomerAccessTokenCreatePayload
+    customerAccessTokenCreate: (CustomerAccessTokenCreatePayload | null)
     /**
      * Creates a customer access token using a
      * [multipass token](https://shopify.dev/api/multipass) instead of email and
@@ -2630,9 +2635,9 @@ export interface Mutation {
      * record already exists but the record is disabled, then the customer record is enabled.
      * 
      */
-    customerAccessTokenCreateWithMultipass?: CustomerAccessTokenCreateWithMultipassPayload
+    customerAccessTokenCreateWithMultipass: (CustomerAccessTokenCreateWithMultipassPayload | null)
     /** Permanently destroys a customer access token. */
-    customerAccessTokenDelete?: CustomerAccessTokenDeletePayload
+    customerAccessTokenDelete: (CustomerAccessTokenDeletePayload | null)
     /**
      * Renews a customer access token.
      * 
@@ -2640,21 +2645,21 @@ export interface Mutation {
      * If a token has already expired, a new one should be created instead via `customerAccessTokenCreate`.
      * 
      */
-    customerAccessTokenRenew?: CustomerAccessTokenRenewPayload
+    customerAccessTokenRenew: (CustomerAccessTokenRenewPayload | null)
     /** Activates a customer. */
-    customerActivate?: CustomerActivatePayload
+    customerActivate: (CustomerActivatePayload | null)
     /** Activates a customer with the activation url received from `customerCreate`. */
-    customerActivateByUrl?: CustomerActivateByUrlPayload
+    customerActivateByUrl: (CustomerActivateByUrlPayload | null)
     /** Creates a new address for a customer. */
-    customerAddressCreate?: CustomerAddressCreatePayload
+    customerAddressCreate: (CustomerAddressCreatePayload | null)
     /** Permanently deletes the address of an existing customer. */
-    customerAddressDelete?: CustomerAddressDeletePayload
+    customerAddressDelete: (CustomerAddressDeletePayload | null)
     /** Updates the address of an existing customer. */
-    customerAddressUpdate?: CustomerAddressUpdatePayload
+    customerAddressUpdate: (CustomerAddressUpdatePayload | null)
     /** Creates a new customer. */
-    customerCreate?: CustomerCreatePayload
+    customerCreate: (CustomerCreatePayload | null)
     /** Updates the default address of an existing customer. */
-    customerDefaultAddressUpdate?: CustomerDefaultAddressUpdatePayload
+    customerDefaultAddressUpdate: (CustomerDefaultAddressUpdatePayload | null)
     /**
      * Sends a reset password email to the customer. The reset password
      * email contains a reset password URL and token that you can pass to
@@ -2669,19 +2674,19 @@ export interface Mutation {
      * mutation presents a security risk.
      * 
      */
-    customerRecover?: CustomerRecoverPayload
+    customerRecover: (CustomerRecoverPayload | null)
     /**
      * "Resets a customer’s password with the token received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation."
      * 
      */
-    customerReset?: CustomerResetPayload
+    customerReset: (CustomerResetPayload | null)
     /**
      * "Resets a customer’s password with the reset password URL received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation."
      * 
      */
-    customerResetByUrl?: CustomerResetByUrlPayload
+    customerResetByUrl: (CustomerResetByUrlPayload | null)
     /** Updates an existing customer. */
-    customerUpdate?: CustomerUpdatePayload
+    customerUpdate: (CustomerUpdatePayload | null)
     __typename: 'Mutation'
 }
 
@@ -2703,15 +2708,15 @@ export type OnlineStorePublishable = (Article | Blog | Collection | Page | Produ
 /** An order is a customer’s completed request to purchase one or more products from a shop. An order is created when a customer completes the checkout process, during which time they provides an email address, billing address and payment information. */
 export interface Order {
     /** The reason for the order's cancellation. Returns `null` if the order wasn't canceled. */
-    cancelReason?: OrderCancelReason
+    cancelReason: (OrderCancelReason | null)
     /** The date and time when the order was canceled. Returns null if the order wasn't canceled. */
-    canceledAt?: Scalars['DateTime']
+    canceledAt: (Scalars['DateTime'] | null)
     /** The code of the currency used for the payment. */
     currencyCode: CurrencyCode
     /** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
     currentSubtotalPrice: MoneyV2
     /** The total cost of duties for the order, including refunds. */
-    currentTotalDuties?: MoneyV2
+    currentTotalDuties: (MoneyV2 | null)
     /** The total amount of the order, including duties, taxes and discounts, minus amounts for line items that have been removed. */
     currentTotalPrice: MoneyV2
     /** The total of all taxes applied to the order, excluding taxes for returned line items. */
@@ -2719,30 +2724,30 @@ export interface Order {
     /** A list of the custom attributes added to the order. */
     customAttributes: Attribute[]
     /** The locale code in which this specific order happened. */
-    customerLocale?: Scalars['String']
+    customerLocale: (Scalars['String'] | null)
     /** The unique URL that the customer can use to access the order. */
-    customerUrl?: Scalars['URL']
+    customerUrl: (Scalars['URL'] | null)
     /** Discounts that have been applied on the order. */
     discountApplications: DiscountApplicationConnection
     /** Whether the order has had any edits applied or not. */
     edited: Scalars['Boolean']
     /** The customer's email address. */
-    email?: Scalars['String']
+    email: (Scalars['String'] | null)
     /** The financial status of the order. */
-    financialStatus?: OrderFinancialStatus
+    financialStatus: (OrderFinancialStatus | null)
     /** The fulfillment status for the order. */
     fulfillmentStatus: OrderFulfillmentStatus
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** List of the order’s line items. */
     lineItems: OrderLineItemConnection
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /**
      * Unique identifier for the order that appears on the order.
      * For example, _#1000_ or _Store1001.
@@ -2752,11 +2757,11 @@ export interface Order {
     /** A unique numeric identifier for the order for use by shop owner and customer. */
     orderNumber: Scalars['Int']
     /** The total cost of duties charged at checkout. */
-    originalTotalDuties?: MoneyV2
+    originalTotalDuties: (MoneyV2 | null)
     /** The total price of the order before any applied edits. */
     originalTotalPrice: MoneyV2
     /** The customer's phone number for receiving SMS notifications. */
-    phone?: Scalars['String']
+    phone: (Scalars['String'] | null)
     /**
      * The date and time when the order was imported.
      * This value can be set to dates in the past when importing from other systems.
@@ -2765,7 +2770,7 @@ export interface Order {
      */
     processedAt: Scalars['DateTime']
     /** The address to where the order will be shipped. */
-    shippingAddress?: MailingAddress
+    shippingAddress: (MailingAddress | null)
     /**
      * The discounts that have been allocated onto the shipping line by discount applications.
      * 
@@ -2774,14 +2779,14 @@ export interface Order {
     /** The unique URL for the order's status page. */
     statusUrl: Scalars['URL']
     /** Price of the order before shipping and taxes. */
-    subtotalPrice?: MoneyV2
+    subtotalPrice: (MoneyV2 | null)
     /**
      * @deprecated Use `subtotalPrice` instead.
      * Price of the order before duties, shipping and taxes.
      */
-    subtotalPriceV2?: MoneyV2
+    subtotalPriceV2: (MoneyV2 | null)
     /** List of the order’s successful fulfillments. */
-    successfulFulfillments?: Fulfillment[]
+    successfulFulfillments: (Fulfillment[] | null)
     /** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
     totalPrice: MoneyV2
     /**
@@ -2804,12 +2809,12 @@ export interface Order {
      */
     totalShippingPriceV2: MoneyV2
     /** The total cost of taxes. */
-    totalTax?: MoneyV2
+    totalTax: (MoneyV2 | null)
     /**
      * @deprecated Use `totalTax` instead.
      * The total cost of taxes.
      */
-    totalTaxV2?: MoneyV2
+    totalTaxV2: (MoneyV2 | null)
     __typename: 'Order'
 }
 
@@ -2873,7 +2878,7 @@ export interface OrderLineItem {
     /** The title of the product combined with title of the variant. */
     title: Scalars['String']
     /** The product variant object associated to the line item. */
-    variant?: ProductVariant
+    variant: (ProductVariant | null)
     __typename: 'OrderLineItem'
 }
 
@@ -2920,19 +2925,19 @@ export interface Page {
     createdAt: Scalars['DateTime']
     /** A human-friendly unique string for the page automatically generated from its title. */
     handle: Scalars['String']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-    onlineStoreUrl?: Scalars['URL']
+    onlineStoreUrl: (Scalars['URL'] | null)
     /** The page's SEO information. */
-    seo?: SEO
+    seo: (SEO | null)
     /** The title of the page. */
     title: Scalars['String']
     /** The timestamp of the latest page update. */
@@ -2977,13 +2982,13 @@ export interface PageEdge {
  */
 export interface PageInfo {
     /** The cursor corresponding to the last node in edges. */
-    endCursor?: Scalars['String']
+    endCursor: (Scalars['String'] | null)
     /** Whether there are more pages to fetch following the current page. */
     hasNextPage: Scalars['Boolean']
     /** Whether there are any pages prior to the current page. */
     hasPreviousPage: Scalars['Boolean']
     /** The cursor corresponding to the first node in edges. */
-    startCursor?: Scalars['String']
+    startCursor: (Scalars['String'] | null)
     __typename: 'PageInfo'
 }
 
@@ -3002,14 +3007,14 @@ export interface Payment {
      */
     amountV2: MoneyV2
     /** The billing address for the payment. */
-    billingAddress?: MailingAddress
+    billingAddress: (MailingAddress | null)
     /** The checkout to which the payment belongs. */
     checkout: Checkout
     /** The credit card used for the payment in the case of direct payments. */
-    creditCard?: CreditCard
+    creditCard: (CreditCard | null)
     /** A message describing a processing error during asynchronous processing. */
-    errorMessage?: Scalars['String']
-    /** A globally-unique identifier. */
+    errorMessage: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /**
      * A client-side generated token to identify a payment and perform idempotent operations.
@@ -3017,15 +3022,15 @@ export interface Payment {
      * [Idempotent requests](https://shopify.dev/api/usage/idempotent-requests).
      * 
      */
-    idempotencyKey?: Scalars['String']
+    idempotencyKey: (Scalars['String'] | null)
     /** The URL where the customer needs to be redirected so they can complete the 3D Secure payment flow. */
-    nextActionUrl?: Scalars['URL']
+    nextActionUrl: (Scalars['URL'] | null)
     /** Whether the payment is still processing asynchronously. */
     ready: Scalars['Boolean']
     /** A flag to indicate if the payment is to be done in test mode for gateways that support it. */
     test: Scalars['Boolean']
     /** The actual transaction recorded by Shopify after having processed the payment with the gateway. */
-    transaction?: Transaction
+    transaction: (Transaction | null)
     __typename: 'Payment'
 }
 
@@ -3042,8 +3047,8 @@ export interface PaymentSettings {
     currencyCode: CurrencyCode
     /** A list of enabled currencies (ISO 4217 format) that the shop accepts. Merchants can enable currencies from their Shopify Payments settings in the Shopify admin. */
     enabledPresentmentCurrencies: CurrencyCode[]
-    /** The shop’s Shopify Payments account id. */
-    shopifyPaymentsAccountId?: Scalars['String']
+    /** The shop’s Shopify Payments account ID. */
+    shopifyPaymentsAccountId: (Scalars['String'] | null)
     /** List of the digital wallets which the shop supports. */
     supportedDigitalWallets: DigitalWallet[]
     __typename: 'PaymentSettings'
@@ -3089,14 +3094,14 @@ export interface Product {
      * This field is functionally equivalent to `images(first: 1)`.
      * 
      */
-    featuredImage?: Image
+    featuredImage: (Image | null)
     /**
      * A human-friendly unique string for the Product automatically generated from its title.
      * They are used by the Liquid templating language to refer to objects.
      * 
      */
     handle: Scalars['String']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** List of images associated with the product. */
     images: ImageConnection
@@ -3105,14 +3110,14 @@ export interface Product {
     /** The media associated with the product. */
     media: MediaConnection
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
-    onlineStoreUrl?: Scalars['URL']
+    onlineStoreUrl: (Scalars['URL'] | null)
     /** List of product options. */
     options: ProductOption[]
     /** The price range. */
@@ -3136,7 +3141,7 @@ export interface Product {
     /** The product’s title. */
     title: Scalars['String']
     /** The total quantity of inventory in stock for this Product. */
-    totalInventory?: Scalars['Int']
+    totalInventory: (Scalars['Int'] | null)
     /**
      * The date and time when the product was last modified.
      * A product's `updatedAt` value can change for different reasons. For example, if an order
@@ -3151,7 +3156,7 @@ export interface Product {
      * If there is not a variant for the selected options, `null` will be returned.
      * 
      */
-    variantBySelectedOptions?: ProductVariant
+    variantBySelectedOptions: (ProductVariant | null)
     /** List of the product’s variants. */
     variants: ProductVariantConnection
     /** The product’s vendor name. */
@@ -3209,7 +3214,7 @@ export type ProductMediaSortKeys = 'POSITION' | 'ID' | 'RELEVANCE'
  * 
  */
 export interface ProductOption {
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The product option’s name. */
     name: Scalars['String']
@@ -3238,30 +3243,30 @@ export interface ProductVariant {
     /** Indicates if the product variant is available for sale. */
     availableForSale: Scalars['Boolean']
     /** The barcode (for example, ISBN, UPC, or GTIN) associated with the variant. */
-    barcode?: Scalars['String']
+    barcode: (Scalars['String'] | null)
     /** The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPrice` is higher than `price`. */
-    compareAtPrice?: MoneyV2
+    compareAtPrice: (MoneyV2 | null)
     /**
      * @deprecated Use `compareAtPrice` instead.
      * The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPriceV2` is higher than `priceV2`.
      */
-    compareAtPriceV2?: MoneyV2
+    compareAtPriceV2: (MoneyV2 | null)
     /** Whether a product is out of stock but still available for purchase (used for backorders). */
     currentlyNotInStock: Scalars['Boolean']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /**
      * Image associated with the product variant. This field falls back to the product image if no image is available.
      * 
      */
-    image?: Image
+    image: (Image | null)
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /** The product variant’s price. */
     price: MoneyV2
     /**
@@ -3272,7 +3277,7 @@ export interface ProductVariant {
     /** The product object that the product variant belongs to. */
     product: Product
     /** The total sellable quantity of the variant for online sales channels. */
-    quantityAvailable?: Scalars['Int']
+    quantityAvailable: (Scalars['Int'] | null)
     /** Whether a customer needs to provide a shipping address when placing an order for the product variant. */
     requiresShipping: Scalars['Boolean']
     /** List of product options applied to the variant. */
@@ -3280,17 +3285,17 @@ export interface ProductVariant {
     /** Represents an association between a variant and a selling plan. Selling plan allocations describe which selling plans are available for each variant, and what their impact is on pricing. */
     sellingPlanAllocations: SellingPlanAllocationConnection
     /** The SKU (stock keeping unit) associated with the variant. */
-    sku?: Scalars['String']
+    sku: (Scalars['String'] | null)
     /** The in-store pickup availability of this variant by location. */
     storeAvailability: StoreAvailabilityConnection
     /** The product variant’s title. */
     title: Scalars['String']
     /** The unit price value for the variant based on the variant's measurement. */
-    unitPrice?: MoneyV2
+    unitPrice: (MoneyV2 | null)
     /** The unit price measurement for the variant. */
-    unitPriceMeasurement?: UnitPriceMeasurement
+    unitPriceMeasurement: (UnitPriceMeasurement | null)
     /** The weight of the product variant in the unit system specified with `weight_unit`. */
-    weight?: Scalars['Float']
+    weight: (Scalars['Float'] | null)
     /** Unit of measurement for weight. */
     weightUnit: WeightUnit
     __typename: 'ProductVariant'
@@ -3334,12 +3339,12 @@ export interface QueryRoot {
     /** List of the shop's articles. */
     articles: ArticleConnection
     /** Fetch a specific `Blog` by one of its unique attributes. */
-    blog?: Blog
+    blog: (Blog | null)
     /**
      * @deprecated Use `blog` instead.
      * Find a blog by its handle.
      */
-    blogByHandle?: Blog
+    blogByHandle: (Blog | null)
     /** List of the shop's blogs. */
     blogs: BlogConnection
     /**
@@ -3347,18 +3352,22 @@ export interface QueryRoot {
      * [Manage a cart with the Storefront API](https://shopify.dev/custom-storefronts/cart/manage).
      * 
      */
-    cart?: Cart
+    cart: (Cart | null)
     /** Fetch a specific `Collection` by one of its unique attributes. */
-    collection?: Collection
+    collection: (Collection | null)
     /**
      * @deprecated Use `collection` instead.
      * Find a collection by its handle.
      */
-    collectionByHandle?: Collection
+    collectionByHandle: (Collection | null)
     /** List of the shop’s collections. */
     collections: CollectionConnection
-    /** Find a customer by its access token. */
-    customer?: Customer
+    /**
+     * The customer associated with the given access token. Tokens are obtained by using the
+     * [`customerAccessTokenCreate` mutation](https://shopify.dev/docs/api/storefront/latest/mutations/customerAccessTokenCreate).
+     * 
+     */
+    customer: (Customer | null)
     /** Returns the localized experiences configured for the shop. */
     localization: Localization
     /**
@@ -3368,39 +3377,42 @@ export interface QueryRoot {
      * 
      */
     locations: LocationConnection
-    /** A storefront menu. */
-    menu?: Menu
+    /**
+     * Retrieve a [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) by its handle.
+     * 
+     */
+    menu: (Menu | null)
     /** Fetch a specific Metaobject by one of its unique identifiers. */
-    metaobject?: Metaobject
+    metaobject: (Metaobject | null)
     /** All active metaobjects for the shop. */
     metaobjects: MetaobjectConnection
     /** Returns a specific node by ID. */
-    node?: Node
+    node: (Node | null)
     /** Returns the list of nodes with the given IDs. */
-    nodes: (Node | undefined)[]
+    nodes: (Node | null)[]
     /** Fetch a specific `Page` by one of its unique attributes. */
-    page?: Page
+    page: (Page | null)
     /**
      * @deprecated Use `page` instead.
      * Find a page by its handle.
      */
-    pageByHandle?: Page
+    pageByHandle: (Page | null)
     /** List of the shop's pages. */
     pages: PageConnection
     /** Fetch a specific `Product` by one of its unique attributes. */
-    product?: Product
+    product: (Product | null)
     /**
      * @deprecated Use `product` instead.
      * Find a product by its handle.
      */
-    productByHandle?: Product
+    productByHandle: (Product | null)
     /**
      * Find recommended products related to a given `product_id`.
      * To learn more about how recommendations are generated, see
      * [*Showing product recommendations on product pages*](https://help.shopify.com/themes/development/recommended-products).
      * 
      */
-    productRecommendations?: Product[]
+    productRecommendations: (Product[] | null)
     /**
      * Tags added to products.
      * Additional access scope required: unauthenticated_read_product_tags.
@@ -3424,9 +3436,9 @@ export interface QueryRoot {
 /** SEO information. */
 export interface SEO {
     /** The meta description. */
-    description?: Scalars['String']
+    description: (Scalars['String'] | null)
     /** The SEO title. */
-    title?: Scalars['String']
+    title: (Scalars['String'] | null)
     __typename: 'SEO'
 }
 
@@ -3470,8 +3482,8 @@ export interface SellingPlan {
     /** The initial payment due for the purchase. */
     checkoutCharge: SellingPlanCheckoutCharge
     /** The description of the selling plan. */
-    description?: Scalars['String']
-    /** A globally-unique identifier. */
+    description: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
     name: Scalars['String']
@@ -3536,7 +3548,7 @@ export interface SellingPlanAllocationPriceAdjustment {
     /** The price of the variant when it's purchased with a selling plan For example, for a prepaid subscription plan that includes 6 deliveries of $10.00 granola, where the customer gets 20% off, the price is 6 x $10.00 x 0.80 = $48.00. */
     price: MoneyV2
     /** The resulting price per unit for the variant associated with the selling plan. If the variant isn't sold by quantity or measurement, then this field returns `null`. */
-    unitPrice?: MoneyV2
+    unitPrice: (MoneyV2 | null)
     __typename: 'SellingPlanAllocationPriceAdjustment'
 }
 
@@ -3614,7 +3626,7 @@ export interface SellingPlanFixedPriceAdjustment {
 /** Represents a selling method. For example, 'Subscribe and save' is a selling method where customers pay for goods or services per delivery. A selling plan group contains individual selling plans. */
 export interface SellingPlanGroup {
     /** A display friendly name for the app that created the selling plan group. */
-    appName?: Scalars['String']
+    appName: (Scalars['String'] | null)
     /** The name of the selling plan group. */
     name: Scalars['String']
     /** Represents the selling plan options available in the drop-down list in the storefront. For example, 'Delivery every week' or 'Delivery every 2 weeks' specifies the delivery frequency options for the product. */
@@ -3670,9 +3682,9 @@ export interface SellingPlanGroupOption {
 /** An option provided by a Selling Plan. */
 export interface SellingPlanOption {
     /** The name of the option (ie "Delivery every"). */
-    name?: Scalars['String']
+    name: (Scalars['String'] | null)
     /** The value of the option (ie "Month"). */
-    value?: Scalars['String']
+    value: (Scalars['String'] | null)
     __typename: 'SellingPlanOption'
 }
 
@@ -3690,7 +3702,7 @@ export interface SellingPlanPriceAdjustment {
     /** The type of price adjustment. An adjustment value can have one of three types: percentage, amount off, or a new price. */
     adjustmentValue: SellingPlanPriceAdjustmentValue
     /** The number of orders that the price adjustment applies to. If the price adjustment always applies, then this field is `null`. */
-    orderCount?: Scalars['Int']
+    orderCount: (Scalars['Int'] | null)
     __typename: 'SellingPlanPriceAdjustment'
 }
 
@@ -3719,18 +3731,18 @@ export interface ShippingRate {
 /** Shop represents a collection of the general settings and information about the shop. */
 export interface Shop {
     /** The shop's branding configuration. */
-    brand?: Brand
+    brand: (Brand | null)
     /** A description of the shop. */
-    description?: Scalars['String']
-    /** A globally-unique identifier. */
+    description: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** Returns a metafield found by namespace and key. */
-    metafield?: Metafield
+    metafield: (Metafield | null)
     /**
      * The metafields associated with the resource matching the supplied list of namespaces and keys.
      * 
      */
-    metafields: (Metafield | undefined)[]
+    metafields: (Metafield | null)[]
     /** A string representing the way currency is formatted when the currency isn’t specified. */
     moneyFormat: Scalars['String']
     /** The shop’s name. */
@@ -3740,17 +3752,17 @@ export interface Shop {
     /** The primary domain of the shop’s Online Store. */
     primaryDomain: Domain
     /** The shop’s privacy policy. */
-    privacyPolicy?: ShopPolicy
+    privacyPolicy: (ShopPolicy | null)
     /** The shop’s refund policy. */
-    refundPolicy?: ShopPolicy
+    refundPolicy: (ShopPolicy | null)
     /** The shop’s shipping policy. */
-    shippingPolicy?: ShopPolicy
+    shippingPolicy: (ShopPolicy | null)
     /** Countries that the shop ships to. */
     shipsToCountries: CountryCode[]
     /** The shop’s subscription policy. */
-    subscriptionPolicy?: ShopPolicyWithDefault
+    subscriptionPolicy: (ShopPolicyWithDefault | null)
     /** The shop’s terms of service. */
-    termsOfService?: ShopPolicy
+    termsOfService: (ShopPolicy | null)
     __typename: 'Shop'
 }
 
@@ -3761,7 +3773,7 @@ export interface ShopPolicy {
     body: Scalars['String']
     /** Policy’s handle. */
     handle: Scalars['String']
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** Policy’s title. */
     title: Scalars['String']
@@ -3782,8 +3794,8 @@ export interface ShopPolicyWithDefault {
     body: Scalars['String']
     /** The handle of the policy. */
     handle: Scalars['String']
-    /** The unique identifier of the policy. A default policy doesn't have an ID. */
-    id?: Scalars['ID']
+    /** The unique ID of the policy. A default policy doesn't have an ID. */
+    id: (Scalars['ID'] | null)
     /** The title of the policy. */
     title: Scalars['String']
     /** Public URL to the policy. */
@@ -3879,7 +3891,7 @@ export interface Transaction {
      */
     status: TransactionStatus
     /** The status of the transaction. */
-    statusV2?: TransactionStatus
+    statusV2: (TransactionStatus | null)
     /** Whether the transaction was done in test mode or not. */
     test: Scalars['Boolean']
     __typename: 'Transaction'
@@ -3900,13 +3912,13 @@ export type TransactionStatus = 'PENDING' | 'SUCCESS' | 'FAILURE' | 'ERROR'
  */
 export interface UnitPriceMeasurement {
     /** The type of unit of measurement for the unit price measurement. */
-    measuredType?: UnitPriceMeasurementMeasuredType
+    measuredType: (UnitPriceMeasurementMeasuredType | null)
     /** The quantity unit for the unit price measurement. */
-    quantityUnit?: UnitPriceMeasurementMeasuredUnit
+    quantityUnit: (UnitPriceMeasurementMeasuredUnit | null)
     /** The quantity value for the unit price measurement. */
     quantityValue: Scalars['Float']
     /** The reference unit for the unit price measurement. */
-    referenceUnit?: UnitPriceMeasurementMeasuredUnit
+    referenceUnit: (UnitPriceMeasurementMeasuredUnit | null)
     /** The reference value for the unit price measurement. */
     referenceValue: Scalars['Int']
     __typename: 'UnitPriceMeasurement'
@@ -3968,7 +3980,7 @@ export interface UrlRedirectEdge {
 /** Represents an error in the input of a mutation. */
 export interface UserError {
     /** The path to the input field that caused the error. */
-    field?: Scalars['String'][]
+    field: (Scalars['String'][] | null)
     /** The error message. */
     message: Scalars['String']
     __typename: 'UserError'
@@ -3978,13 +3990,13 @@ export interface UserError {
 /** Represents a Shopify hosted video. */
 export interface Video {
     /** A word or phrase to share the nature or contents of a media. */
-    alt?: Scalars['String']
-    /** A globally-unique identifier. */
+    alt: (Scalars['String'] | null)
+    /** A globally-unique ID. */
     id: Scalars['ID']
     /** The media content type. */
     mediaContentType: MediaContentType
     /** The preview image for the media. */
-    previewImage?: Image
+    previewImage: (Image | null)
     /** The sources for a video. */
     sources: VideoSource[]
     __typename: 'Video'
@@ -4046,7 +4058,7 @@ export interface AppliedGiftCardGenqlSelection{
      * The amount left on the gift card.
      */
     balanceV2?: MoneyV2GenqlSelection
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The last characters of the gift card. */
     lastCharacters?: boolean | number
@@ -4097,7 +4109,7 @@ export interface ArticleGenqlSelection{
      * 
      */
     handle?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The image associated with the article. */
     image?: ImageGenqlSelection
@@ -4187,12 +4199,12 @@ export interface AttributeGenqlSelection{
 }
 
 
-/** Specifies the input fields required for an attribute. */
+/** The input fields for an attribute. */
 export interface AttributeInput {
 /** Key or name of the attribute. */
-key: Scalars['String'],
+key?: Scalars['String'],
 /** Value of the attribute. */
-value: Scalars['String']}
+value?: Scalars['String']}
 
 
 /**
@@ -4272,7 +4284,7 @@ export interface BlogGenqlSelection{
      * 
      */
     handle?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** Returns a metafield found by namespace and key. */
     metafield?: (MetafieldGenqlSelection & { __args: {
@@ -4329,7 +4341,7 @@ export interface BlogEdgeGenqlSelection{
 
 
 /**
- * The store's branding configuration.
+ * The store's [branding configuration](https://help.shopify.com/en/manual/promoting-marketing/managing-brand-assets).
  * 
  */
 export interface BrandGenqlSelection{
@@ -4432,7 +4444,7 @@ export interface CartGenqlSelection{
      * 
      */
     estimatedCost?: CartEstimatedCostGenqlSelection
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** A list of lines containing information about the items the customer intends to purchase. */
     lines?: (CartLineConnectionGenqlSelection & { __args?: {
@@ -4734,7 +4746,7 @@ export interface CartEstimatedCostGenqlSelection{
 }
 
 
-/** Specifies the input fields to create a cart. */
+/** The input fields to create a cart. */
 export interface CartInput {
 /** An array of key-value pairs that contains additional information about the cart. */
 attributes?: (AttributeInput[] | null),
@@ -4773,7 +4785,7 @@ export interface CartLineGenqlSelection{
      * The estimated cost of the merchandise that the buyer will pay for at checkout. The estimated costs are subject to change and changes will be reflected at checkout.
      */
     estimatedCost?: CartLineEstimatedCostGenqlSelection
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The merchandise that the buyer intends to purchase. */
     merchandise?: MerchandiseGenqlSelection
@@ -4846,29 +4858,29 @@ export interface CartLineEstimatedCostGenqlSelection{
 }
 
 
-/** Specifies the input fields to create a merchandise line on a cart. */
+/** The input fields to create a merchandise line on a cart. */
 export interface CartLineInput {
 /** An array of key-value pairs that contains additional information about the merchandise line. */
 attributes?: (AttributeInput[] | null),
 /** The quantity of the merchandise. */
 quantity?: (Scalars['Int'] | null),
-/** The identifier of the merchandise that the buyer intends to purchase. */
-merchandiseId: Scalars['ID'],
-/** The identifier of the selling plan that the merchandise is being purchased with. */
+/** The ID of the merchandise that the buyer intends to purchase. */
+merchandiseId?: Scalars['ID'],
+/** The ID of the selling plan that the merchandise is being purchased with. */
 sellingPlanId?: (Scalars['ID'] | null)}
 
 
-/** Specifies the input fields to update a line item on a cart. */
+/** The input fields to update a line item on a cart. */
 export interface CartLineUpdateInput {
-/** The identifier of the merchandise line. */
-id: Scalars['ID'],
+/** The ID of the merchandise line. */
+id?: Scalars['ID'],
 /** The quantity of the line item. */
 quantity?: (Scalars['Int'] | null),
-/** The identifier of the merchandise for the line item. */
+/** The ID of the merchandise for the line item. */
 merchandiseId?: (Scalars['ID'] | null),
 /** An array of key-value pairs that contains additional information about the merchandise line. */
 attributes?: (AttributeInput[] | null),
-/** The identifier of the selling plan that the merchandise is being purchased with. */
+/** The ID of the selling plan that the merchandise is being purchased with. */
 sellingPlanId?: (Scalars['ID'] | null)}
 
 
@@ -4922,9 +4934,9 @@ export interface CartNoteUpdatePayloadGenqlSelection{
  */
 export interface CartSelectedDeliveryOptionInput {
 /** The ID of the cart delivery group. */
-deliveryGroupId: Scalars['ID'],
+deliveryGroupId?: Scalars['ID'],
 /** The handle of the selected delivery option. */
-deliveryOptionHandle: Scalars['String']}
+deliveryOptionHandle?: Scalars['String']}
 
 
 /** Return type for `cartSelectedDeliveryOptionsUpdate` mutation. */
@@ -4986,7 +4998,7 @@ export interface CheckoutGenqlSelection{
     reverse?: (Scalars['Boolean'] | null)} })
     /** The email attached to this checkout. */
     email?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** A list of line item objects, each one containing information about an item in the checkout. */
     lineItems?: (CheckoutLineItemConnectionGenqlSelection & { __args?: {
@@ -5070,7 +5082,7 @@ export interface CheckoutGenqlSelection{
 }
 
 
-/** Specifies the fields required to update a checkout's attributes. */
+/** The input fields required to update a checkout's attributes. */
 export interface CheckoutAttributesUpdateV2Input {
 /** The text of an optional note that a shop owner can attach to the checkout. */
 note?: (Scalars['String'] | null),
@@ -5111,7 +5123,7 @@ export interface CheckoutBuyerIdentityGenqlSelection{
 }
 
 
-/** Specifies the identity of the customer associated with the checkout. */
+/** The input fields for the identity of the customer associated with the checkout. */
 export interface CheckoutBuyerIdentityInput {
 /**
  * The country code of one of the shop's
@@ -5119,7 +5131,7 @@ export interface CheckoutBuyerIdentityInput {
  * For example, `CA`. Including this field creates a checkout in the specified country's currency.
  * 
  */
-countryCode: CountryCode}
+countryCode?: CountryCode}
 
 
 /** Return type for `checkoutCompleteFree` mutation. */
@@ -5174,7 +5186,7 @@ export interface CheckoutCompleteWithTokenizedPaymentV3PayloadGenqlSelection{
 }
 
 
-/** Specifies the fields required to create a checkout. */
+/** The input fields required to create a checkout. */
 export interface CheckoutCreateInput {
 /** The email with which the customer wants to checkout. */
 email?: (Scalars['String'] | null),
@@ -5335,7 +5347,7 @@ export interface CheckoutLineItemGenqlSelection{
     customAttributes?: AttributeGenqlSelection
     /** The discounts that have been allocated onto the checkout line item by discount applications. */
     discountAllocations?: DiscountAllocationGenqlSelection
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The quantity of the line item. */
     quantity?: boolean | number
@@ -5380,21 +5392,21 @@ export interface CheckoutLineItemEdgeGenqlSelection{
 }
 
 
-/** Specifies the input fields to create a line item on a checkout. */
+/** The input fields to create a line item on a checkout. */
 export interface CheckoutLineItemInput {
 /** Extra information in the form of an array of Key-Value pairs about the line item. */
 customAttributes?: (AttributeInput[] | null),
 /** The quantity of the line item. */
-quantity: Scalars['Int'],
-/** The identifier of the product variant for the line item. */
-variantId: Scalars['ID']}
+quantity?: Scalars['Int'],
+/** The ID of the product variant for the line item. */
+variantId?: Scalars['ID']}
 
 
-/** Specifies the input fields to update a line item on the checkout. */
+/** The input fields to update a line item on the checkout. */
 export interface CheckoutLineItemUpdateInput {
-/** The identifier of the line item. */
+/** The ID of the line item. */
 id?: (Scalars['ID'] | null),
-/** The variant identifier of the line item. */
+/** The variant ID of the line item. */
 variantId?: (Scalars['ID'] | null),
 /** The quantity of the line item. */
 quantity?: (Scalars['Int'] | null),
@@ -5520,7 +5532,7 @@ export interface CollectionGenqlSelection{
      * 
      */
     handle?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** Image associated with the collection. */
     image?: ImageGenqlSelection
@@ -5606,7 +5618,7 @@ export interface CommentGenqlSelection{
     truncateAt?: (Scalars['Int'] | null)} } | boolean | number
     /** The content of the comment, complete with HTML formatting. */
     contentHtml?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -5701,13 +5713,13 @@ export interface CreditCardGenqlSelection{
  */
 export interface CreditCardPaymentInputV2 {
 /** The amount and currency of the payment. */
-paymentAmount: MoneyInput,
+paymentAmount?: MoneyInput,
 /** A unique client generated key used to avoid duplicate charges. When a duplicate payment is found, the original is returned instead of creating a new one. For more information, refer to [Idempotent requests](https://shopify.dev/api/usage/idempotent-requests). */
-idempotencyKey: Scalars['String'],
+idempotencyKey?: Scalars['String'],
 /** The billing address for the payment. */
-billingAddress: MailingAddressInput,
+billingAddress?: MailingAddressInput,
 /** The ID returned by Shopify's Card Vault. */
-vaultId: Scalars['String'],
+vaultId?: Scalars['String'],
 /** Executes the payment in test mode if possible. Defaults to `false`. */
 test?: (Scalars['Boolean'] | null)}
 
@@ -5751,7 +5763,7 @@ export interface CustomerGenqlSelection{
     email?: boolean | number
     /** The customer’s first name. */
     firstName?: boolean | number
-    /** A unique identifier for the customer. */
+    /** A unique ID for the customer. */
     id?: boolean | number
     /** The customer's most recently updated, incomplete checkout. */
     lastIncompleteCheckout?: CheckoutGenqlSelection
@@ -5821,12 +5833,12 @@ export interface CustomerAccessTokenGenqlSelection{
 }
 
 
-/** Specifies the input fields required to create a customer access token. */
+/** The input fields required to create a customer access token. */
 export interface CustomerAccessTokenCreateInput {
 /** The email associated to the customer. */
-email: Scalars['String'],
+email?: Scalars['String'],
 /** The login password to be used by the customer. */
-password: Scalars['String']}
+password?: Scalars['String']}
 
 
 /** Return type for `customerAccessTokenCreate` mutation. */
@@ -5893,12 +5905,12 @@ export interface CustomerActivateByUrlPayloadGenqlSelection{
 }
 
 
-/** Specifies the input fields required to activate a customer. */
+/** The input fields to activate a customer. */
 export interface CustomerActivateInput {
 /** The activation token required to activate the customer. */
-activationToken: Scalars['String'],
+activationToken?: Scalars['String'],
 /** New password that will be set during activation. */
-password: Scalars['String']}
+password?: Scalars['String']}
 
 
 /** Return type for `customerActivate` mutation. */
@@ -5967,14 +5979,14 @@ export interface CustomerAddressUpdatePayloadGenqlSelection{
 }
 
 
-/** The fields required to create a new customer. */
+/** The input fields to create a new customer. */
 export interface CustomerCreateInput {
 /** The customer’s first name. */
 firstName?: (Scalars['String'] | null),
 /** The customer’s last name. */
 lastName?: (Scalars['String'] | null),
 /** The customer’s email. */
-email: Scalars['String'],
+email?: Scalars['String'],
 /**
  * A unique phone number for the customer.
  * 
@@ -5983,7 +5995,7 @@ email: Scalars['String'],
  */
 phone?: (Scalars['String'] | null),
 /** The login password used by the customer. */
-password: Scalars['String'],
+password?: Scalars['String'],
 /** Indicates whether the customer has consented to be sent marketing material via email. */
 acceptsMarketing?: (Scalars['Boolean'] | null)}
 
@@ -6052,12 +6064,12 @@ export interface CustomerResetByUrlPayloadGenqlSelection{
 }
 
 
-/** Specifies the fields required to reset a customer’s password. */
+/** The input fields to reset a customer's password. */
 export interface CustomerResetInput {
 /** The reset token required to reset the customer’s password. */
-resetToken: Scalars['String'],
+resetToken?: Scalars['String'],
 /** New password that will be set as part of the reset password process. */
-password: Scalars['String']}
+password?: Scalars['String']}
 
 
 /** Return type for `customerReset` mutation. */
@@ -6078,7 +6090,7 @@ export interface CustomerResetPayloadGenqlSelection{
 }
 
 
-/** Specifies the fields required to update the Customer information. */
+/** The input fields to update the Customer information. */
 export interface CustomerUpdateInput {
 /** The customer’s first name. */
 firstName?: (Scalars['String'] | null),
@@ -6282,7 +6294,7 @@ export interface ExternalVideoGenqlSelection{
     embeddedUrl?: boolean | number
     /** The host of the external video. */
     host?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The media content type. */
     mediaContentType?: boolean | number
@@ -6415,7 +6427,7 @@ export interface FulfillmentTrackingInfoGenqlSelection{
 export interface GenericFileGenqlSelection{
     /** A word or phrase to indicate the contents of a file. */
     alt?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The MIME type of the file. */
     mimeType?: boolean | number
@@ -6430,12 +6442,12 @@ export interface GenericFileGenqlSelection{
 }
 
 
-/** Used to specify a geographical location. */
+/** The input fields used to specify a geographical location. */
 export interface GeoCoordinateInput {
 /** The coordinate's latitude value. */
-latitude: Scalars['Float'],
+latitude?: Scalars['Float'],
 /** The coordinate's longitude value. */
-longitude: Scalars['Float']}
+longitude?: Scalars['Float']}
 
 
 /** Represents information about the metafields associated to the specified resource. */
@@ -6467,12 +6479,12 @@ export interface HasMetafieldsGenqlSelection{
 }
 
 
-/** Identifies a metafield on an owner resource by namespace and key. */
+/** The input fields to identify a metafield on an owner resource by namespace and key. */
 export interface HasMetafieldsIdentifier {
 /** A container for a set of metafields. */
-namespace: Scalars['String'],
+namespace?: Scalars['String'],
 /** The identifier for the metafield. */
-key: Scalars['String']}
+key?: Scalars['String']}
 
 
 /** Represents an image resource. */
@@ -6481,7 +6493,7 @@ export interface ImageGenqlSelection{
     altText?: boolean | number
     /** The original height of the image in pixels. Returns `null` if the image is not hosted by Shopify. */
     height?: boolean | number
-    /** A unique identifier for the image. */
+    /** A unique ID for the image. */
     id?: boolean | number
     /**
      * @deprecated Use `url` instead.
@@ -6636,7 +6648,7 @@ export interface LocalizationGenqlSelection{
 export interface LocationGenqlSelection{
     /** The address of the location. */
     address?: LocationAddressGenqlSelection
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The name of the location. */
     name?: boolean | number
@@ -6761,7 +6773,7 @@ export interface MailingAddressGenqlSelection{
     withCompany?: (Scalars['Boolean'] | null)} } | boolean | number
     /** A comma-separated list of the values for city, province, and country. */
     formattedArea?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The last name of the customer. */
     lastName?: boolean | number
@@ -6827,7 +6839,7 @@ export interface MailingAddressEdgeGenqlSelection{
 }
 
 
-/** Specifies the fields accepted to create or update a mailing address. */
+/** The input fields to create or update a mailing address. */
 export interface MailingAddressInput {
 /**
  * The first line of the address. Typically the street address or PO Box number.
@@ -6941,7 +6953,7 @@ export interface MediaEdgeGenqlSelection{
 export interface MediaImageGenqlSelection{
     /** A word or phrase to share the nature or contents of a media. */
     alt?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The image for the media. */
     image?: ImageGenqlSelection
@@ -6955,13 +6967,14 @@ export interface MediaImageGenqlSelection{
 
 
 /**
- * A menu used for navigation within a storefront.
+ * A [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) representing a hierarchy
+ * of hyperlinks (items).
  * 
  */
 export interface MenuGenqlSelection{
     /** The menu's handle. */
     handle?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The menu's child items. */
     items?: MenuItemGenqlSelection
@@ -6979,7 +6992,7 @@ export interface MenuGenqlSelection{
  * 
  */
 export interface MenuItemGenqlSelection{
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The menu item's child items. */
     items?: MenuItemGenqlSelection
@@ -7017,15 +7030,15 @@ export interface MetafieldGenqlSelection{
     createdAt?: boolean | number
     /** The description of a metafield. */
     description?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
-    /** The key name for a metafield. */
+    /** The unique identifier for the metafield within its namespace. */
     key?: boolean | number
-    /** The namespace for a metafield. */
+    /** The container for a group of metafields that the metafield is associated with. */
     namespace?: boolean | number
-    /** The parent object that the metafield belongs to. */
+    /** The type of resource that the metafield is attached to. */
     parentResource?: MetafieldParentResourceGenqlSelection
-    /** Returns a reference object if the metafield definition's type is a resource reference. */
+    /** Returns a reference object if the metafield's type is a resource reference. */
     reference?: MetafieldReferenceGenqlSelection
     /** A list of reference objects if the metafield's type is a resource reference list. */
     references?: (MetafieldReferenceConnectionGenqlSelection & { __args?: {
@@ -7039,13 +7052,13 @@ export interface MetafieldGenqlSelection{
     before?: (Scalars['String'] | null)} })
     /**
      * The type name of the metafield.
-     * See the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
+     * Refer to the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
      * 
      */
     type?: boolean | number
-    /** The date and time when the storefront metafield was updated. */
+    /** The date and time when the metafield was last updated. */
     updatedAt?: boolean | number
-    /** The value of a metafield. */
+    /** The data stored in the metafield. Always stored as a string, regardless of the metafield's type. */
     value?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -7064,11 +7077,11 @@ export interface MetafieldGenqlSelection{
  */
 export interface MetafieldFilter {
 /** The namespace of the metafield to filter on. */
-namespace: Scalars['String'],
+namespace?: Scalars['String'],
 /** The key of the metafield to filter on. */
-key: Scalars['String'],
+key?: Scalars['String'],
 /** The value of the metafield. */
-value: Scalars['String']}
+value?: Scalars['String']}
 
 
 /** A resource that the metafield belongs to. */
@@ -7154,7 +7167,7 @@ export interface MetaobjectGenqlSelection{
     fields?: MetaobjectFieldGenqlSelection
     /** The unique handle of the metaobject. Useful as a custom ID. */
     handle?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The type of the metaobject. Defines the namespace of its associated metafields. */
     type?: boolean | number
@@ -7227,16 +7240,16 @@ export interface MetaobjectFieldGenqlSelection{
 /** The input fields used to retrieve a metaobject by handle. */
 export interface MetaobjectHandleInput {
 /** The handle of the metaobject. */
-handle: Scalars['String'],
+handle?: Scalars['String'],
 /** The type of the metaobject. */
-type: Scalars['String']}
+type?: Scalars['String']}
 
 
 /** Represents a Shopify hosted 3D model. */
 export interface Model3dGenqlSelection{
     /** A word or phrase to share the nature or contents of a media. */
     alt?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The media content type. */
     mediaContentType?: boolean | number
@@ -7264,12 +7277,12 @@ export interface Model3dSourceGenqlSelection{
 }
 
 
-/** Specifies the fields for a monetary value with currency. */
+/** The input fields for a monetary value with currency. */
 export interface MoneyInput {
 /** Decimal money amount. */
-amount: Scalars['Decimal'],
+amount?: Scalars['Decimal'],
 /** Currency of the money. */
-currencyCode: CurrencyCode}
+currencyCode?: CurrencyCode}
 
 
 /**
@@ -7584,7 +7597,7 @@ export interface MutationGenqlSelection{
  * 
  */
 export interface NodeGenqlSelection{
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     on_AppliedGiftCard?: AppliedGiftCardGenqlSelection
     on_Article?: ArticleGenqlSelection
@@ -7676,7 +7689,7 @@ export interface OrderGenqlSelection{
     financialStatus?: boolean | number
     /** The fulfillment status for the order. */
     fulfillmentStatus?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** List of the order’s line items. */
     lineItems?: (OrderLineItemConnectionGenqlSelection & { __args?: {
@@ -7872,7 +7885,7 @@ export interface PageGenqlSelection{
     createdAt?: boolean | number
     /** A human-friendly unique string for the page automatically generated from its title. */
     handle?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** Returns a metafield found by namespace and key. */
     metafield?: (MetafieldGenqlSelection & { __args: {
@@ -7967,7 +7980,7 @@ export interface PaymentGenqlSelection{
     creditCard?: CreditCardGenqlSelection
     /** A message describing a processing error during asynchronous processing. */
     errorMessage?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /**
      * A client-side generated token to identify a payment and perform idempotent operations.
@@ -8001,7 +8014,7 @@ export interface PaymentSettingsGenqlSelection{
     currencyCode?: boolean | number
     /** A list of enabled currencies (ISO 4217 format) that the shop accepts. Merchants can enable currencies from their Shopify Payments settings in the Shopify admin. */
     enabledPresentmentCurrencies?: boolean | number
-    /** The shop’s Shopify Payments account id. */
+    /** The shop’s Shopify Payments account ID. */
     shopifyPaymentsAccountId?: boolean | number
     /** List of the digital wallets which the shop supports. */
     supportedDigitalWallets?: boolean | number
@@ -8010,7 +8023,10 @@ export interface PaymentSettingsGenqlSelection{
 }
 
 
-/** A filter used to view a subset of products in a collection matching a specific price range. */
+/**
+ * The input fields for a filter used to view a subset of products in a collection matching a specific price range.
+ * 
+ */
 export interface PriceRangeFilter {
 /** The minimum price in the range. Defaults to zero. */
 min?: (Scalars['Float'] | null),
@@ -8077,7 +8093,7 @@ export interface ProductGenqlSelection{
      * 
      */
     handle?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** List of images associated with the product. */
     images?: (ImageConnectionGenqlSelection & { __args?: {
@@ -8230,7 +8246,12 @@ export interface ProductEdgeGenqlSelection{
 }
 
 
-/** A filter used to view a subset of products in a collection. */
+/**
+ * The input fields for a filter used to view a subset of products in a collection.
+ * By default, the `available` and `price` filters are enabled. Filters are customized with the Shopify Search & Discovery app.
+ * Learn more about [customizing storefront filtering](https://help.shopify.com/manual/online-store/themes/customizing-themes/storefront-filters).
+ * 
+ */
 export interface ProductFilter {
 /** Filter on if the product is available for sale. */
 available?: (Scalars['Boolean'] | null),
@@ -8257,7 +8278,7 @@ tag?: (Scalars['String'] | null)}
  * 
  */
 export interface ProductOptionGenqlSelection{
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The product option’s name. */
     name?: boolean | number
@@ -8294,7 +8315,7 @@ export interface ProductVariantGenqlSelection{
     compareAtPriceV2?: MoneyV2GenqlSelection
     /** Whether a product is out of stock but still available for purchase (used for backorders). */
     currentlyNotInStock?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /**
      * Image associated with the product variant. This field falls back to the product image if no image is available.
@@ -8517,7 +8538,11 @@ export interface QueryRootGenqlSelection{
      * 
      */
     query?: (Scalars['String'] | null)} })
-    /** Find a customer by its access token. */
+    /**
+     * The customer associated with the given access token. Tokens are obtained by using the
+     * [`customerAccessTokenCreate` mutation](https://shopify.dev/docs/api/storefront/latest/mutations/customerAccessTokenCreate).
+     * 
+     */
     customer?: (CustomerGenqlSelection & { __args: {
     /** The customer access token. */
     customerAccessToken: Scalars['String']} })
@@ -8544,9 +8569,12 @@ export interface QueryRootGenqlSelection{
     sortKey?: (LocationSortKeys | null), 
     /** Used to sort results based on proximity to the provided location. */
     near?: (GeoCoordinateInput | null)} })
-    /** A storefront menu. */
+    /**
+     * Retrieve a [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) by its handle.
+     * 
+     */
     menu?: (MenuGenqlSelection & { __args: {
-    /** Returns a storefront menu by the specified handle. */
+    /** The navigation menu's handle. */
     handle: Scalars['String']} })
     /** Fetch a specific Metaobject by one of its unique identifiers. */
     metaobject?: (MetaobjectGenqlSelection & { __args?: {
@@ -8761,12 +8789,12 @@ export interface SelectedOptionGenqlSelection{
 }
 
 
-/** Specifies the input fields required for a selected option. */
+/** The input fields required for a selected option. */
 export interface SelectedOptionInput {
 /** The product option’s name. */
-name: Scalars['String'],
+name?: Scalars['String'],
 /** The product option’s value. */
-value: Scalars['String']}
+value?: Scalars['String']}
 
 
 /** Represents how products and variants can be sold and purchased. */
@@ -8775,7 +8803,7 @@ export interface SellingPlanGenqlSelection{
     checkoutCharge?: SellingPlanCheckoutChargeGenqlSelection
     /** The description of the selling plan. */
     description?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The name of the selling plan. For example, '6 weeks of prepaid granola, delivered weekly'. */
     name?: boolean | number
@@ -9060,7 +9088,7 @@ export interface ShopGenqlSelection{
     brand?: BrandGenqlSelection
     /** A description of the shop. */
     description?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** Returns a metafield found by namespace and key. */
     metafield?: (MetafieldGenqlSelection & { __args: {
@@ -9106,7 +9134,7 @@ export interface ShopPolicyGenqlSelection{
     body?: boolean | number
     /** Policy’s handle. */
     handle?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** Policy’s title. */
     title?: boolean | number
@@ -9128,7 +9156,7 @@ export interface ShopPolicyWithDefaultGenqlSelection{
     body?: boolean | number
     /** The handle of the policy. */
     handle?: boolean | number
-    /** The unique identifier of the policy. A default policy doesn't have an ID. */
+    /** The unique ID of the policy. A default policy doesn't have an ID. */
     id?: boolean | number
     /** The title of the policy. */
     title?: boolean | number
@@ -9221,19 +9249,19 @@ export interface StringEdgeGenqlSelection{
  */
 export interface TokenizedPaymentInputV3 {
 /** The amount and currency of the payment. */
-paymentAmount: MoneyInput,
+paymentAmount?: MoneyInput,
 /** A unique client generated key used to avoid duplicate charges. When a duplicate payment is found, the original is returned instead of creating a new one. For more information, refer to [Idempotent requests](https://shopify.dev/api/usage/idempotent-requests). */
-idempotencyKey: Scalars['String'],
+idempotencyKey?: Scalars['String'],
 /** The billing address for the payment. */
-billingAddress: MailingAddressInput,
+billingAddress?: MailingAddressInput,
 /** A simple string or JSON containing the required payment data for the tokenized payment. */
-paymentData: Scalars['String'],
+paymentData?: Scalars['String'],
 /** Whether to execute the payment in test mode, if possible. Test mode is not supported in production stores. Defaults to `false`. */
 test?: (Scalars['Boolean'] | null),
 /** Public Hash Key used for AndroidPay payments only. */
 identifier?: (Scalars['String'] | null),
 /** The type of payment token. */
-type: PaymentTokenType}
+type?: PaymentTokenType}
 
 
 /** An object representing exchange of money for a product or service. */
@@ -9335,19 +9363,22 @@ export interface UserErrorGenqlSelection{
 }
 
 
-/** A filter used to view a subset of products in a collection matching a specific variant option. */
+/**
+ * The input fields for a filter used to view a subset of products in a collection matching a specific variant option.
+ * 
+ */
 export interface VariantOptionFilter {
 /** The name of the variant option to filter on. */
-name: Scalars['String'],
+name?: Scalars['String'],
 /** The value of the variant option to filter on. */
-value: Scalars['String']}
+value?: Scalars['String']}
 
 
 /** Represents a Shopify hosted video. */
 export interface VideoGenqlSelection{
     /** A word or phrase to share the nature or contents of a media. */
     alt?: boolean | number
-    /** A globally-unique identifier. */
+    /** A globally-unique ID. */
     id?: boolean | number
     /** The media content type. */
     mediaContentType?: boolean | number

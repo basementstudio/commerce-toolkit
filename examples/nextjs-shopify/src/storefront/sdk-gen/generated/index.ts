@@ -15,8 +15,7 @@ import {
   type GraphqlOperation,
   type ClientOptions,
   GenqlError,
-} from './runtime'
-export type { FieldsSelection } from './runtime'
+} from './runtime/index'
 export { GenqlError }
 
 import types from './types'
