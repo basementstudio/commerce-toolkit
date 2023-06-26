@@ -20,6 +20,7 @@ import {
   MutationSuccess,
   UserError
 } from './types'
+import type { CookieAttributes } from 'js-cookie'
 
 type MutatorResult<Data> = {
   data: Data | null | undefined
@@ -101,7 +102,7 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
   queryClientConfig?: QueryClientConfig
   cartOpenStateOptions?: cartOpenState.UseCartOpenStateOptions
   logging?: Logging<Cart>
-  cartCookieOptions?: Cookies.CookieAttributes
+  cartCookieOptions?: CookieAttributes
 }) {
   const queryClient = new QueryClient(queryClientConfig)
 

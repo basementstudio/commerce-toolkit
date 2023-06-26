@@ -5,6 +5,7 @@ import { useCartCookieManager } from '../helpers/use-cart-cookie-manager'
 import { useOptimisticCartUpdate } from '../queries/cart'
 import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart, LineItem } from '../types'
+import type { CookieAttributes } from 'js-cookie'
 
 export type UpdateLineItemsInCartMutationUserOptions<Cart> = {
   mutationOptions?: UseMutationOptions<Cart, unknown, LineItem[]>
@@ -24,7 +25,7 @@ export const useUpdateLineItemsInCartMutation = <Cart extends BarebonesCart>({
   cartCookieKey: string
   options: InternalOptions<Cart>
   logging?: Logging<Cart>
-  cartCookieOptions?: Cookies.CookieAttributes
+  cartCookieOptions?: CookieAttributes
 }) => {
   const cartCookieManager = useCartCookieManager(
     cartCookieKey,

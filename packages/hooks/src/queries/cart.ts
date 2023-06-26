@@ -9,6 +9,7 @@ import { surfaceMutationErrors } from '../helpers/error-handling'
 import { useCartCookieManager } from '../helpers/use-cart-cookie-manager'
 import { CartMutators, Logging } from '../storefront-hooks'
 import { BarebonesCart, OptionalPromise } from '../types'
+import type { CookieAttributes } from 'js-cookie'
 
 export type CartFetcher<Cart> = (cartId: string) => OptionalPromise<Cart>
 
@@ -34,7 +35,7 @@ export const useCartQuery = <Cart extends BarebonesCart>({
   cartCookieKey: string
   options: Options<Cart>
   logging?: Logging<Cart>
-  cartCookieOptions?: Cookies.CookieAttributes
+  cartCookieOptions?: CookieAttributes
 }) => {
   const cartCookieManager = useCartCookieManager(
     cartCookieKey,
