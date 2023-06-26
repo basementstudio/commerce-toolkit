@@ -89,7 +89,8 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
   createCartIfNotFound,
   queryClientConfig,
   cartOpenStateOptions,
-  logging
+  logging,
+  cartCookieOptions
 }: {
   cartCookieKey: string
   fetchers: {
@@ -100,6 +101,7 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
   queryClientConfig?: QueryClientConfig
   cartOpenStateOptions?: cartOpenState.UseCartOpenStateOptions
   logging?: Logging<Cart>
+  cartCookieOptions?: Cookies.CookieAttributes
 }) {
   const queryClient = new QueryClient(queryClientConfig)
 
@@ -112,6 +114,7 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
     useCartQuery: (options?: cartQuery.UseCartQueryUserOptions<Cart>) => {
       return cartQuery.useCartQuery({
         cartCookieKey,
+        cartCookieOptions,
         fetchCart: fetchers.fetchCart,
         mutators: { createCart: mutators.createCart },
         options: {
@@ -135,6 +138,7 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
           createCartWithLines: mutators.createCartWithLines
         },
         cartCookieKey,
+        cartCookieOptions,
         options: { ...options },
         logging
       })
@@ -145,6 +149,7 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
       return updateLines.useUpdateLineItemsInCartMutation<Cart>({
         mutators: { updateLineItemsInCart: mutators.updateLineItemsInCart },
         cartCookieKey,
+        cartCookieOptions,
         options: {
           ...options,
           mutationOptions: options?.mutationOptions
@@ -158,6 +163,7 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
       return removeLines.useRemoveLineItemsFromCartMutation<Cart>({
         mutators: { removeLineItemsFromCart: mutators.removeLineItemsFromCart },
         cartCookieKey,
+        cartCookieOptions,
         options: {
           ...options,
           mutationOptions: options?.mutationOptions

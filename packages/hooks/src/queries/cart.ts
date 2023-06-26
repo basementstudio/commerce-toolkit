@@ -26,15 +26,20 @@ export const useCartQuery = <Cart extends BarebonesCart>({
   mutators,
   cartCookieKey,
   options,
-  logging
+  logging,
+  cartCookieOptions
 }: {
   fetchCart: CartFetcher<Cart | null>
   mutators: Pick<CartMutators<Cart>, 'createCart'>
   cartCookieKey: string
   options: Options<Cart>
   logging?: Logging<Cart>
+  cartCookieOptions?: Cookies.CookieAttributes
 }) => {
-  const cartCookieManager = useCartCookieManager(cartCookieKey)
+  const cartCookieManager = useCartCookieManager(
+    cartCookieKey,
+    cartCookieOptions
+  )
 
   const createCart = React.useCallback(async () => {
     const { data, userErrors, silenceUserErrors } = await mutators.createCart()
