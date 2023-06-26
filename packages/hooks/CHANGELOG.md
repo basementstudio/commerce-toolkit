@@ -1,5 +1,11 @@
 # @bsmnt/storefront-hooks
 
+## 2.0.3
+
+### Patch Changes
+
+- f2c1a3c: Expose cookie options
+
 ## 2.0.2
 
 ### Patch Changes
