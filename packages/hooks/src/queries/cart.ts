@@ -13,7 +13,7 @@ import type { CookieAttributes } from 'js-cookie'
 
 export type CartFetcher<Cart> = (cartId: string) => OptionalPromise<Cart>
 
-const cartQueryKey = ['cart']
+const getCartQueryKey = (cartCookieKey: string) => ['cart', cartCookieKey]
 
 export type UseCartQueryUserOptions<Cart> = {
   queryOptions?: UseQueryOptions<Cart | null>
@@ -47,6 +47,11 @@ export const useCartQuery = <Cart extends BarebonesCart>({
     surfaceMutationErrors(data, userErrors, silenceUserErrors)
     return data
   }, [mutators])
+
+  const cartQueryKey = React.useMemo(
+    () => getCartQueryKey(cartCookieKey),
+    [cartCookieKey]
+  )
 
   return useQuery<Cart | null>(
     cartQueryKey,
@@ -112,8 +117,18 @@ export const useCartQuery = <Cart extends BarebonesCart>({
   )
 }
 
-export const useOptimisticCartUpdate = <Cart extends BarebonesCart>() => {
+export const useOptimisticCartUpdate = <Cart extends BarebonesCart>({
+  cartCookieKey
+}: {
+  cartCookieKey: string
+  cartCookieOptions?: CookieAttributes
+}) => {
   const queryClient = useQueryClient()
+
+  const cartQueryKey = React.useMemo(
+    () => getCartQueryKey(cartCookieKey),
+    [cartCookieKey]
+  )
 
   const optimisticUpdate = React.useMemo(() => {
     let snapshot: Cart | null | undefined = undefined
@@ -127,7 +142,7 @@ export const useOptimisticCartUpdate = <Cart extends BarebonesCart>() => {
         queryClient.setQueryData<Cart | null>(cartQueryKey, snapshot)
       }
     }
-  }, [queryClient])
+  }, [cartQueryKey, queryClient])
 
   return optimisticUpdate
 }

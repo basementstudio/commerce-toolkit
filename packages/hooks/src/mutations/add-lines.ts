@@ -34,7 +34,10 @@ export const useAddLineItemsToCartMutation = <Cart extends BarebonesCart>({
     cartCookieKey,
     cartCookieOptions
   )
-  const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
+  const optimisticCartUpdate = useOptimisticCartUpdate<Cart>({
+    cartCookieKey,
+    cartCookieOptions
+  })
 
   return useMutation(
     ['addLineItemsToCart'],

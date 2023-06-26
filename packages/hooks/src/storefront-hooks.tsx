@@ -128,7 +128,10 @@ export function createStorefrontHooks<Cart extends BarebonesCart>({
     },
     // MUTATIONS
     useOptimisticCartUpdate: () => {
-      return cartQuery.useOptimisticCartUpdate<Cart>()
+      return cartQuery.useOptimisticCartUpdate<Cart>({
+        cartCookieKey,
+        cartCookieOptions
+      })
     },
     useAddLineItemsToCartMutation: (
       options?: addLines.AddLineItemsToCartMutationUserOptions<Cart>
