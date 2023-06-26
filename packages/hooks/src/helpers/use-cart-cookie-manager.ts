@@ -3,7 +3,10 @@ import * as React from 'react'
 
 import { isClient } from './misc'
 
-export const useCartCookieManager = (key: string) => {
+export const useCartCookieManager = (
+  key: string,
+  opts?: Cookies.CookieAttributes
+) => {
   return React.useMemo(() => {
     return {
       set: (id: string) => {
@@ -11,7 +14,8 @@ export const useCartCookieManager = (key: string) => {
         Cookies.set(key, id, {
           sameSite: 'strict',
           secure: true,
-          expires: 365 // one year
+          expires: 365, // one year
+          ...opts
         })
       },
       get: () => {
@@ -23,5 +27,5 @@ export const useCartCookieManager = (key: string) => {
         return Cookies.remove(key)
       }
     }
-  }, [key])
+  }, [key, opts])
 }

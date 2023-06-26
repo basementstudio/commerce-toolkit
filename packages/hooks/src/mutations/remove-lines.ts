@@ -17,14 +17,19 @@ export const useRemoveLineItemsFromCartMutation = <Cart extends BarebonesCart>({
   mutators,
   cartCookieKey,
   options,
-  logging
+  logging,
+  cartCookieOptions
 }: {
   mutators: Pick<CartMutators<Cart>, 'removeLineItemsFromCart'>
   cartCookieKey: string
   options: InternalOptions<Cart>
   logging?: Logging<Cart>
+  cartCookieOptions?: Cookies.CookieAttributes
 }) => {
-  const cartCookieManager = useCartCookieManager(cartCookieKey)
+  const cartCookieManager = useCartCookieManager(
+    cartCookieKey,
+    cartCookieOptions
+  )
   const optimisticCartUpdate = useOptimisticCartUpdate<Cart>()
 
   return useMutation(
