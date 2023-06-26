@@ -1,5 +1,12 @@
 # @bsmnt/storefront-hooks
 
+## 2.0.4
+
+### Patch Changes
+
+- 9c95314: expose cookie options type
+- 28cf63e: fix: use cookie key as tanstack query key
+
 ## 2.0.3
 
 ### Patch Changes
