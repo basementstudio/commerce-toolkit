@@ -330,7 +330,7 @@ export const {
 yarn add @bsmnt/sdk-gen --dev
 ```
 
-This package installs a CLI with a single command: `generate`. Running it will hit your GraphQL endpoint and generate TypeScript types from your queries and mutations.
+This package installs a CLI with a single command: `generate`. Running it will hit your GraphQL endpoint and generate TypeScript types from your queries and mutations. <b>It's powered by [Genql](https://genql.dev/), so be sure to check out [their docs](https://genql.dev/docs).</b>
 
 ```bash
 # By default, you can have a file tree like the following:
