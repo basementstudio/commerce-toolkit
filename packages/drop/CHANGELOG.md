@@ -1,5 +1,11 @@
 # @bsmnt/drop
 
+## 1.2.2
+
+### Patch Changes
+
+- 5c942d0: Don't throw an error, just a warning
+
 ## 1.2.1
 
 ### Patch Changes
