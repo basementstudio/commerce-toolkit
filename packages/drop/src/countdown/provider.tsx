@@ -43,9 +43,7 @@ const CountdownProvider = ({
       : null;
 
     if (startTimestamp && startTimestamp >= endTimestamp) {
-      throw new Error(
-        "startDate must be before endDate. Please check your start and end dates."
-      );
+      console.warn("startDate must be before endDate. Please check your start and end dates.")
     }
 
     return create<CountdownContext>((set) => {
