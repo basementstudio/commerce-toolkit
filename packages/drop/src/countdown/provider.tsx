@@ -1,5 +1,5 @@
 import * as React from "react";
-import create, { StoreApi, UseBoundStore } from "zustand";
+import { create, StoreApi, UseBoundStore } from "zustand";
 import shallow from "zustand/shallow";
 
 import { calculateCountdownState } from "./calculate-countdown-state";

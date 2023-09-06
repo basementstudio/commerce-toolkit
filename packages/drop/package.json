@@ -16,7 +16,7 @@
     "react-dom": ">=16"
   },
   "dependencies": {
-    "zustand": "^4.1.2"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
