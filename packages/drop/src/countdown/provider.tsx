@@ -1,5 +1,6 @@
 import * as React from "react";
-import { create, StoreApi, UseBoundStore } from "zustand";
+import { StoreApi, UseBoundStore } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
 
 import { calculateCountdownState } from "./calculate-countdown-state";
@@ -46,7 +47,7 @@ const CountdownProvider = ({
       console.warn("startDate must be before endDate. Please check your start and end dates.")
     }
 
-    return create<CountdownContext>((set) => {
+    return createWithEqualityFn<CountdownContext>((set) => {
       const state = calculateCountdownState(endTimestamp, startTimestamp);
       return {
         ...state,
@@ -62,7 +63,7 @@ const CountdownProvider = ({
           set({ countdownState });
         },
       };
-    });
+    }, Object.is);
   });
 
   return (
