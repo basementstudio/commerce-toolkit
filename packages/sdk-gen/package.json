@@ -17,17 +17,17 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@genql/cli": "6.0.0",
+    "@genql/cli": "^6.3.3",
     "arg": "^5.0.1",
-    "dotenv": "^16.0.0",
-    "graphql": "^16.3.0",
-    "zod": "^3.14.4"
+    "dotenv": "^16.4.5",
+    "graphql": "^16.8.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^17.0.24",
-    "size-limit": "^7.0.4",
+    "@types/node": "^20.12.12",
+    "size-limit": "^11.1.4",
     "tsconfig": "*",
-    "tslib": "^2.3.1",
-    "typescript": "^4.8.4"
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5"
   }
 }
