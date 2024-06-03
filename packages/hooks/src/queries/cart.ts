@@ -133,6 +133,7 @@ export const useOptimisticCartUpdate = <Cart extends BarebonesCart>({
   const optimisticUpdate = React.useMemo(() => {
     let snapshot: Cart | null | undefined = undefined
     return {
+      get: () => snapshot,
       update: async (newCart: Cart) => {
         await queryClient.cancelQueries(cartQueryKey)
         snapshot = queryClient.getQueryData<Cart | null>(cartQueryKey)
