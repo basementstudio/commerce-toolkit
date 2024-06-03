@@ -1,5 +1,11 @@
 # @bsmnt/drop
 
+## 1.2.3
+
+### Patch Changes
+
+- b355057: [Drop] Change: update zustand
+
 ## 1.2.2
 
 ### Patch Changes
