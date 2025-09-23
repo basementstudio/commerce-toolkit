@@ -3,7 +3,7 @@
 Internal use only (for now). Install at your risk:
 
 ```zsh
-yarn add @bsmnt/shopify-helpers
+pnpm add @bsmnt/shopify-helpers
 ```
 
 Exports:

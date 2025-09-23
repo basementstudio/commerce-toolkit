@@ -37,7 +37,7 @@ These play really well together, but can also be used separately. Let's see how 
 ## `@bsmnt/storefront-hooks`
 
 ```zsh
-yarn add @bsmnt/storefront-hooks @tanstack/react-query
+pnpm add @bsmnt/storefront-hooks @tanstack/react-query
 ```
 
 This package exports:
@@ -327,7 +327,7 @@ export const {
 ## `@bsmnt/sdk-gen`
 
 ```zsh
-yarn add @bsmnt/sdk-gen --dev
+pnpm add @bsmnt/sdk-gen --dev
 ```
 
 This package installs a CLI with a single command: `generate`. Running it will hit your GraphQL endpoint and generate TypeScript types from your queries and mutations. <b>It's powered by [Genql](https://genql.dev/), so be sure to check out [their docs](https://genql.dev/docs).</b>
@@ -354,7 +354,7 @@ module.exports = {
 And then you can run the generator:
 
 ```zsh
-yarn sdk-gen
+pnpm sdk-gen
 ```
 
 This will look inside `./sdk-gen/` for a `config.js` file, and for all your `.{graphql,gql}` files under that directory.
@@ -362,7 +362,7 @@ This will look inside `./sdk-gen/` for a `config.js` file, and for all your `.{g
 If you want to use a custom directory (and not the default, which is `./sdk-gen/`), you can use the `--dir` argument.
 
 ```zsh
-yarn sdk-gen --dir ./my-custom/directory
+pnpm sdk-gen --dir ./my-custom/directory
 ```
 
 After running the generator, you should get the following result:
@@ -398,7 +398,7 @@ An added benefit is that this sdk doesn't depend on `graphql`. Many GraphQL Clie
 ## `@bsmnt/drop`
 
 ```zsh
-yarn add @bsmnt/drop
+pnpm add @bsmnt/drop
 ```
 
 This package exports:

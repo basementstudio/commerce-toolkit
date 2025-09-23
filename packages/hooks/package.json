@@ -11,7 +11,7 @@
   "source": "./src/index.ts",
   "sideEffects": false,
   "scripts": {
-    "dev": "yarn build --watch",
+    "dev": "pnpm build --watch",
     "build": "tsup ./src/index.ts --format esm,cjs --dts"
   },
   "peerDependencies": {

@@ -12,7 +12,7 @@
     "bin"
   ],
   "scripts": {
-    "dev": "yarn build --watch",
+    "dev": "pnpm build --watch",
     "build": "tsup ./src/index.ts && tsup ./src/types.ts --dts-only"
   },
   "peerDependencies": {},

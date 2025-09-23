@@ -15,8 +15,8 @@
     "lint": "turbo run lint",
     "generate": "turbo run generate",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "version:packages": "yarn changeset version",
-    "release": "yarn build:packages && yarn changeset publish"
+    "version:packages": "pnpm changeset version",
+    "release": "pnpm build:packages && pnpm changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.22.0",
@@ -28,5 +28,5 @@
     "node": "20.x"
   },
   "dependencies": {},
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "pnpm@9.15.0"
 }
