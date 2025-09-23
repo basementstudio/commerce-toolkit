@@ -1,6 +1,6 @@
 {
   "exclude": ["node_modules"],
-  "extends": "tsconfig/nextjs.json",
+  "extends": "../../internal/tsconfig/nextjs.json",
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
